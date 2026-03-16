@@ -1,0 +1,334 @@
+- generic [ref=e4]:
+  - generic [ref=e5]:
+    - generic [ref=e7]:
+      - iframe [active] [ref=e10]:
+        - generic [ref=f2e1]:
+          - contentinfo:
+            - paragraph: TradingView is interactive and has commands to use with a screen reader. The following is a list of keyboard commands available to interact on the platform
+            - list:
+              - listitem: Start using keyboard navigation mode. Press Alt + Z
+              - listitem: Quick search. Press Ctrl + K
+              - listitem: Change symbol. Start typing symbol name
+              - listitem: Change interval. Press number or comma
+              - listitem: Indicators, Metrics and Strategies. Press slash
+              - listitem: Load layout. Press period
+          - generic [ref=f2e2]:
+            - toolbar [ref=f2e6]:
+              - generic [ref=f2e10]:
+                - generic [ref=f2e11]:
+                  - button "Symbol Search" [ref=f2e12]:
+                    - img [ref=f2e14]
+                    - generic [ref=f2e16]: NEPSE
+                  - button "Compare or Add Symbol" [ref=f2e17]:
+                    - img [ref=f2e19]
+                - button "1 day" [ref=f2e26]:
+                  - generic [ref=f2e28]: D
+                - button "Candles" [ref=f2e33]:
+                  - img [ref=f2e36]
+                - generic [ref=f2e43]:
+                  - button "Indicators & Strategies" [ref=f2e45]:
+                    - img [ref=f2e47]
+                  - button "Indicator Templates" [ref=f2e50]:
+                    - img [ref=f2e53]
+                - button "Tick Chart" [ref=f2e58]:
+                  - generic [ref=f2e60]: xT
+                - generic [ref=f2e66] [cursor=pointer]: 
+                - generic "Fundamental Indicator" [ref=f2e72] [cursor=pointer]:
+                  - img [ref=f2e73]: Show Particulars
+                - generic [ref=f2e79] [cursor=pointer]:
+                  - generic [ref=f2e80]: 
+                  - text: Unadj
+                - generic [ref=f2e85] [cursor=pointer]:
+                  - generic [ref=f2e86]: 
+                  - text: Replay
+                - generic "Enable Auto Save" [ref=f2e91]:
+                  - text: Autosave
+                  - checkbox [ref=f2e93]
+                - generic [ref=f2e101] [cursor=pointer]:
+                  - generic [ref=f2e102]: 
+                  - text: Mark
+                - generic [ref=f2e107] [cursor=pointer]:
+                  - generic [ref=f2e108]: 
+                  - text: Floorsheet
+                - button "Multi Chart" [ref=f2e112]:
+                  - img [ref=f2e115]
+                - generic [ref=f2e120]:
+                  - button "Undo apply chart theme" [ref=f2e121]:
+                    - img [ref=f2e123]
+                  - button [disabled] [ref=f2e125]:
+                    - img [ref=f2e127]
+                - generic [ref=f2e131]:
+                  - button "Quick Search" [ref=f2e132]:
+                    - img [ref=f2e134]
+                  - button "Chart settings" [ref=f2e136]:
+                    - img [ref=f2e138]
+                  - button "Fullscreen mode" [ref=f2e143]:
+                    - img [ref=f2e145]
+                  - button "Take a snapshot" [ref=f2e147]:
+                    - img [ref=f2e150]
+                - generic "Free Login to save chart & create portfolio" [ref=f2e157] [cursor=pointer]:
+                  - generic [ref=f2e158]: 
+                  - text: Free Login For Live Chart
+                - button "Chart Modes" [ref=f2e162]:
+                  - generic [ref=f2e164]: 📊 Chart Modes
+            - generic [ref=f2e165]:
+              - toolbar [ref=f2e166]:
+                - generic [ref=f2e170]:
+                  - generic [ref=f2e171]:
+                    - generic [ref=f2e174]:
+                      - button "Cross" [pressed] [ref=f2e176]:
+                        - img [ref=f2e179]
+                      - button "Cursors" [pressed] [ref=f2e183]:
+                        - img [ref=f2e185]
+                    - generic [ref=f2e189]:
+                      - button "Trend Line" [ref=f2e191]:
+                        - img [ref=f2e194]
+                      - button "Trend line tools" [ref=f2e198]:
+                        - img [ref=f2e200]
+                    - generic [ref=f2e204]:
+                      - button "Fib Retracement" [ref=f2e206]:
+                        - img [ref=f2e209]
+                      - button "Gann and Fibonacci tools" [ref=f2e216]:
+                        - img [ref=f2e218]
+                    - generic [ref=f2e222]:
+                      - button "XABCD Pattern" [ref=f2e224]:
+                        - img [ref=f2e227]
+                      - button "Patterns" [ref=f2e231]:
+                        - img [ref=f2e233]
+                    - generic [ref=f2e237]:
+                      - button "Long Position" [ref=f2e239]:
+                        - img [ref=f2e242]
+                      - button "Forecasting and measurement tools" [ref=f2e245]:
+                        - img [ref=f2e247]
+                    - generic [ref=f2e251]:
+                      - button "Brush" [ref=f2e253]:
+                        - img [ref=f2e256]
+                      - button "Geometric shapes" [ref=f2e260]:
+                        - img [ref=f2e262]
+                    - generic [ref=f2e266]:
+                      - button "Text" [ref=f2e268]:
+                        - img [ref=f2e271]
+                      - button "Annotation tools" [ref=f2e273]:
+                        - img [ref=f2e275]
+                    - generic [ref=f2e278]:
+                      - button "Icon" [ref=f2e280]:
+                        - img [ref=f2e283]
+                      - button "Icons" [ref=f2e285]:
+                        - img [ref=f2e287]
+                  - generic [ref=f2e289]:
+                    - button "Measure" [ref=f2e290]:
+                      - img [ref=f2e293]
+                    - button "Zoom In" [ref=f2e295]:
+                      - img [ref=f2e298]
+                  - generic [ref=f2e303]:
+                    - generic [ref=f2e306]:
+                      - button "Magnet Mode snaps drawings placed near price bars to the closest OHLC value" [ref=f2e308]:
+                        - img [ref=f2e311]
+                      - button [ref=f2e315]:
+                        - img [ref=f2e317]
+                    - button "Stay in Drawing Mode" [ref=f2e319]:
+                      - img [ref=f2e322]
+                    - button "Lock All Drawing Tools" [ref=f2e331]:
+                      - img [ref=f2e334]
+                    - generic [ref=f2e337]:
+                      - button "Hide all drawings" [ref=f2e339]:
+                        - img [ref=f2e342]
+                      - button [ref=f2e344]:
+                        - img [ref=f2e346]
+                  - generic [ref=f2e350]:
+                    - button "Remove 0 drawings" [ref=f2e352]:
+                      - img [ref=f2e355]
+                    - button [ref=f2e357]:
+                      - img [ref=f2e359]
+                  - button "Show Object Tree" [ref=f2e363]:
+                    - img [ref=f2e366]
+              - generic "Hide Drawings Toolbar" [ref=f2e371]:
+                - img [ref=f2e372]
+            - generic [ref=f2e376]:
+              - toolbar [ref=f2e378]:
+                - generic [ref=f2e478]:
+                  - generic [ref=f2e479]:
+                    - button "5 years in 1 week intervals" [ref=f2e480]:
+                      - generic [ref=f2e481]: 5y
+                    - button "1 year in 1 week intervals" [ref=f2e482]:
+                      - generic [ref=f2e483]: 1y
+                    - button "6 months in 2 hours intervals" [ref=f2e484]:
+                      - generic [ref=f2e485]: 6m
+                    - button "3 months in 1 hour intervals" [ref=f2e486]:
+                      - generic [ref=f2e487]: 3m
+                    - button "1 month in 30 minutes intervals" [ref=f2e488]:
+                      - generic [ref=f2e489]: 1m
+                    - button "5 days in 5 minutes intervals" [ref=f2e490]:
+                      - generic [ref=f2e491]: 5d
+                    - button "1 day in 1 minute intervals" [ref=f2e492]:
+                      - generic [ref=f2e493]: 1d
+                  - button "Go to" [ref=f2e496]:
+                    - img [ref=f2e498]
+                - generic [ref=f2e387]:
+                  - button "Timezone" [ref=f2e390]:
+                    - generic [ref=f2e391]: 17:00:18 (UTC+5:45)
+                  - button "Toggle Percentage" [ref=f2e395]:
+                    - img [ref=f2e397]
+                  - button "Toggle Log Scale" [ref=f2e403]:
+                    - generic [ref=f2e404]: log
+                  - button "Toggle Auto Scale" [pressed] [ref=f2e406]:
+                    - generic [ref=f2e407]: auto
+              - 'region "Chart #1" [ref=f2e410]':
+                - generic [ref=f2e411]:
+                  - generic [ref=f2e414]:
+                    - generic "Chart for NEPSE, 1 day" [ref=f2e416]
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic [ref=f2e417]:
+                              - generic [ref=f2e418]:
+                                - generic [ref=f2e421]: "N"
+                                - generic [ref=f2e422]: NEPAL STOCK EXCHANGE
+                              - generic [ref=f2e423]:
+                                - text: ·
+                                - generic [ref=f2e424]: 1D
+                              - generic [ref=f2e425]:
+                                - text: ·
+                                - generic [ref=f2e426]: index (nepsealpha.com)
+                            - img [ref=f2e430]
+                          - generic [ref=f2e433]:
+                            - generic [ref=f2e434]: O2824.89
+                            - generic [ref=f2e435]: H2839.35
+                            - generic [ref=f2e436]: L2808.57
+                            - generic [ref=f2e437]: C2824.90
+                            - generic [ref=f2e438]: +4.46 (+0.16%)
+                      - generic:
+                        - img [ref=f2e446]
+                        - generic:
+                          - generic:
+                            - generic [ref=f2e450]: Volume
+                            - generic [ref=f2e454]: 14.33B
+                  - img [ref=f2e474]
+          - generic:
+            - generic:
+              - generic:
+                - generic: Symbol Search
+          - alert
+          - generic [ref=f2e502]:
+            - generic [ref=f2e503]:
+              - generic [ref=f2e505]: Symbol Search
+              - button "Close menu" [ref=f2e506]:
+                - img [ref=f2e509]
+                - generic [ref=f2e511]: Close menu
+            - generic [ref=f2e512]:
+              - textbox "Search" [active] [ref=f2e514]: SMHL
+              - generic [ref=f2e515]:
+                - img [ref=f2e518]
+                - img [ref=f2e523]
+                - img [ref=f2e526]
+                - img [ref=f2e530]
+                - img [ref=f2e534]
+                - img [ref=f2e538]
+              - generic:
+                - img
+            - generic [ref=f2e542]:
+              - generic [ref=f2e544]: All Types
+              - generic [ref=f2e546]: Stock
+              - generic [ref=f2e548]: Index
+              - generic [ref=f2e550]: Economy
+              - generic [ref=f2e552]: Alpha Folio
+              - generic [ref=f2e554]: MarketCap Millions
+              - generic [ref=f2e556]: Commodities
+            - generic [ref=f2e559]:
+              - generic [ref=f2e562]: Symbol & description
+              - generic [ref=f2e564]:
+                - generic [ref=f2e565]:
+                  - generic [ref=f2e599]:
+                    - img [ref=f2e601]
+                    - generic [ref=f2e603]: S
+                  - generic [ref=f2e573]:
+                    - generic [ref=f2e574]: SMHL
+                    - generic [ref=f2e575]: Super Madi Hydropower Limited
+                - generic [ref=f2e577]:
+                  - generic [ref=f2e578]: stock
+                  - generic [ref=f2e580]: Hydro Power src:Nepsealpha.com
+              - generic [ref=f2e581]:
+                - generic [ref=f2e582]:
+                  - generic [ref=f2e604]:
+                    - img [ref=f2e606]
+                    - generic [ref=f2e608]: S
+                  - generic [ref=f2e590]:
+                    - generic [ref=f2e591]: SMHL-MARKET_CAP
+                    - generic [ref=f2e592]: SMHL-MARKET_CAP
+                - generic [ref=f2e594]:
+                  - generic [ref=f2e595]: marketStructure
+                  - generic [ref=f2e597]: SMHL-MARKET_CAP
+            - generic [ref=f2e598]: Simply start typing while on the chart to pull up this search box
+      - generic [ref=e13]:
+        - banner [ref=e14]:
+          - generic [ref=e16]:
+            - text: 󰅁
+            - generic [ref=e18]:
+              - button "Chart Modes" [ref=e20] [cursor=pointer]:
+                - generic [ref=e21]:
+                  - text: Chart Modes
+                  - generic [ref=e22]: 󰁝
+              - button "Live Scanners" [ref=e24] [cursor=pointer]:
+                - generic [ref=e25]:
+                  - text: Live Scanners
+                  - generic [ref=e26]: 󰁝
+              - button "Trade Monitor" [ref=e28] [cursor=pointer]:
+                - generic [ref=e30]: Trade Monitor
+              - button "Trade signals AI" [ref=e32] [cursor=pointer]:
+                - generic [ref=e33]:
+                  - text: Trade signals AI
+                  - generic [ref=e34]: 󰁝
+              - button "Chart Master" [ref=e36] [cursor=pointer]:
+                - generic [ref=e37]:
+                  - text: Chart Master
+                  - generic [ref=e38]: 󰁝
+              - button "My Algorithms" [ref=e40] [cursor=pointer]:
+                - generic [ref=e42]: My Algorithms
+              - button "Portfolios" [ref=e44] [cursor=pointer]:
+                - generic [ref=e46]: Portfolios
+            - generic [ref=e48] [cursor=pointer]: 󰅂
+        - text: 󰐕 󰍝 󰈳 󰷏 󰠘 󰐕 󰍝 󰈳 󰷏 󰠘 󰐕 󰍝 󰈳 󰷏 󰠘 󰐕 󰍝 󰈳 󰷏 󰠘 󰍝 󰍝 󰍝 󰍝 󰍴 󰍴 󰍴 󰍴 󰍝 󰈳 󰍝 󰅁 󰅂
+    - generic [ref=e53]:
+      - button "" [ref=e55] [cursor=pointer]:
+        - generic [ref=e56]: 
+      - button "" [ref=e58] [cursor=pointer]:
+        - generic [ref=e59]: 
+      - button "" [ref=e61] [cursor=pointer]:
+        - generic [ref=e62]: 
+      - button "" [ref=e64] [cursor=pointer]:
+        - generic [ref=e65]: 
+      - button "" [ref=e67] [cursor=pointer]:
+        - generic [ref=e68]: 
+      - button [ref=e70] [cursor=pointer]:
+        - img [ref=e71]
+      - button "" [ref=e78] [cursor=pointer]:
+        - generic [ref=e79]: 
+      - button "F" [ref=e81] [cursor=pointer]:
+        - generic [ref=e82]: F
+      - button "" [ref=e84] [cursor=pointer]:
+        - generic [ref=e85]: 
+      - button "" [ref=e87] [cursor=pointer]:
+        - generic [ref=e88]: 
+      - button "" [ref=e90] [cursor=pointer]:
+        - generic [ref=e91]: 
+      - button "" [ref=e93] [cursor=pointer]:
+        - generic [ref=e94]: 
+      - button "" [ref=e96] [cursor=pointer]:
+        - generic [ref=e97]: 
+      - button "" [ref=e99] [cursor=pointer]:
+        - generic [ref=e100]: 
+      - button "S" [ref=e102] [cursor=pointer]:
+        - generic [ref=e103]: S
+      - button "" [ref=e105] [cursor=pointer]:
+        - generic [ref=e106]: 
+  - generic [ref=e109]:
+    - heading "NPR 1,000 for 3 Months" [level=4] [ref=e110]
+    - link "SastoShare V.5.1" [ref=e111] [cursor=pointer]:
+      - /url: /about-sasto-share
+    - text: has been launched.
+    - link "Please click here to subscribe" [ref=e112] [cursor=pointer]:
+      - /url: /dashboard
+    - text: for more features.
+    - button "" [ref=e113] [cursor=pointer]:
+      - generic [ref=e114]: 
