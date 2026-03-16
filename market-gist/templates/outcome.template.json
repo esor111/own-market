@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "session_id": "",
+  "decision_session_id": "",
+  "symbol": "",
+  "evaluation_date": "",
+  "time_horizon": "",
+  "outcome_label": "",
+  "target_1_hit": null,
+  "target_2_hit": null,
+  "target_3_hit": null,
+  "stop_hit": null,
+  "max_favorable_excursion_pct": null,
+  "max_adverse_excursion_pct": null,
+  "notes": null
+}

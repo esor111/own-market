@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "session_id": "",
+  "run_date": "",
+  "captured_at": "",
+  "source": "",
+  "symbol": "",
+  "event_date": "",
+  "event_type": "",
+  "sentiment": "",
+  "impact_window_days": null,
+  "relevance_now": "",
+  "details": {},
+  "confidence_source": "",
+  "evidence_refs": []
+}

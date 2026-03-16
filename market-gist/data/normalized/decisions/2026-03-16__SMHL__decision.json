@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-16T21-00-00-smhl",
+  "run_date": "2026-03-16",
+  "captured_at": "2026-03-16T21:05:00+05:45",
+  "symbol": "SMHL",
+  "setup_type": "reversal_watch",
+  "score": 45,
+  "confidence": 0.55,
+  "action": "watch_only",
+  "entry_zone": [531, 545],
+  "stop_loss": 477,
+  "invalidation_level": 477,
+  "targets": [600, 641, 700],
+  "risk_reward_ratio": 2.1,
+  "why": [
+    "Price below EMA 20 (587.52) showing downtrend",
+    "RSI at 37.75 approaching oversold, potential reversal signal",
+    "MACD showing negative momentum but histogram improving",
+    "Near support zone 500-515",
+    "Market and sector both weak - no tailwind",
+    "Volume above average suggesting interest",
+    "Wait for breakout above 531 for confirmation"
+  ],
+  "evidence_refs": [
+    "data/normalized/stocks/2026-03-16__SMHL__1W__stock_chart.json",
+    "data/normalized/indicators/2026-03-16__SMHL__1W__indicator.json",
+    "data/normalized/market/2026-03-16__NEPSE__1D__market.json"
+  ]
+}

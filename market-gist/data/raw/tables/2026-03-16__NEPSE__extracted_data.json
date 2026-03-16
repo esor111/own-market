@@ -1,0 +1,17 @@
+{
+  "extraction_timestamp": "2026-03-16T21:17:43+05:45",
+  "source": "nepsealpha_chart_dom",
+  "symbol": "NEPSE",
+  "timeframe": "1D",
+  "extracted_values": {
+    "open": 2827.34,
+    "high": 2827.62,
+    "low": 2792.13,
+    "close": 2798.83,
+    "change": -26.07,
+    "change_pct": -0.92,
+    "volume": "11.975B"
+  },
+  "raw_extraction": "O2827.34 | H2827.62 | L2792.13 | C2798.83 | −26.07 (−0.92%) | Vol11.975B",
+  "confidence": "direct_dom"
+}

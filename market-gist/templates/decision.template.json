@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "session_id": "",
+  "run_date": "",
+  "captured_at": "",
+  "symbol": "",
+  "setup_type": "",
+  "score": null,
+  "confidence": null,
+  "action": "",
+  "entry_zone": [],
+  "stop_loss": null,
+  "invalidation_level": null,
+  "targets": [],
+  "risk_reward_ratio": null,
+  "why": [],
+  "evidence_refs": []
+}

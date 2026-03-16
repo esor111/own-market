@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-16T21-00-00-smhl",
+  "run_date": "2026-03-16",
+  "symbol": "SMHL",
+  "benchmark_market": "NEPSE",
+  "benchmark_sector": "Hydropower",
+  "rs_vs_market_label": "neutral",
+  "rs_vs_sector_label": "neutral",
+  "rs_notes": "Stock moving in line with market and sector weakness",
+  "confidence_source": "visual_inference",
+  "evidence_refs": []
+}

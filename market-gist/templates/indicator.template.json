@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "session_id": "",
+  "run_date": "",
+  "captured_at": "",
+  "source": "nepsealpha_chart",
+  "symbol": "",
+  "timeframe": "",
+  "ema_20": null,
+  "ma_50": null,
+  "ma_200": null,
+  "rsi": null,
+  "macd_line": null,
+  "signal_line": null,
+  "histogram": null,
+  "price_above_ema_20": null,
+  "price_above_ma_50": null,
+  "price_above_ma_200": null,
+  "momentum_label": "",
+  "confidence_source": "",
+  "evidence_refs": []
+}

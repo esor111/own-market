@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "session_id": "",
+  "run_date": "",
+  "source": "floorsheet_or_broker_view",
+  "symbol": "",
+  "activity_label": "",
+  "accumulation_signal": null,
+  "distribution_signal": null,
+  "notes": null,
+  "confidence_source": "",
+  "evidence_refs": []
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-16T21-00-00-smhl",
+  "run_date": "2026-03-16",
+  "captured_at": "2026-03-16T21:05:00+05:45",
+  "source": "nepsealpha_chart",
+  "symbol": "SMHL",
+  "timeframe": "1W",
+  "ema_20": 587.52,
+  "ma_50": null,
+  "ma_200": null,
+  "rsi": 37.75,
+  "macd_line": 2.68,
+  "signal_line": -91.92,
+  "histogram": -94.60,
+  "price_above_ema_20": false,
+  "price_above_ma_50": null,
+  "price_above_ma_200": null,
+  "momentum_label": "oversold_with_potential_reversal",
+  "confidence_source": "page_text",
+  "evidence_refs": [
+    "data/raw/screenshots/2026-03-16__SMHL__1W__clean.png"
+  ]
+}

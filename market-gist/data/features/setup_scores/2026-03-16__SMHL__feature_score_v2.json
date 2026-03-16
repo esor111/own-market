@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-16__SMHL__v2",
+  "run_date": "2026-03-16",
+  "symbol": "SMHL",
+  "scores": {
+    "market_alignment": 3,
+    "sector_alignment": 5,
+    "structure_quality": 4,
+    "location_quality": 6,
+    "trend_filter_quality": 2,
+    "volume_confirmation": 3,
+    "momentum_confirmation": 3,
+    "relative_strength": 2,
+    "event_quality": 5,
+    "risk_reward_quality": 5
+  },
+  "score_total": 38,
+  "score_max": 100,
+  "score_percent": 38,
+  "notes": "Low score due to: weak market (3/10), failed trend filters (2/10), poor relative strength (2/10), weak momentum (3/10). Positive factors: near support (6/10), sector slightly better (5/10), clear structure (4/10).",
+  "confidence_source": "derived",
+  "evidence_refs": [
+    "2026-03-16__NEPSE__1D__market_v2.json",
+    "2026-03-16__Hydropower__sector_v2.json",
+    "2026-03-16__SMHL__1W__stock_chart_v2.json",
+    "2026-03-16__SMHL__1W__indicator_v2.json",
+    "2026-03-16__SMHL__relative_strength_v2.json"
+  ]
+}

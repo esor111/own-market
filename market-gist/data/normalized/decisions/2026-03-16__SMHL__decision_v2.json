@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-16__SMHL__v2",
+  "run_date": "2026-03-16",
+  "captured_at": "2026-03-16T21:30:06+05:45",
+  "symbol": "SMHL",
+  "setup_type": "reversal_watch",
+  "score": 38,
+  "score_max": 100,
+  "confidence": 50,
+  "action": "watch_only",
+  "entry_zone": [480, 500],
+  "stop_loss": 450,
+  "invalidation_level": 450,
+  "targets": [550, 600, 650],
+  "risk_reward_ratio": 1.5,
+  "why": [
+    "Price near support zone (500-515 area)",
+    "RSI at 37.75 approaching oversold",
+    "Sector (Hydropower) showing relative strength vs market",
+    "BUT: Price below both EMA 20 and MA 50",
+    "BUT: MACD deeply negative showing strong bearish momentum",
+    "BUT: Stock underperforming both market and sector",
+    "BUT: Market (NEPSE) in distribution phase",
+    "Conclusion: Too early to enter. Watch for reversal signals: RSI divergence, volume spike, price reclaim of EMA 20"
+  ],
+  "evidence_refs": [
+    "2026-03-16__SMHL__session_v2.json",
+    "2026-03-16__NEPSE__1D__market_v2.json",
+    "2026-03-16__Hydropower__sector_v2.json",
+    "2026-03-16__SMHL__1W__stock_chart_v2.json",
+    "2026-03-16__SMHL__1W__indicator_v2.json",
+    "2026-03-16__SMHL__1W__volume_v2.json",
+    "2026-03-16__SMHL__relative_strength_v2.json",
+    "2026-03-16__SMHL__feature_score_v2.json",
+    "2026-03-16__SMHL__1W__clean_v2.png",
+    "2026-03-16__SMHL__1W__annotated_v2.png"
+  ]
+}

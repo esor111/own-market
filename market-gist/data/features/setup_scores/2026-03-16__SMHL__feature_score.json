@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-16T21-00-00-smhl",
+  "run_date": "2026-03-16",
+  "symbol": "SMHL",
+  "scores": {
+    "market_alignment": 0,
+    "sector_alignment": 0,
+    "structure_quality": 1,
+    "location_quality": 2,
+    "trend_filter_quality": 0,
+    "volume_confirmation": 1,
+    "momentum_confirmation": 2,
+    "relative_strength": 1,
+    "event_quality": 0,
+    "risk_reward_quality": 2
+  },
+  "score_total": 9,
+  "score_max": 20,
+  "confidence_source": "derived",
+  "evidence_refs": []
+}

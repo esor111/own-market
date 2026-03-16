@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-16T21-00-00-smhl",
+  "run_date": "2026-03-16",
+  "symbol": "SMHL",
+  "timeframe": "1W",
+  "current_volume": 585772,
+  "volume_vs_average": "above_average",
+  "breakout_volume_signal": "not_triggered",
+  "pullback_volume_signal": "healthy",
+  "participation_label": "accumulation_possible",
+  "confidence_source": "visual_inference",
+  "evidence_refs": [
+    "data/raw/screenshots/2026-03-16__SMHL__1W__clean.png"
+  ]
+}

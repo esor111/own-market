@@ -1,0 +1,66 @@
+{
+  "extraction_metadata": {
+    "symbol": "SMHL",
+    "timeframe": "1W",
+    "timestamp": "2026-03-16T21:26:29+05:45",
+    "source": "nepsealpha.com",
+    "extraction_method": "visual_from_screenshot",
+    "data_quality": "high_confidence"
+  },
+  "ohlcv": {
+    "open": 551.00,
+    "high": 586.00,
+    "low": 510.60,
+    "close": 518.00,
+    "change": -42.00,
+    "change_percent": -7.50,
+    "volume": 214489,
+    "volume_display": "214.489K"
+  },
+  "indicators": {
+    "ema_20": {
+      "name": "EMA",
+      "period": 20,
+      "source": "close",
+      "offset": 0,
+      "value": 739.21,
+      "display": "EMA 20 close 0"
+    },
+    "ma_50": {
+      "name": "MA",
+      "period": 50,
+      "source": "close",
+      "offset": 0,
+      "value": 887.92,
+      "display": "MA 50 close 0"
+    },
+    "macd": {
+      "name": "MACD",
+      "fast_period": 12,
+      "slow_period": 26,
+      "source": "close",
+      "signal_period": 9,
+      "macd_line": -23.87,
+      "signal_line": -86.15,
+      "histogram": -62.28,
+      "display": "MACD 12 26 close 9"
+    },
+    "rsi": {
+      "name": "RSI",
+      "period": 14,
+      "value": 26.89,
+      "display": "RSI 14"
+    }
+  },
+  "chart_info": {
+    "symbol_full_name": "Super Madi Hydropower Limited",
+    "sector": "Hydro Power",
+    "exchange": "nepsealpha.com",
+    "timeframe": "1W",
+    "candle_date_visible": "Sun Jan 4 2026"
+  },
+  "evidence_refs": [
+    "2026-03-16__SMHL__1W__clean_v2.png",
+    "2026-03-16__SMHL__1W__with_indicators_snapshot.txt"
+  ]
+}

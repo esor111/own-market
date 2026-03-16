@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-16T21-00-00-smhl",
+  "run_date": "2026-03-16",
+  "captured_at": "2026-03-16T21:00:00+05:45",
+  "source": "nepsealpha",
+  "sector_name": "Hydropower",
+  "timeframe": "1D",
+  "trend_label": "neutral_to_bearish",
+  "relative_strength_vs_market": "neutral",
+  "notes": "Sector showing weakness along with broader market",
+  "confidence_source": "visual_inference",
+  "evidence_refs": []
+}

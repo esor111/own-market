@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-16__SMHL__v2",
+  "run_date": "2026-03-16",
+  "symbol": "SMHL",
+  "data_available": false,
+  "unavailable_reason": "floorsheet_requires_login",
+  "top_buyers": [],
+  "top_sellers": [],
+  "net_institutional_flow": null,
+  "flow_label": "unknown",
+  "notes": "Floorsheet data on NEPSE Alpha requires user login. Cannot access broker flow data without authentication. This is a known limitation of the free tier.",
+  "confidence_source": "system_limitation",
+  "evidence_refs": [
+    "2026-03-16__SMHL__1W__with_indicators_snapshot.txt"
+  ]
+}

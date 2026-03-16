@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "session_id": "",
+  "run_date": "",
+  "symbol": "",
+  "scores": {
+    "market_alignment": null,
+    "sector_alignment": null,
+    "structure_quality": null,
+    "location_quality": null,
+    "trend_filter_quality": null,
+    "volume_confirmation": null,
+    "momentum_confirmation": null,
+    "relative_strength": null,
+    "event_quality": null,
+    "risk_reward_quality": null
+  },
+  "score_total": null,
+  "score_max": null,
+  "confidence_source": "derived",
+  "evidence_refs": []
+}

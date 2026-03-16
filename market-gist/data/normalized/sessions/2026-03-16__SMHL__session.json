@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-16T21-00-00-smhl",
+  "run_date": "2026-03-16",
+  "captured_at": "2026-03-16T21:00:00+05:45",
+  "source": "nepsealpha",
+  "symbol": "SMHL",
+  "status": "completed",
+  "stages_completed": [
+    "market_context",
+    "sector_context",
+    "chart_capture",
+    "indicator_setup",
+    "data_normalization",
+    "scoring",
+    "decision"
+  ],
+  "stages_skipped": [
+    "candidate_discovery",
+    "event_enrichment",
+    "broker_flow"
+  ],
+  "notes": "Automated analysis following reliability-first workflow. Skipped candidate discovery (direct symbol analysis), event enrichment (no immediate events found), and broker flow (not available in current session)"
+}
