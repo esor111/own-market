@@ -27,23 +27,31 @@ def main():
     controller = UIAutomationController(screen_w, screen_h)
     
     print("\n" + "="*70)
-    print("🚀 HIGH-PRECISION HAND GESTURE UI AUTOMATION")
+    print("🎯 PRECISION HAND GESTURE UI AUTOMATION")
     print("="*70)
-    print("\n📋 Features:")
-    print("  • Model Complexity: 0 (3x faster)")
-    print("  • EMA Smoothing: Reduces jitter")
-    print("  • Control Rectangle: Better precision")
-    print("  • Normalized Thresholds: Adapts to hand size")
-    print("  • Frame Stability: Reduces false triggers")
+    print("\n📋 NEW FEATURES:")
+    print("  🎯 PRECISION MODE: Raise index + middle finger")
+    print("     • Slower, more stable cursor")
+    print("     • Perfect for small buttons")
+    print("     • Purple skeleton = precision mode active")
+    print("\n  🖱️  CURSOR FREEZE: Pinch freezes cursor position")
+    print("     • Hold pinch for 0.15s to click")
+    print("     • Cursor won't move while pinching")
+    print("     • Red crosshair shows click target")
+    print("\n  ✨ ANTI-JITTER:")
+    print("     • 3-pixel deadzone eliminates flicker")
+    print("     • Adaptive smoothing per mode")
+    print("     • Frame stability requirement")
     print("\n📋 Controls:")
-    print("  ✋ Move INDEX FINGER to control cursor")
-    print("  👌 PINCH (thumb + index) to CLICK")
-    print("  🛑 Move cursor to CORNER to abort (failsafe)")
-    print("  ❌ Press 'q' to quit")
-    print("\n⚡ Performance Tips:")
-    print("  • Keep hand within yellow control zone")
-    print("  • Good lighting improves tracking")
-    print("  • Keep hand at consistent distance")
+    print("  ✋ INDEX FINGER ONLY = Normal cursor movement")
+    print("  ✌️  INDEX + MIDDLE UP = Precision mode (slower, stable)")
+    print("  👌 PINCH & HOLD 0.15s = Click at frozen position")
+    print("  🛑 Move to CORNER = Emergency abort")
+    print("  ❌ Press 'q' = Quit")
+    print("\n💡 Tips:")
+    print("  • Use precision mode for small UI elements")
+    print("  • Pinch freezes cursor - no more shaky clicks!")
+    print("  • Good lighting = better tracking")
     print("="*70 + "\n")
     
     # Create window
@@ -90,10 +98,16 @@ def main():
         cv2.rectangle(overlay, (0, 0), (w, 140), (0, 0, 0), -1)
         cv2.addWeighted(overlay, 0.75, processed_frame, 0.25, 0, processed_frame)
         
-        # Display status
-        color = (0, 255, 255) if "CLICKED" in status else (255, 255, 255)
+        # Display status with mode indicator
+        if "PRECISION" in status:
+            color = (255, 0, 255)
+        elif "CLICKED" in status:
+            color = (0, 255, 0)
+        else:
+            color = (255, 255, 255)
+        
         cv2.putText(processed_frame, status, (10, 30), 
-                   cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
+                   cv2.FONT_HERSHEY_SIMPLEX, 0.65, color, 2)
         
         # Display performance metrics
         cv2.putText(processed_frame, f"FPS: {fps_display}", (10, 60),
@@ -103,8 +117,9 @@ def main():
                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         
         # Display instructions
-        cv2.putText(processed_frame, "Press 'q' to quit | Move to corner to abort",
-                   (10, 120), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (200, 200, 200), 1)
+        mode_hint = "INDEX+MIDDLE=Precision | PINCH&HOLD=Click | Q=Quit"
+        cv2.putText(processed_frame, mode_hint,
+                   (10, 120), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (200, 200, 200), 1)
         
         # Show frame
         cv2.imshow('Precision Hand Control', processed_frame)
