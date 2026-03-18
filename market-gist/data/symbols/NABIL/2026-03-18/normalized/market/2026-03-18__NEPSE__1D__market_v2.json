@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__NABIL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T14:07:47.604159",
+  "source": "nepsealpha",
+  "symbol": "NEPSE",
+  "timeframe": "1D",
+  "close": 2739.95,
+  "change_pct": -0.65,
+  "trend_label": "down",
+  "market_phase": "unknown",
+  "support_levels": [],
+  "resistance_levels": [],
+  "volume_visible": true,
+  "confidence_source": "",
+  "evidence_refs": [
+    "raw/screenshots/2026-03-18__NABIL__NEPSE__1D__market_context.png",
+    "raw/snapshots/2026-03-18__NABIL__NEPSE__1D__snapshot.txt",
+    "raw/tables/2026-03-18__NABIL__NEPSE__1D__market_extract.json",
+    "raw/snapshots/2026-03-18__NABIL__1W__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__NABIL__1W__stock_extract.json",
+    "raw/tables/2026-03-18__NABIL__1W__bar_extract.json",
+    "raw/tables/2026-03-18__NABIL__1W__indicator_extract.json",
+    "raw/screenshots/2026-03-18__NABIL__1W__clean_v2.png",
+    "raw/screenshots/2026-03-18__NABIL__1W__annotated_v2.png",
+    "raw/tables/2026-03-18__NABIL__BANKING__sector_extract.json",
+    "raw/screenshots/2026-03-18__NABIL__BANKING__sector.png",
+    "raw/snapshots/2026-03-18__NABIL__BANKING__sector_snapshot.txt",
+    "raw/tables/2026-03-18__NABIL__1W__decision_qc.json"
+  ]
+}

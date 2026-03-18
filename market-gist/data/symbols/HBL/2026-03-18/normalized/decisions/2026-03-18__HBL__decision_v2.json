@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__HBL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T14:13:33.322531",
+  "symbol": "HBL",
+  "setup_type": "breakout_watch",
+  "score": 48,
+  "confidence": 58,
+  "action": "avoid",
+  "entry_zone": [],
+  "stop_loss": null,
+  "invalidation_level": null,
+  "targets": [],
+  "risk_reward_ratio": null,
+  "why": [
+    "Price: 253.0, EMA20: 255.55, MA50: 254.27",
+    "RSI: 54.87, MACD Histogram: 15.55",
+    "Sector change%: -0.68",
+    "Derived support/resistance: 247.0 / 258.0",
+    "Structure: range (high)",
+    "Local range: 184.4 -> 220.5",
+    "Setup: breakout_watch, Score: 48/100, Confidence: 58%",
+    "Action: AVOID",
+    "QC gate: risk_reward_below_minimum"
+  ],
+  "evidence_refs": [
+    "raw/screenshots/2026-03-18__HBL__NEPSE__1D__market_context.png",
+    "raw/snapshots/2026-03-18__HBL__NEPSE__1D__snapshot.txt",
+    "raw/tables/2026-03-18__HBL__NEPSE__1D__market_extract.json",
+    "raw/snapshots/2026-03-18__HBL__1W__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__HBL__1W__stock_extract.json",
+    "raw/tables/2026-03-18__HBL__1W__bar_extract.json",
+    "raw/tables/2026-03-18__HBL__1W__indicator_extract.json",
+    "raw/screenshots/2026-03-18__HBL__1W__clean_v2.png",
+    "raw/screenshots/2026-03-18__HBL__1W__annotated_v2.png",
+    "raw/tables/2026-03-18__HBL__BANKING__sector_extract.json",
+    "raw/screenshots/2026-03-18__HBL__BANKING__sector.png",
+    "raw/snapshots/2026-03-18__HBL__BANKING__sector_snapshot.txt",
+    "raw/tables/2026-03-18__HBL__1W__decision_qc.json"
+  ],
+  "score_max": 100
+}

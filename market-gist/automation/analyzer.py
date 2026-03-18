@@ -5,6 +5,8 @@ from config import SCORING_RULES, DECISION_THRESHOLDS
 
 
 class StockAnalyzer:
+    MIN_TARGET_DISTANCE_PCT = 0.03
+
     def __init__(self):
         self.scoring_rules = SCORING_RULES
         self.decision_thresholds = DECISION_THRESHOLDS
@@ -96,7 +98,7 @@ class StockAnalyzer:
         
         return 5  # Neutral if can't determine
     
-    def calculate_structure_quality_score(self, trend_label):
+    def calculate_structure_quality_score(self, trend_label, structure_label="", structure_confidence="medium"):
         """Score based on chart structure"""
         structure_scores = {
             "uptrend": 8,
@@ -105,7 +107,23 @@ class StockAnalyzer:
             "reversal_setup": 7,
             "transition": 5
         }
-        return structure_scores.get(trend_label, 5)
+        score = structure_scores.get(trend_label, 5)
+
+        structure_bonus = {
+            "trend_continuation": 1,
+            "compression": 1,
+            "range": 0,
+            "trend_breakdown": -1,
+            "insufficient_structure": -2
+        }
+        score += structure_bonus.get(structure_label, 0)
+
+        if structure_confidence == "low":
+            score -= 2
+        elif structure_confidence == "high":
+            score += 1
+
+        return max(0, min(10, score))
     
     def calculate_volume_score(self, volume_label):
         """Score based on volume confirmation"""
@@ -151,8 +169,14 @@ class StockAnalyzer:
         else:
             return "avoid"
     
-    def determine_setup_type(self, trend_label, price, ema_20, rsi):
+    def determine_setup_type(self, trend_label, price, ema_20, rsi, structure_label=""):
         """Determine setup type"""
+        if structure_label == "compression":
+            return "breakout_watch"
+        if structure_label == "trend_continuation" and trend_label == "uptrend" and price > ema_20:
+            return "continuation"
+        if structure_label == "range":
+            return "breakout_watch"
         if trend_label == "downtrend" and price < ema_20 and rsi < 40:
             return "reversal_watch"
         elif trend_label == "uptrend" and price > ema_20:
@@ -177,19 +201,30 @@ class StockAnalyzer:
     def calculate_targets(self, entry, resistance_levels):
         """Calculate target levels"""
         targets = []
+        minimum_target = entry * (1 + self.MIN_TARGET_DISTANCE_PCT)
+        seen = set()
+
         for level in sorted(resistance_levels):
-            if level > entry:
-                targets.append(level)
-                if len(targets) >= 3:
-                    break
-        
+            rounded = round(level, 2)
+            if rounded <= minimum_target:
+                continue
+            if rounded in seen:
+                continue
+            seen.add(rounded)
+            targets.append(rounded)
+            if len(targets) >= 3:
+                break
+
         # If not enough resistance levels, use percentage targets
         if len(targets) < 3:
-            targets.extend([
-                entry * 1.05,
-                entry * 1.10,
-                entry * 1.15
-            ])
+            for fallback in [entry * 1.05, entry * 1.10, entry * 1.15]:
+                rounded = round(fallback, 2)
+                if rounded <= minimum_target or rounded in seen:
+                    continue
+                seen.add(rounded)
+                targets.append(rounded)
+                if len(targets) >= 3:
+                    break
         
         return targets[:3]
     

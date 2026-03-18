@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__SMHL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T16:46:15.228050",
+  "source": "nepsealpha_chart",
+  "symbol": "SMHL",
+  "timeframe": "1D",
+  "ema_20": 523.66,
+  "ma_50": 523.1,
+  "ma_200": null,
+  "rsi": 84.76,
+  "macd_line": 0.85,
+  "signal_line": 1.94,
+  "histogram": 1.09,
+  "price_above_ema_20": true,
+  "price_above_ma_50": true,
+  "price_above_ma_200": null,
+  "momentum_label": "bullish_momentum",
+  "confidence_source": "",
+  "evidence_refs": [
+    "raw/snapshots/2026-03-18__SMHL__1D__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__SMHL__1D__stock_extract.json",
+    "raw/tables/2026-03-18__SMHL__1D__bar_extract.json",
+    "raw/tables/2026-03-18__SMHL__1D__indicator_extract.json",
+    "raw/screenshots/2026-03-18__SMHL__1D__clean_v2.png",
+    "raw/screenshots/2026-03-18__SMHL__1D__annotated_v2.png"
+  ],
+  "notes": null
+}

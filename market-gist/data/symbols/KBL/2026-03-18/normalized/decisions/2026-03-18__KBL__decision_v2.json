@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__KBL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T14:15:26.253942",
+  "symbol": "KBL",
+  "setup_type": "no_setup",
+  "score": 0,
+  "confidence": 0,
+  "action": "incomplete_data",
+  "entry_zone": [],
+  "stop_loss": null,
+  "invalidation_level": null,
+  "targets": [],
+  "risk_reward_ratio": null,
+  "why": [
+    "Analysis skipped due to incomplete extracted chart data.",
+    "Missing fields: close, change_pct, ema_20, ma_50, rsi"
+  ],
+  "evidence_refs": [
+    "raw/screenshots/2026-03-18__KBL__NEPSE__1D__market_context.png",
+    "raw/tables/2026-03-18__KBL__NEPSE__1D__market_extract.json",
+    "raw/tables/2026-03-18__KBL__1W__stock_extract.json",
+    "raw/tables/2026-03-18__KBL__1W__bar_extract.json",
+    "raw/tables/2026-03-18__KBL__1W__indicator_extract.json",
+    "raw/screenshots/2026-03-18__KBL__1W__clean_v2.png",
+    "raw/screenshots/2026-03-18__KBL__1W__annotated_v2.png",
+    "raw/tables/2026-03-18__KBL__BANKING__sector_extract.json",
+    "raw/screenshots/2026-03-18__KBL__BANKING__sector.png"
+  ],
+  "score_max": 100
+}

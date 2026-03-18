@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__EBL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T19:21:43.973693",
+  "source": "nepsealpha_chart",
+  "symbol": "EBL",
+  "timeframe": "1W",
+  "close": 564.2,
+  "open": 614.9,
+  "high": 616.6,
+  "low": 547.9,
+  "volume": null,
+  "trend_label": "downtrend",
+  "structure_label": "trend_continuation",
+  "swing_highs": [
+    585.48,
+    605.82,
+    614.9,
+    616.6,
+    683.5,
+    734.0
+  ],
+  "swing_lows": [
+    547.9
+  ],
+  "support_zones": [
+    [
+      542.42,
+      553.38
+    ]
+  ],
+  "resistance_zones": [
+    [
+      579.63,
+      591.33
+    ],
+    [
+      599.76,
+      611.88
+    ],
+    [
+      608.75,
+      621.05
+    ]
+  ],
+  "breakout_level": 585.48,
+  "breakdown_level": 547.9,
+  "invalidation_level": 531.46,
+  "location_label": "near_support",
+  "confidence_source": "extracted_plus_derived",
+  "evidence_refs": [
+    "raw/snapshots/2026-03-18__EBL__1W__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__EBL__1W__stock_extract.json",
+    "raw/tables/2026-03-18__EBL__1W__bar_extract.json",
+    "raw/tables/2026-03-18__EBL__1W__indicator_extract.json",
+    "raw/screenshots/2026-03-18__EBL__1W__clean_v2.png",
+    "raw/screenshots/2026-03-18__EBL__1W__annotated_v2.png"
+  ],
+  "local_range_high": 734.0,
+  "local_range_low": 652.0,
+  "range_width_pct": 12.58,
+  "structure_confidence": "medium",
+  "structure_confidence_reasons": [
+    "limited_chart_structure"
+  ]
+}

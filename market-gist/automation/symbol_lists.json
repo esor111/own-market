@@ -1,0 +1,16 @@
+{
+  "core_reliability": [
+    "SMHL",
+    "NABIL"
+  ],
+  "expanded_reliability": [
+    "SMHL",
+    "UPPER",
+    "NABIL",
+    "NBL",
+    "EBL",
+    "HBL",
+    "KBL",
+    "SANIMA"
+  ]
+}

@@ -33,6 +33,24 @@ python analyze_stock.py SMHL 1W
 
 # Analyze NABIL on daily chart
 python analyze_stock.py NABIL 1D
+
+# Batch analyze a saved list
+python batch_analyze.py 1W @core_reliability
+
+# Run the full reliability cycle for a saved list
+python run_reliability_cycle.py 1W @core_reliability
+
+# Check which symbols in a list have sector mappings
+python symbol_coverage.py @core_reliability
+
+# Re-evaluate only pending outcomes for an existing run
+python reevaluate_pending_outcomes.py 2026-03-18 1W @expanded_reliability
+
+# Build a simple follow-up queue from the latest cycle
+python followup_queue.py 2026-03-18 1W
+
+# Run the full daily follow-up in one command
+python daily_followup.py 2026-03-18 1W @expanded_reliability
 ```
 
 ## Output
@@ -65,6 +83,9 @@ Edit `config.py` to customize:
 - Indicator configuration
 - Scoring rules
 - Decision thresholds
+
+Maintain reusable symbols in `symbol_lists.json`.
+Maintain symbol-to-sector coverage in `sector_map.json`.
 
 ## Architecture
 

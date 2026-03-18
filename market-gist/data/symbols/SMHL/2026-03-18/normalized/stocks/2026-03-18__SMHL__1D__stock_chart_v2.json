@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__SMHL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T16:46:15.228050",
+  "source": "nepsealpha_chart",
+  "symbol": "SMHL",
+  "timeframe": "1D",
+  "close": 527.0,
+  "open": 525.9,
+  "high": 528.0,
+  "low": 525.0,
+  "volume": null,
+  "trend_label": "uptrend",
+  "structure_label": "trend_continuation",
+  "swing_highs": [
+    542.81,
+    558.62
+  ],
+  "swing_lows": [
+    518.0
+  ],
+  "support_zones": [
+    [
+      512.82,
+      523.18
+    ]
+  ],
+  "resistance_zones": [
+    [
+      537.38,
+      548.24
+    ],
+    [
+      553.03,
+      564.21
+    ]
+  ],
+  "breakout_level": 542.81,
+  "breakdown_level": 518.0,
+  "invalidation_level": 502.46,
+  "location_label": "near_support",
+  "confidence_source": "extracted_plus_derived",
+  "evidence_refs": [
+    "raw/snapshots/2026-03-18__SMHL__1D__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__SMHL__1D__stock_extract.json",
+    "raw/tables/2026-03-18__SMHL__1D__bar_extract.json",
+    "raw/tables/2026-03-18__SMHL__1D__indicator_extract.json",
+    "raw/screenshots/2026-03-18__SMHL__1D__clean_v2.png",
+    "raw/screenshots/2026-03-18__SMHL__1D__annotated_v2.png"
+  ],
+  "local_range_high": 528.0,
+  "local_range_low": 519.9,
+  "range_width_pct": 1.56,
+  "structure_confidence": "low",
+  "structure_confidence_reasons": [
+    "resistance_levels_fallback_used",
+    "limited_chart_structure"
+  ]
+}

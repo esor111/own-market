@@ -1,0 +1,13 @@
+{
+  "extraction_type": "indicator_values",
+  "symbol": "EBL",
+  "timeframe": "1W",
+  "data": {
+    "macd_line": 3.9,
+    "signal_line": 43.17,
+    "histogram": 39.26,
+    "rsi": 57.48,
+    "ema_20": 585.48,
+    "ma_50": 605.82
+  }
+}

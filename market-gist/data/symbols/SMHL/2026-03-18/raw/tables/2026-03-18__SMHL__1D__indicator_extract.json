@@ -1,0 +1,13 @@
+{
+  "extraction_type": "indicator_values",
+  "symbol": "SMHL",
+  "timeframe": "1D",
+  "data": {
+    "macd_line": 0.85,
+    "signal_line": 1.94,
+    "histogram": 1.09,
+    "rsi": 84.76,
+    "ema_20": 523.66,
+    "ma_50": 523.1
+  }
+}

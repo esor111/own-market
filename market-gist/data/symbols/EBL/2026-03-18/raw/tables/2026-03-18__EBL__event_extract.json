@@ -1,0 +1,28 @@
+{
+  "extraction_type": "official_event_context",
+  "symbol": "EBL",
+  "data": {
+    "event_found": false,
+    "source": "sebon_prospectus",
+    "event_date": "",
+    "event_type": "no_recent_official_event_match",
+    "sentiment": "neutral",
+    "impact_window_days": 0,
+    "relevance_now": "inactive",
+    "confidence_source": "page_text",
+    "details": {
+      "company_name": "Everest Bank Limited",
+      "symbol": "EBL",
+      "pages_checked": [
+        "https://sebon.gov.np/prospectus",
+        "https://sebon.gov.np/prospectus?page=2",
+        "https://sebon.gov.np/prospectus?page=3"
+      ]
+    },
+    "source_refs": [
+      "https://sebon.gov.np/prospectus",
+      "https://sebon.gov.np/prospectus?page=2",
+      "https://sebon.gov.np/prospectus?page=3"
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__HBL__v2",
+  "run_date": "2026-03-18",
+  "source": "floorsheet_or_broker_view",
+  "symbol": "HBL",
+  "activity_label": "",
+  "accumulation_signal": null,
+  "distribution_signal": null,
+  "notes": "Floorsheet data requires authentication. Cannot access without login.",
+  "confidence_source": "",
+  "evidence_refs": [
+    "raw/screenshots/2026-03-18__HBL__NEPSE__1D__market_context.png",
+    "raw/snapshots/2026-03-18__HBL__NEPSE__1D__snapshot.txt",
+    "raw/tables/2026-03-18__HBL__NEPSE__1D__market_extract.json",
+    "raw/snapshots/2026-03-18__HBL__1W__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__HBL__1W__stock_extract.json",
+    "raw/tables/2026-03-18__HBL__1W__bar_extract.json",
+    "raw/tables/2026-03-18__HBL__1W__indicator_extract.json",
+    "raw/screenshots/2026-03-18__HBL__1W__clean_v2.png",
+    "raw/screenshots/2026-03-18__HBL__1W__annotated_v2.png",
+    "raw/tables/2026-03-18__HBL__BANKING__sector_extract.json",
+    "raw/screenshots/2026-03-18__HBL__BANKING__sector.png",
+    "raw/snapshots/2026-03-18__HBL__BANKING__sector_snapshot.txt",
+    "raw/tables/2026-03-18__HBL__1W__decision_qc.json"
+  ],
+  "data_available": false,
+  "unavailable_reason": "floorsheet_requires_login"
+}

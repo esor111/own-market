@@ -5,16 +5,22 @@ Usage: python analyze_stock.py SMHL 1W
 import asyncio
 import sys
 import os
+import json
+import statistics
 from datetime import datetime
 
 from browser_actions import BrowserAutomation
 from data_extractor import DataExtractor
 from analyzer import StockAnalyzer
 from file_generator import FileGenerator
+from structure_signals import StructureSignalEngine
+from quality_gate import AnalysisQualityGate
+from event_sources import OfficialEventExtractor
 from config import (
     get_session_id, get_file_prefix,
     get_run_directories,
-    INDICATORS
+    INDICATORS,
+    SECTOR_MAP_FILE
 )
 
 for stream_name in ("stdout", "stderr"):
@@ -38,7 +44,11 @@ class StockAnalysisAutomation:
         self.browser = BrowserAutomation()
         self.extractor = DataExtractor()
         self.analyzer = StockAnalyzer()
+        self.structure = StructureSignalEngine()
+        self.quality_gate = AnalysisQualityGate()
+        self.event_extractor = OfficialEventExtractor()
         self.file_gen = FileGenerator(self.session_id, self.run_date, self.run_dirs)
+        self.sector_map = self._load_sector_map()
         
         self.data = {
             "market": {},
@@ -47,130 +57,390 @@ class StockAnalysisAutomation:
             "indicators": {},
             "volume": {},
             "relative_strength": {},
-            "evidence_files": []
+            "event": {},
+            "evidence_files": [],
+            "timeframe_evidence": {},
+            "timeframes": {},
+            "qc": {}
         }
 
-    @staticmethod
-    def _round_price(value):
-        """Round numeric values for stable output."""
-        if value is None:
-            return None
-        return round(float(value), 2)
+    def _load_sector_map(self):
+        """Load symbol-to-sector mapping from a maintained JSON file."""
+        try:
+            with open(SECTOR_MAP_FILE, "r", encoding="utf-8") as f:
+                raw = json.load(f)
+            return {str(symbol).upper(): sector for symbol, sector in raw.items()}
+        except FileNotFoundError:
+            print(f"  Warning: sector map file not found at {SECTOR_MAP_FILE}")
+            return {}
+        except Exception as exc:
+            print(f"  Warning: could not load sector map: {exc}")
+            return {}
 
-    def _sorted_levels(self, levels, reverse=False):
-        """Return unique rounded levels in sorted order."""
-        cleaned = []
+    def _record_evidence(self, filepath):
+        """Store run-relative evidence references for later traceability."""
+        relative = os.path.relpath(filepath, self.run_dirs["base"]).replace("\\", "/")
+        if relative not in self.data["evidence_files"]:
+            self.data["evidence_files"].append(relative)
+        return relative
+
+    def _record_timeframe_evidence(self, timeframe, filepath):
+        """Store evidence references for a specific timeframe."""
+        relative = self._record_evidence(filepath)
+        if timeframe:
+            bucket = self.data["timeframe_evidence"].setdefault(timeframe, [])
+            if relative not in bucket:
+                bucket.append(relative)
+        return relative
+
+    def _save_raw_json(self, filename, payload, timeframe=None):
+        """Persist raw extracted payloads inside the current run folder."""
+        filepath = os.path.join(self.run_dirs["raw_tables"], filename)
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2)
+        if timeframe:
+            self._record_timeframe_evidence(timeframe, filepath)
+        else:
+            self._record_evidence(filepath)
+        return filepath
+
+    def _get_context_timeframes(self):
+        """Return the primary timeframe plus one supporting higher/lower context timeframe."""
+        ordered = [self.timeframe]
+        if self.timeframe == "1W":
+            ordered.append("1D")
+        elif self.timeframe == "1D":
+            ordered.append("1W")
+
+        unique = []
         seen = set()
-        for level in levels:
-            if level is None:
-                continue
-            rounded = self._round_price(level)
-            if rounded is None or rounded <= 0:
-                continue
-            key = f"{rounded:.2f}"
-            if key in seen:
-                continue
-            seen.add(key)
-            cleaned.append(rounded)
-        return sorted(cleaned, reverse=reverse)
+        for timeframe in ordered:
+            if timeframe not in seen:
+                seen.add(timeframe)
+                unique.append(timeframe)
+        return unique
 
-    def _levels_to_zones(self, levels):
-        """Convert levels into narrow support/resistance zones."""
-        zones = []
-        for level in levels[:3]:
-            width = max(level * 0.01, 1)
-            zones.append([
-                self._round_price(level - width),
-                self._round_price(level + width)
-            ])
-        return zones
+    def _infer_bar_timeframe(self, bars):
+        """Infer the actual timeframe from recent bar spacing."""
+        close_times = sorted(
+            bar.get("close_time_ms")
+            for bar in bars
+            if bar.get("close_time_ms") is not None
+        )
+        if len(close_times) < 3:
+            return "unknown"
 
-    def _derive_price_levels(self, price, chart_data, indicator_data):
-        """Derive support, resistance, breakout, and invalidation from chart state."""
-        low = chart_data.get("low")
-        high = chart_data.get("high")
-        open_price = chart_data.get("open")
+        gaps_hours = []
+        for previous, current in zip(close_times, close_times[1:]):
+            gap_ms = current - previous
+            if gap_ms > 0:
+                gaps_hours.append(gap_ms / 3_600_000)
+
+        if not gaps_hours:
+            return "unknown"
+
+        median_gap_hours = statistics.median(gaps_hours)
+        if median_gap_hours >= 500:
+            return "1M"
+        if median_gap_hours >= 96:
+            return "1W"
+        if median_gap_hours >= 12:
+            return "1D"
+        return "intraday"
+
+    async def _capture_stock_timeframe(self, timeframe, configure_indicators=False):
+        """Capture chart, bars, indicators, and screenshots for one stock timeframe."""
+        await self.browser.set_timeframe(timeframe)
+        await asyncio.sleep(2)
+
+        snapshot_path = os.path.join(
+            self.run_dirs["raw_snapshots"],
+            f"{self.file_prefix}__{timeframe}__pre_indicators_snapshot.txt"
+        )
+        snapshot = await self.browser.get_page_snapshot()
+        if snapshot:
+            os.makedirs(os.path.dirname(snapshot_path), exist_ok=True)
+            with open(snapshot_path, 'w', encoding='utf-8') as f:
+                f.write(snapshot)
+            self._record_timeframe_evidence(timeframe, snapshot_path)
+
+        if configure_indicators:
+            if await self.browser.has_expected_indicators():
+                print("  Indicators already on chart — skipping add step")
+            else:
+                print("  Adding indicators...")
+                for indicator_key, indicator_config in INDICATORS.items():
+                    await self.browser.add_indicator(
+                        indicator_config["name"],
+                        indicator_config.get("search")
+                    )
+                    await asyncio.sleep(1)
+                await self.browser.close_indicators_dialog()
+                await asyncio.sleep(2)
+
+        current_symbol = await self.browser.get_current_symbol_code()
+        if current_symbol and current_symbol.upper() != self.symbol:
+            print(f"  Warning: expected symbol {self.symbol}, found {current_symbol}. Reloading once...")
+            await self.browser.search_and_load_symbol(self.symbol)
+            await asyncio.sleep(2)
+            await self.browser.set_timeframe(timeframe)
+            await asyncio.sleep(2)
+
+        print(f"  Extracting chart data for {timeframe}...")
+        chart_data = await self.browser.extract_chart_data()
+        recent_bars_payload = await self.browser.extract_recent_bars()
+        chart_data["recent_bars"] = recent_bars_payload.get("bars", [])
+        chart_data["recent_bar_count"] = recent_bars_payload.get("extracted_bars", 0)
+        chart_data["total_bar_count"] = recent_bars_payload.get("total_bars", 0)
+
+        inferred_timeframe = self._infer_bar_timeframe(chart_data["recent_bars"])
+        chart_data["inferred_timeframe"] = inferred_timeframe
+        if inferred_timeframe != "unknown" and inferred_timeframe != timeframe:
+            raise ValueError(
+                f"timeframe_mismatch:{timeframe}:extracted_{inferred_timeframe}"
+            )
+
+        self._save_raw_json(
+            f"{self.file_prefix}__{timeframe}__stock_extract.json",
+            {"extraction_type": "stock_chart", "symbol": self.symbol, "timeframe": timeframe, "data": chart_data},
+            timeframe=timeframe
+        )
+        self._save_raw_json(
+            f"{self.file_prefix}__{timeframe}__bar_extract.json",
+            {
+                "extraction_type": "recent_bars",
+                "symbol": self.symbol,
+                "timeframe": timeframe,
+                "data": recent_bars_payload
+            },
+            timeframe=timeframe
+        )
+
+        print(f"  Extracting indicator values for {timeframe}...")
+        indicator_data = await self.browser.extract_indicator_values()
+        self._save_raw_json(
+            f"{self.file_prefix}__{timeframe}__indicator_extract.json",
+            {"extraction_type": "indicator_values", "symbol": self.symbol, "timeframe": timeframe, "data": indicator_data},
+            timeframe=timeframe
+        )
+
+        clean_path = os.path.join(self.run_dirs["raw_screenshots"], f"{self.file_prefix}__{timeframe}__clean_v2.png")
+        await self.browser.take_screenshot(clean_path)
+        self._record_timeframe_evidence(timeframe, clean_path)
+
+        annotated_path = os.path.join(self.run_dirs["raw_screenshots"], f"{self.file_prefix}__{timeframe}__annotated_v2.png")
+        await self.browser.take_screenshot(annotated_path)
+        self._record_timeframe_evidence(timeframe, annotated_path)
+
+        volume_profile = self.structure.derive_volume_profile(chart_data)
+        self.data["timeframes"][timeframe] = {
+            "stock": chart_data,
+            "indicators": indicator_data,
+            "volume": volume_profile
+        }
+
+        if timeframe == self.timeframe:
+            self.data["stock"] = chart_data
+            self.data["indicators"] = indicator_data
+            self.data["volume"] = volume_profile
+
+        print(f"✓ Captured {self.symbol} {timeframe}")
+
+    def _derive_timeframe_context(self, timeframe):
+        """Enrich a timeframe payload with derived structure fields."""
+        payload = self.data["timeframes"].get(timeframe)
+        if not payload:
+            return
+
+        stock_data = payload.get("stock", {})
+        indicator_data = payload.get("indicators", {})
+        price = stock_data.get("close")
         ema_20 = indicator_data.get("ema_20")
         ma_50 = indicator_data.get("ma_50")
+        rsi = indicator_data.get("rsi")
+        macd_histogram = indicator_data.get("histogram")
 
-        support_candidates = list(chart_data.get("swing_lows", []))
-        resistance_candidates = list(chart_data.get("swing_highs", []))
+        if None in {price, ema_20, ma_50, rsi}:
+            stock_data.setdefault("trend_label", "unknown")
+            stock_data.setdefault("structure_label", "insufficient_structure")
+            stock_data.setdefault("structure_confidence", "low")
+            return
 
-        if low is not None:
-            support_candidates.append(low)
-        if open_price is not None:
-            support_candidates.append(min(open_price, price))
-            resistance_candidates.append(max(open_price, price))
-        if high is not None:
-            resistance_candidates.append(high)
-        if ema_20 is not None:
-            if ema_20 <= price:
-                support_candidates.append(ema_20)
-            else:
-                resistance_candidates.append(ema_20)
-        if ma_50 is not None:
-            if ma_50 <= price:
-                support_candidates.append(ma_50)
-            else:
-                resistance_candidates.append(ma_50)
+        trend_label = self.analyzer.classify_trend(price, ema_20, ma_50)
+        price_levels = self.structure.derive_price_levels(price, stock_data, indicator_data)
+        volume_profile = payload.get("volume") or self.structure.derive_volume_profile(stock_data)
+        payload["volume"] = volume_profile
 
-        if not support_candidates:
-            support_candidates.append(price * 0.97)
-        if not resistance_candidates:
-            resistance_candidates.append(price * 1.03)
-
-        support_levels = self._sorted_levels(
-            [level for level in support_candidates if level <= price * 1.02],
-            reverse=True
-        )
-        resistance_levels = self._sorted_levels(
-            [level for level in resistance_candidates if level >= price * 0.98]
-        )
-
-        nearest_support = next((level for level in support_levels if level <= price), support_levels[0])
-        nearest_resistance = next((level for level in resistance_levels if level >= price), resistance_levels[0])
-
-        deeper_supports = [level for level in support_levels if level < nearest_support]
-        if deeper_supports:
-            invalidation = deeper_supports[0]
-        elif low is not None and low < nearest_support:
-            invalidation = low
+        if rsi >= 60 and (macd_histogram or 0) >= 0:
+            momentum_label = "bullish_momentum"
+        elif rsi < 40:
+            momentum_label = "weak_or_reversal_watch"
         else:
-            invalidation = nearest_support * 0.97
+            momentum_label = "neutral_momentum"
 
-        return {
-            "support_levels": support_levels,
-            "resistance_levels": resistance_levels,
-            "nearest_support": self._round_price(nearest_support),
-            "nearest_resistance": self._round_price(nearest_resistance),
-            "breakout_level": self._round_price(nearest_resistance),
-            "breakdown_level": self._round_price(nearest_support),
-            "invalidation_level": self._round_price(invalidation)
-        }
+        indicator_data.update({
+            "price_above_ema_20": price > ema_20,
+            "price_above_ma_50": price > ma_50,
+            "momentum_label": momentum_label
+        })
 
-    def _derive_volume_profile(self, chart_data):
-        """Build a conservative volume profile from extracted chart data."""
-        current_volume = chart_data.get("volume")
-        if current_volume is None:
-            return {
-                "current_volume": None,
-                "volume_vs_average": "unknown",
-                "breakout_volume_signal": "unknown",
-                "pullback_volume_signal": "unknown",
-                "participation_label": "volume_unconfirmed",
-                "notes": "Volume not extracted from chart."
+        stock_data.update({
+            "trend_label": trend_label,
+            "structure_label": price_levels.get("structure_label"),
+            "swing_highs": price_levels.get("resistance_levels", []),
+            "swing_lows": price_levels.get("support_levels", []),
+            "support_zones": self.structure.levels_to_zones(price_levels.get("support_levels", [])),
+            "resistance_zones": self.structure.levels_to_zones(price_levels.get("resistance_levels", [])),
+            "breakout_level": price_levels.get("breakout_level"),
+            "breakdown_level": price_levels.get("breakdown_level"),
+            "invalidation_level": price_levels.get("invalidation_level"),
+            "local_range_high": price_levels.get("local_range_high"),
+            "local_range_low": price_levels.get("local_range_low"),
+            "range_width_pct": price_levels.get("range_width_pct"),
+            "location_label": (
+                "near_support"
+                if price_levels.get("nearest_support") and price_levels.get("nearest_resistance")
+                and abs(price - price_levels["nearest_support"]) <= abs(price_levels["nearest_resistance"] - price)
+                else "near_resistance"
+            ),
+            "structure_confidence": price_levels.get("structure_confidence"),
+            "structure_confidence_reasons": price_levels.get("confidence_reasons", []),
+            "confidence_source": "extracted_plus_derived"
+        })
+
+    def _build_model_input_payload(self):
+        """Build the high-value model-input package for a stronger reasoning model."""
+        for timeframe in self.data.get("timeframes", {}):
+            self._derive_timeframe_context(timeframe)
+
+        timeframe_summary = {}
+        for timeframe, payload in self.data.get("timeframes", {}).items():
+            stock_data = payload.get("stock", {})
+            indicator_data = payload.get("indicators", {})
+            volume_data = payload.get("volume", {})
+            timeframe_summary[timeframe] = {
+                "close": stock_data.get("close"),
+                "trend_label": stock_data.get("trend_label"),
+                "structure_label": stock_data.get("structure_label"),
+                "support_zones": stock_data.get("support_zones", []),
+                "resistance_zones": stock_data.get("resistance_zones", []),
+                "breakout_level": stock_data.get("breakout_level"),
+                "invalidation_level": stock_data.get("invalidation_level"),
+                "ema_20": indicator_data.get("ema_20"),
+                "ma_50": indicator_data.get("ma_50"),
+                "rsi": indicator_data.get("rsi"),
+                "macd_histogram": indicator_data.get("histogram"),
+                "volume_participation": volume_data.get("participation_label"),
+                "structure_confidence": stock_data.get("structure_confidence")
             }
 
+        weekly = timeframe_summary.get("1W", {})
+        daily = timeframe_summary.get("1D", {})
+        weekly_trend = weekly.get("trend_label")
+        daily_trend = daily.get("trend_label")
+        if weekly_trend == "uptrend" and daily_trend == "uptrend":
+            alignment = "aligned_bullish"
+            structure_agreement = "weekly_and_daily_supportive"
+        elif weekly_trend == "downtrend" and daily_trend == "downtrend":
+            alignment = "aligned_bearish"
+            structure_agreement = "weekly_and_daily_weak"
+        elif weekly_trend and daily_trend:
+            alignment = "mixed"
+            structure_agreement = "timeframe_conflict"
+        else:
+            alignment = "higher_tf_conflict"
+            structure_agreement = "insufficient_timeframe_data"
+
+        decision = self.data.get("decision", {})
+        if decision.get("action") in {"buy", "strong_buy"}:
+            trigger_readiness = "confirmed_actionable"
+        elif decision.get("setup_type") == "breakout_watch":
+            trigger_readiness = "near_breakout_but_not_confirmed"
+        elif decision.get("action") == "watch_only":
+            trigger_readiness = "watch_but_not_confirmed"
+        else:
+            trigger_readiness = "not_ready"
+
+        entry_zone = decision.get("entry_zone") or []
+        stop_loss = decision.get("stop_loss")
+        if entry_zone and stop_loss is not None:
+            entry_reference = entry_zone[0]
+            risk_pct = abs(entry_reference - stop_loss) / entry_reference if entry_reference else 0
+            invalidation_quality = "clear" if risk_pct >= 0.03 else "acceptable"
+        else:
+            invalidation_quality = "weak"
+
+        uncertainties = []
+        if self.data.get("event", {}).get("event_found") is False:
+            uncertainties.append("official_event_layer_found_no_recent_match")
+        if self.data.get("stock", {}).get("structure_confidence") == "low":
+            uncertainties.append("primary_structure_confidence_low")
+        if self.data.get("qc", {}).get("status") != "pass":
+            uncertainties.append("qc_gate_not_pass")
+        uncertainties.append("usable_calibration_samples_still_low")
+
         return {
-            "current_volume": current_volume,
-            "volume_vs_average": "available",
-            "breakout_volume_signal": "not_triggered",
-            "pullback_volume_signal": "unknown",
-            "participation_label": "volume_available",
-            "notes": "Current candle volume extracted, but no historical average is available yet."
+            "primary_horizon": "swing",
+            "market": {
+                "symbol": "NEPSE",
+                "timeframe": "1D",
+                "close": self.data["market"].get("close"),
+                "change_pct": self.data["market"].get("change_pct"),
+                "trend_label": self.data["market"].get("trend_label"),
+                "market_phase": self.data["market"].get("market_phase"),
+                "structure_confidence": "medium"
+            },
+            "sector": {
+                "name": self.data["sector"].get("name"),
+                "timeframe": "1D",
+                "close": self.data["sector"].get("close"),
+                "change_pct": self.data["sector"].get("change_pct"),
+                "trend_label": self.data["sector"].get("trend_label"),
+                "relative_strength_vs_market": self.data["relative_strength"].get("rs_vs_sector_label"),
+                "structure_confidence": "medium" if self.data["sector"].get("name") != "UNKNOWN" else "low"
+            },
+            "timeframes": timeframe_summary,
+            "derived_alignment": {
+                "higher_timeframe_alignment": alignment,
+                "structure_agreement": structure_agreement,
+                "trigger_readiness": trigger_readiness,
+                "invalidation_quality": invalidation_quality,
+                "trade_quality": "good_but_needs_confirmation" if decision.get("action") in {"buy", "watch_only"} else "not_actionable"
+            },
+            "event_context": {
+                "has_active_event": self.data["event"].get("event_found") and self.data["event"].get("relevance_now") == "active_window",
+                "event_type": self.data["event"].get("event_type"),
+                "event_date": self.data["event"].get("event_date"),
+                "event_sentiment": self.data["event"].get("sentiment"),
+                "event_status": self.data["event"].get("relevance_now"),
+                "impact_window_days": self.data["event"].get("impact_window_days"),
+                "event_confidence": "high" if self.data["event"].get("event_found") else "medium",
+                "details": self.data["event"].get("details", {})
+            },
+            "quality_flags": {
+                "market_data_quality": "high" if self.data["market"].get("close") is not None else "low",
+                "sector_data_quality": "high" if self.data["sector"].get("name") != "UNKNOWN" else "low",
+                "stock_structure_quality": self.data["stock"].get("structure_confidence", "low"),
+                "indicator_quality": "high" if self.data["indicators"].get("rsi") is not None and self.data["indicators"].get("ema_20") is not None else "low",
+                "event_data_quality": "medium" if self.data["event"].get("source") == "sebon_prospectus" else "low",
+                "outcome_history_quality": "low"
+            },
+            "uncertainties": uncertainties,
+            "decision_inputs": {
+                "setup_type": decision.get("setup_type"),
+                "score": decision.get("score"),
+                "confidence": decision.get("confidence"),
+                "action": decision.get("action"),
+                "entry_zone": decision.get("entry_zone", []),
+                "stop_loss": decision.get("stop_loss"),
+                "targets": decision.get("targets", []),
+                "risk_reward_ratio": decision.get("risk_reward_ratio"),
+                "qc_status": self.data.get("qc", {}).get("status"),
+                "qc_findings": self.data.get("qc", {}).get("findings", [])
+            }
         }
 
-    
     async def run(self):
         """Main execution flow"""
         try:
@@ -191,10 +461,13 @@ class StockAnalysisAutomation:
             # Step 3: Capture sector evidence
             await self.capture_sector_evidence()
             
-            # Step 4: Generate analysis and decision
+            # Step 4: Capture official event context
+            await self.capture_event_context()
+
+            # Step 5: Generate analysis and decision
             await self.generate_analysis()
             
-            # Step 5: Create all normalized records
+            # Step 6: Create all normalized records
             await self.create_normalized_records()
             
             print(f"\n{'='*60}")
@@ -220,7 +493,7 @@ class StockAnalysisAutomation:
         # Take market screenshot
         screenshot_path = os.path.join(self.run_dirs["raw_screenshots"], f"{self.file_prefix}__NEPSE__1D__market_context.png")
         await self.browser.take_screenshot(screenshot_path)
-        self.data["evidence_files"].append(os.path.basename(screenshot_path))
+        self._record_evidence(screenshot_path)
 
         # Get snapshot
         snapshot = await self.browser.get_page_snapshot()
@@ -229,10 +502,14 @@ class StockAnalysisAutomation:
             os.makedirs(os.path.dirname(snapshot_path), exist_ok=True)
             with open(snapshot_path, 'w', encoding='utf-8') as f:
                 f.write(snapshot)
-            self.data["evidence_files"].append(os.path.basename(snapshot_path))
+            self._record_evidence(snapshot_path)
 
         # Extract real market data from chart
         market_ohlc = await self.browser.extract_chart_data()
+        self._save_raw_json(
+            f"{self.file_prefix}__NEPSE__1D__market_extract.json",
+            {"extraction_type": "market_chart", "data": market_ohlc}
+        )
         change_pct = market_ohlc.get("change_pct", 0)
         if change_pct > 0.5:
             trend_label = "up"
@@ -259,78 +536,29 @@ class StockAnalysisAutomation:
         await self.browser.search_and_load_symbol(self.symbol)
         await asyncio.sleep(2)
         
-        # Set timeframe
-        await self.browser.set_timeframe(self.timeframe)
-        await asyncio.sleep(2)
-        
-        # Take pre-indicators snapshot
-        snapshot_path = os.path.join(self.run_dirs["raw_snapshots"], f"{self.file_prefix}__{self.timeframe}__pre_indicators_snapshot.txt")
-        snapshot = await self.browser.get_page_snapshot()
-        if snapshot:
-            os.makedirs(os.path.dirname(snapshot_path), exist_ok=True)
-            with open(snapshot_path, 'w', encoding='utf-8') as f:
-                f.write(snapshot)
-            self.data["evidence_files"].append(os.path.basename(snapshot_path))
-        
-        # Add indicators only if not already present on the chart
-        if await self.browser.has_expected_indicators():
-            print("  Indicators already on chart — skipping add step")
-        else:
-            print("  Adding indicators...")
-            for indicator_key, indicator_config in INDICATORS.items():
-                await self.browser.add_indicator(
-                    indicator_config["name"],
-                    indicator_config.get("search")
-                )
-                await asyncio.sleep(1)
-            # Close indicators dialog
-            await self.browser.close_indicators_dialog()
-            await asyncio.sleep(2)
+        context_timeframes = self._get_context_timeframes()
+        for index, timeframe in enumerate(context_timeframes):
+            await self._capture_stock_timeframe(timeframe, configure_indicators=(index == 0))
 
-        # Symbol sanity check: avoid silent drift before extracting final values.
-        current_symbol = await self.browser.get_current_symbol_code()
-        if current_symbol and current_symbol.upper() != self.symbol:
-            print(f"  Warning: expected symbol {self.symbol}, found {current_symbol}. Reloading once...")
-            await self.browser.search_and_load_symbol(self.symbol)
-            await asyncio.sleep(2)
-            await self.browser.set_timeframe(self.timeframe)
-            await asyncio.sleep(2)
-        
-        # Extract chart data BEFORE screenshots
-        print("  Extracting chart data...")
-        chart_data = await self.browser.extract_chart_data()
-        self.data["stock"] = chart_data
-        
-        # Extract indicator values
-        print("  Extracting indicator values...")
-        indicator_data = await self.browser.extract_indicator_values()
-        self.data["indicators"] = indicator_data
-        
-        # Take clean chart screenshot
-        screenshot_path = os.path.join(self.run_dirs["raw_screenshots"], f"{self.file_prefix}__{self.timeframe}__clean_v2.png")
-        await self.browser.take_screenshot(screenshot_path)
-        self.data["evidence_files"].append(os.path.basename(screenshot_path))
-        
-        # Take annotated screenshot (same as clean for now)
-        screenshot_path = os.path.join(self.run_dirs["raw_screenshots"], f"{self.file_prefix}__{self.timeframe}__annotated_v2.png")
-        await self.browser.take_screenshot(screenshot_path)
-        self.data["evidence_files"].append(os.path.basename(screenshot_path))
-        
         print(f"✓ {self.symbol} analysis completed")
-        print(f"  Data: {self.data['stock']}")
-        print(f"  Indicators: {self.data['indicators']}")
+        print(f"  Primary ({self.timeframe}) Data: {self.data['stock']}")
+        print(f"  Primary ({self.timeframe}) Indicators: {self.data['indicators']}")
 
     
     async def capture_sector_evidence(self):
         """Capture sector chart evidence"""
         print("\n[3/5] Capturing sector evidence...")
         
-        # Determine sector (simplified - would need lookup table)
-        sector_map = {
-            "SMHL": "HYDROPOWER",
-            "NABIL": "BANKING"
-        }
-        sector_symbol = sector_map.get(self.symbol, "HYDROPOWER")
+        sector_symbol = self.sector_map.get(self.symbol)
+        if not sector_symbol:
+            self.data["sector"] = {
+                "name": "UNKNOWN",
+                "change_pct": None,
+                "trend_label": "unknown",
+                "notes": f"sector_mapping_missing_for_symbol:{self.symbol}"
+            }
+            print(f"  Sector mapping missing for {self.symbol}; recording explicit skip")
+            return
         
         # Load sector chart
         await self.browser.search_and_load_symbol(sector_symbol)
@@ -338,6 +566,10 @@ class StockAnalysisAutomation:
 
         # Extract real sector OHLCV data
         sector_ohlc = await self.browser.extract_chart_data()
+        self._save_raw_json(
+            f"{self.file_prefix}__{sector_symbol}__sector_extract.json",
+            {"extraction_type": "sector_chart", "sector_symbol": sector_symbol, "data": sector_ohlc}
+        )
         sector_change_pct = sector_ohlc.get("change_pct")
         if sector_change_pct is None:
             sector_trend = "unknown"
@@ -351,7 +583,7 @@ class StockAnalysisAutomation:
         # Take sector screenshot
         screenshot_path = os.path.join(self.run_dirs["raw_screenshots"], f"{self.file_prefix}__{sector_symbol}__sector.png")
         await self.browser.take_screenshot(screenshot_path)
-        self.data["evidence_files"].append(os.path.basename(screenshot_path))
+        self._record_evidence(screenshot_path)
 
         # Get sector snapshot
         snapshot = await self.browser.get_page_snapshot()
@@ -360,7 +592,7 @@ class StockAnalysisAutomation:
             os.makedirs(os.path.dirname(snapshot_path), exist_ok=True)
             with open(snapshot_path, 'w', encoding='utf-8') as f:
                 f.write(snapshot)
-            self.data["evidence_files"].append(os.path.basename(snapshot_path))
+            self._record_evidence(snapshot_path)
 
         # Store real sector data
         self.data["sector"] = {
@@ -378,10 +610,58 @@ class StockAnalysisAutomation:
         
         print("✓ Sector evidence captured")
 
+    async def capture_event_context(self):
+        """Capture minimal official event context from SEBON prospectus pages."""
+        print("\n[4/6] Capturing official event context...")
+
+        company_name = (
+            self.data.get("stock", {}).get("series_title")
+            or self.symbol
+        )
+
+        try:
+            event_data = self.event_extractor.find_recent_official_event(
+                self.symbol,
+                company_name,
+                self.run_date
+            )
+        except Exception as exc:
+            event_data = {
+                "event_found": False,
+                "source": "sebon_prospectus",
+                "event_date": "",
+                "event_type": "event_lookup_failed",
+                "sentiment": "neutral",
+                "impact_window_days": 0,
+                "relevance_now": "inactive",
+                "confidence_source": "manual_note",
+                "details": {
+                    "company_name": company_name,
+                    "symbol": self.symbol,
+                    "error": str(exc)
+                },
+                "source_refs": []
+            }
+
+        self.data["event"] = event_data
+        self._save_raw_json(
+            f"{self.file_prefix}__event_extract.json",
+            {
+                "extraction_type": "official_event_context",
+                "symbol": self.symbol,
+                "data": event_data
+            }
+        )
+        print(
+            f"  Event: {event_data.get('event_type')} "
+            f"({event_data.get('relevance_now')})"
+        )
+        print("✓ Official event context captured")
+
     
     async def generate_analysis(self):
         """Generate scores and decision"""
-        print("\n[4/5] Generating analysis...")
+        print("\n[5/6] Generating analysis...")
 
         required_stock_fields = ["close", "change_pct"]
         required_indicator_fields = ["ema_20", "ma_50", "rsi"]
@@ -454,11 +734,13 @@ class StockAnalysisAutomation:
             relative_strength_score = 6 if stock_change_pct > self.data["market"]["change_pct"] else 2
 
         trend_label = self.analyzer.classify_trend(price, ema_20, ma_50)
-        price_levels = self._derive_price_levels(price, self.data["stock"], self.data["indicators"])
+        price_levels = self.structure.derive_price_levels(price, self.data["stock"], self.data["indicators"])
         nearest_support = price_levels["nearest_support"]
         nearest_resistance = price_levels["nearest_resistance"]
+        structure_confidence = price_levels.get("structure_confidence", "medium")
+        structure_label = price_levels.get("structure_label", "insufficient_structure")
 
-        volume_profile = self._derive_volume_profile(self.data["stock"])
+        volume_profile = self.structure.derive_volume_profile(self.data["stock"])
         self.data["volume"] = volume_profile
         volume_score = self.analyzer.calculate_volume_score(volume_profile["volume_vs_average"])
 
@@ -467,7 +749,11 @@ class StockAnalysisAutomation:
             nearest_support,
             nearest_resistance
         )
-        structure_score = self.analyzer.calculate_structure_quality_score(trend_label)
+        structure_score = self.analyzer.calculate_structure_quality_score(
+            trend_label,
+            structure_label=structure_label,
+            structure_confidence=structure_confidence
+        )
 
         market_label = "underperforming" if stock_change_pct < self.data["market"]["change_pct"] else "outperforming"
         if has_sector_change:
@@ -502,7 +788,7 @@ class StockAnalysisAutomation:
             "structure_quality": structure_score,
             "location_quality": location_score,
             "volume_confirmation": volume_score,
-            "event_quality": 5,
+            "event_quality": 7 if self.data["event"].get("event_found") and self.data["event"].get("relevance_now") == "active_window" else 5,
             "risk_reward_quality": 0
         }
 
@@ -520,19 +806,25 @@ class StockAnalysisAutomation:
         )
 
         action = self.analyzer.determine_action(score_summary["percent"], confidence)
-        setup_type = self.analyzer.determine_setup_type(trend_label, price, ema_20, rsi)
+        setup_type = self.analyzer.determine_setup_type(
+            trend_label,
+            price,
+            ema_20,
+            rsi,
+            structure_label=structure_label
+        )
 
         if setup_type == "continuation":
             entry_zone = [
-                self._round_price(min(price, nearest_support)),
-                self._round_price(max(price, nearest_support))
+                self.structure.round_price(min(price, nearest_support)),
+                self.structure.round_price(price)
             ]
             stop_loss = price_levels["invalidation_level"]
         elif setup_type in {"reversal_watch", "breakout_watch"}:
             breakout_level = price_levels["breakout_level"]
             entry_zone = [
                 breakout_level,
-                self._round_price(breakout_level * 1.02)
+                self.structure.round_price(breakout_level * 1.02)
             ]
             stop_loss = price_levels["invalidation_level"]
         else:
@@ -543,7 +835,7 @@ class StockAnalysisAutomation:
         risk_reward_ratio = None
         if entry_zone and stop_loss is not None:
             targets = [
-                self._round_price(target)
+                self.structure.round_price(target)
                 for target in self.analyzer.calculate_targets(entry_zone[0], price_levels["resistance_levels"])
             ]
             if targets:
@@ -572,14 +864,19 @@ class StockAnalysisAutomation:
 
         self.data["stock"].update({
             "trend_label": trend_label,
-            "structure_label": "price_vs_moving_averages",
+            "structure_label": structure_label,
             "swing_highs": price_levels["resistance_levels"],
             "swing_lows": price_levels["support_levels"],
-            "support_zones": self._levels_to_zones(price_levels["support_levels"]),
-            "resistance_zones": self._levels_to_zones(price_levels["resistance_levels"]),
+            "support_zones": self.structure.levels_to_zones(price_levels["support_levels"]),
+            "resistance_zones": self.structure.levels_to_zones(price_levels["resistance_levels"]),
             "breakout_level": price_levels["breakout_level"],
             "breakdown_level": price_levels["breakdown_level"],
             "invalidation_level": stop_loss,
+            "local_range_high": price_levels.get("local_range_high"),
+            "local_range_low": price_levels.get("local_range_low"),
+            "range_width_pct": price_levels.get("range_width_pct"),
+            "structure_confidence": structure_confidence,
+            "structure_confidence_reasons": price_levels.get("confidence_reasons", []),
             "location_label": (
                 "near_support" if nearest_support and abs(price - nearest_support) <= abs(nearest_resistance - price)
                 else "near_resistance"
@@ -593,7 +890,14 @@ class StockAnalysisAutomation:
             **score_summary,
             "notes": None if has_sector_change else "sector_change_pct_missing; sector alignment scored conservatively"
         }
-        self.data["decision"] = {
+        if structure_confidence == "low":
+            if action in {"buy", "strong_buy"}:
+                action = "watch_only"
+            self.data["scores"]["notes"] = (
+                (self.data["scores"]["notes"] + "; " if self.data["scores"]["notes"] else "")
+                + "structure_confidence_low"
+            )
+        decision_payload = {
             "setup_type": setup_type,
             "score": score_summary["total"],
             "score_max": score_summary["max"],
@@ -608,18 +912,48 @@ class StockAnalysisAutomation:
                 f"Price: {price}, EMA20: {ema_20}, MA50: {ma_50}",
                 f"RSI: {rsi}, MACD Histogram: {macd_histogram}",
                 "Sector change% unavailable; sector scoring was reduced" if not has_sector_change else f"Sector change%: {self.data['sector']['change_pct']}",
+                f"Event: {self.data['event'].get('event_type')} ({self.data['event'].get('relevance_now')})",
                 f"Derived support/resistance: {nearest_support} / {nearest_resistance}",
+                f"Structure: {structure_label} ({structure_confidence})",
+                f"Local range: {price_levels.get('local_range_low')} -> {price_levels.get('local_range_high')}",
                 f"Setup: {setup_type}, Score: {score_summary['percent']}/100, Confidence: {confidence}%",
                 f"Action: {action.upper()}"
             ]
         }
+        qc_result = self.quality_gate.evaluate(decision_payload, self.data["stock"])
+        self.data["qc"] = qc_result
+        self._save_raw_json(
+            f"{self.file_prefix}__{self.timeframe}__decision_qc.json",
+            {
+                "extraction_type": "decision_qc",
+                "symbol": self.symbol,
+                "timeframe": self.timeframe,
+                "data": qc_result
+            }
+        )
+        if qc_result["status"] != "pass":
+            qc_notes = ", ".join(qc_result["findings"]) or "qc_failed"
+            self.data["scores"]["notes"] = (
+                (self.data["scores"]["notes"] + "; " if self.data["scores"]["notes"] else "")
+                + f"qc_gate:{qc_notes}"
+            )
+            decision_payload = qc_result["decision"]
+            decision_payload["why"] = decision_payload.get("why", []) + [f"QC gate: {qc_notes}"]
+
+        self.data["decision"] = decision_payload
         
-        print(f"✓ Analysis complete: {action.upper()} (Score: {score_summary['percent']}/100, Confidence: {confidence}%)")
+        print(
+            f"✓ Analysis complete: {self.data['decision']['action'].upper()} "
+            f"(Score: {score_summary['percent']}/100, Confidence: {confidence}%)"
+        )
 
     
     async def create_normalized_records(self):
         """Create all normalized JSON records"""
-        print("\n[5/5] Creating normalized records...")
+        print("\n[6/6] Creating normalized records...")
+
+        for timeframe in self.data.get("timeframes", {}):
+            self._derive_timeframe_context(timeframe)
         
         # Session record
         self.file_gen.generate_session_record(
@@ -627,10 +961,23 @@ class StockAnalysisAutomation:
             stages_completed=[
                 "market_context_capture", "symbol_chart_load",
                 "timeframe_selection", "indicator_setup",
-                "clean_chart_capture", "sector_evidence_capture"
+                "clean_chart_capture",
+                "sector_evidence_capture" if self.data["sector"].get("name") != "UNKNOWN" else "sector_mapping_check",
+                "official_event_capture",
+                "decision_qc"
             ],
-            stages_skipped=["event_enrichment", "broker_flow_capture"],
-            notes="Automated analysis run"
+            stages_skipped=(
+                ["broker_flow_capture"]
+                + (["sector_evidence_capture"] if self.data["sector"].get("name") == "UNKNOWN" else [])
+            ),
+            notes=(
+                "Automated analysis run"
+                + (
+                    f"; qc_gate={','.join(self.data.get('qc', {}).get('findings', []))}"
+                    if self.data.get("qc", {}).get("findings")
+                    else ""
+                )
+            )
         )
         
         # Market record
@@ -647,33 +994,41 @@ class StockAnalysisAutomation:
         )
         
         # Stock chart record
-        self.file_gen.generate_stock_chart_record(
-            self.symbol,
-            self.timeframe,
-            self.data["stock"],
-            self.data["evidence_files"]
-        )
-        
-        # Indicator record
-        self.file_gen.generate_indicator_record(
-            self.symbol,
-            self.timeframe,
-            self.data.get("indicators", {}),
-            self.data["evidence_files"]
-        )
-        
-        # Volume record
-        self.file_gen.generate_volume_record(
-            self.symbol,
-            self.timeframe,
-            self.data.get("volume", {}),
-            self.data["evidence_files"]
-        )
+        for timeframe, timeframe_payload in self.data.get("timeframes", {}).items():
+            timeframe_evidence = self.data["timeframe_evidence"].get(timeframe, self.data["evidence_files"])
+
+            self.file_gen.generate_stock_chart_record(
+                self.symbol,
+                timeframe,
+                timeframe_payload.get("stock", {}),
+                timeframe_evidence
+            )
+
+            self.file_gen.generate_indicator_record(
+                self.symbol,
+                timeframe,
+                timeframe_payload.get("indicators", {}),
+                timeframe_evidence
+            )
+
+            self.file_gen.generate_volume_record(
+                self.symbol,
+                timeframe,
+                timeframe_payload.get("volume", {}),
+                timeframe_evidence
+            )
         
         # Relative strength record
         self.file_gen.generate_relative_strength_record(
             self.symbol,
             self.data.get("relative_strength", {"benchmark_sector": self.data["sector"]["name"]}),
+            self.data["evidence_files"]
+        )
+
+        # Model-input record
+        self.file_gen.generate_model_input_record(
+            self.symbol,
+            self._build_model_input_payload(),
             self.data["evidence_files"]
         )
         
@@ -691,10 +1046,10 @@ class StockAnalysisAutomation:
             self.data["evidence_files"]
         )
         
-        # Event record (no events)
+        # Event record
         self.file_gen.generate_event_record(
             self.symbol,
-            False,
+            self.data.get("event", {}),
             self.data["evidence_files"]
         )
         

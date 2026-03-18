@@ -1,0 +1,38 @@
+{
+  "extraction_type": "decision_qc",
+  "symbol": "SANIMA",
+  "timeframe": "1W",
+  "data": {
+    "status": "pass",
+    "findings": [],
+    "decision": {
+      "setup_type": "continuation",
+      "score": 55,
+      "score_max": 100,
+      "confidence": 65,
+      "action": "watch_only",
+      "entry_zone": [
+        247.61,
+        252.0
+      ],
+      "stop_loss": 244.24,
+      "invalidation_level": 244.24,
+      "targets": [
+        256.2,
+        260.0,
+        353.0
+      ],
+      "risk_reward_ratio": 2.55,
+      "why": [
+        "Price: 252.0, EMA20: 247.61, MA50: 244.24",
+        "RSI: 54.05, MACD Histogram: -0.65",
+        "Sector change%: -1.95",
+        "Derived support/resistance: 247.61 / 256.2",
+        "Structure: trend_continuation (high)",
+        "Local range: 323.4 -> 368.0",
+        "Setup: continuation, Score: 55/100, Confidence: 65%",
+        "Action: WATCH_ONLY"
+      ]
+    }
+  }
+}

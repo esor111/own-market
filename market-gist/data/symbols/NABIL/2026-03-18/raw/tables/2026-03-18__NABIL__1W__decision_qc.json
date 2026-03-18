@@ -1,0 +1,33 @@
+{
+  "extraction_type": "decision_qc",
+  "symbol": "NABIL",
+  "timeframe": "1W",
+  "data": {
+    "status": "fail",
+    "findings": [
+      "risk_reward_below_minimum"
+    ],
+    "decision": {
+      "setup_type": "breakout_watch",
+      "score": 49,
+      "score_max": 100,
+      "confidence": 59,
+      "action": "avoid",
+      "entry_zone": [],
+      "stop_loss": null,
+      "invalidation_level": null,
+      "targets": [],
+      "risk_reward_ratio": null,
+      "why": [
+        "Price: 479.1, EMA20: 464.44, MA50: 454.31",
+        "RSI: 50.65, MACD Histogram: -22.68",
+        "Sector change%: -1.95",
+        "Derived support/resistance: 464.44 / 486.5",
+        "Structure: range (high)",
+        "Local range: 488.2 -> 555.0",
+        "Setup: breakout_watch, Score: 49/100, Confidence: 59%",
+        "Action: AVOID"
+      ]
+    }
+  }
+}

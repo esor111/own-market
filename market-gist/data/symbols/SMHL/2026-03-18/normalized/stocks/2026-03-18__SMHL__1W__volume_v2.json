@@ -11,13 +11,12 @@
   "participation_label": "volume_unconfirmed",
   "confidence_source": "",
   "evidence_refs": [
-    "2026-03-18__SMHL__NEPSE__1D__market_context.png",
-    "2026-03-18__SMHL__NEPSE__1D__snapshot.txt",
-    "2026-03-18__SMHL__1W__pre_indicators_snapshot.txt",
-    "2026-03-18__SMHL__1W__clean_v2.png",
-    "2026-03-18__SMHL__1W__annotated_v2.png",
-    "2026-03-18__SMHL__HYDROPOWER__sector.png",
-    "2026-03-18__SMHL__HYDROPOWER__sector_snapshot.txt"
+    "raw/snapshots/2026-03-18__SMHL__1W__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__SMHL__1W__stock_extract.json",
+    "raw/tables/2026-03-18__SMHL__1W__bar_extract.json",
+    "raw/tables/2026-03-18__SMHL__1W__indicator_extract.json",
+    "raw/screenshots/2026-03-18__SMHL__1W__clean_v2.png",
+    "raw/screenshots/2026-03-18__SMHL__1W__annotated_v2.png"
   ],
   "notes": "Volume not extracted from chart."
 }

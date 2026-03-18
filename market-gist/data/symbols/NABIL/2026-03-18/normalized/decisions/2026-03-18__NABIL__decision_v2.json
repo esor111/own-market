@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__NABIL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T14:07:47.604159",
+  "symbol": "NABIL",
+  "setup_type": "breakout_watch",
+  "score": 49,
+  "confidence": 59,
+  "action": "avoid",
+  "entry_zone": [],
+  "stop_loss": null,
+  "invalidation_level": null,
+  "targets": [],
+  "risk_reward_ratio": null,
+  "why": [
+    "Price: 479.1, EMA20: 464.44, MA50: 454.31",
+    "RSI: 50.65, MACD Histogram: -22.68",
+    "Sector change%: -1.95",
+    "Derived support/resistance: 464.44 / 486.5",
+    "Structure: range (high)",
+    "Local range: 488.2 -> 555.0",
+    "Setup: breakout_watch, Score: 49/100, Confidence: 59%",
+    "Action: AVOID",
+    "QC gate: risk_reward_below_minimum"
+  ],
+  "evidence_refs": [
+    "raw/screenshots/2026-03-18__NABIL__NEPSE__1D__market_context.png",
+    "raw/snapshots/2026-03-18__NABIL__NEPSE__1D__snapshot.txt",
+    "raw/tables/2026-03-18__NABIL__NEPSE__1D__market_extract.json",
+    "raw/snapshots/2026-03-18__NABIL__1W__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__NABIL__1W__stock_extract.json",
+    "raw/tables/2026-03-18__NABIL__1W__bar_extract.json",
+    "raw/tables/2026-03-18__NABIL__1W__indicator_extract.json",
+    "raw/screenshots/2026-03-18__NABIL__1W__clean_v2.png",
+    "raw/screenshots/2026-03-18__NABIL__1W__annotated_v2.png",
+    "raw/tables/2026-03-18__NABIL__BANKING__sector_extract.json",
+    "raw/screenshots/2026-03-18__NABIL__BANKING__sector.png",
+    "raw/snapshots/2026-03-18__NABIL__BANKING__sector_snapshot.txt",
+    "raw/tables/2026-03-18__NABIL__1W__decision_qc.json"
+  ],
+  "score_max": 100
+}

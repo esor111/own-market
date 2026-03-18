@@ -1,6 +1,7 @@
 """
 Configuration for stock analysis automation
 """
+import json
 import os
 from datetime import datetime
 
@@ -8,7 +9,11 @@ from datetime import datetime
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 SYMBOLS_DIR = os.path.join(DATA_DIR, "symbols")
+VALIDATION_DIR = os.path.join(DATA_DIR, "validation")
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+AUTOMATION_DIR = os.path.dirname(os.path.abspath(__file__))
+SECTOR_MAP_FILE = os.path.join(AUTOMATION_DIR, "sector_map.json")
+SYMBOL_LISTS_FILE = os.path.join(AUTOMATION_DIR, "symbol_lists.json")
 
 # Data subdirectories
 RAW_DIR = os.path.join(DATA_DIR, "raw")
@@ -116,3 +121,55 @@ def get_run_directories(symbol, date=None):
         "outcomes": os.path.join(base, "outcomes"),
         "outcomes_realized_results": os.path.join(base, "outcomes", "realized_results")
     }
+
+
+def load_json_file(path, default):
+    """Load JSON from disk, returning a default value when file is missing."""
+    if not os.path.exists(path):
+        return default
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def load_symbol_lists():
+    """Return named symbol lists from automation/symbol_lists.json."""
+    raw = load_json_file(SYMBOL_LISTS_FILE, {})
+    symbol_lists = {}
+    for name, values in raw.items():
+        if isinstance(values, list):
+            symbol_lists[str(name)] = [str(value).upper() for value in values if str(value).strip()]
+    return symbol_lists
+
+
+def resolve_symbols(args):
+    """
+    Resolve CLI symbol arguments into a unique ordered list.
+
+    Supports:
+    - plain symbols: SMHL NABIL
+    - named lists: @core_reliability
+    """
+    symbol_lists = load_symbol_lists()
+    resolved = []
+
+    for arg in args:
+        token = str(arg).strip()
+        if not token:
+            continue
+
+        if token.startswith("@"):
+            list_name = token[1:]
+            symbols = symbol_lists.get(list_name)
+            if symbols is None:
+                raise ValueError(f"Unknown symbol list: {token}")
+            resolved.extend(symbols)
+        else:
+            resolved.append(token.upper())
+
+    unique_symbols = []
+    seen = set()
+    for symbol in resolved:
+        if symbol not in seen:
+            seen.add(symbol)
+            unique_symbols.append(symbol)
+    return unique_symbols

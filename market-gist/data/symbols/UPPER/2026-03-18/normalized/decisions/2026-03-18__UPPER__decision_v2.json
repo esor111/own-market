@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__UPPER__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T14:05:54.232304",
+  "symbol": "UPPER",
+  "setup_type": "breakout_watch",
+  "score": 44,
+  "confidence": 54,
+  "action": "avoid",
+  "entry_zone": [
+    165.0,
+    168.3
+  ],
+  "stop_loss": 151.25,
+  "invalidation_level": 151.25,
+  "targets": [
+    195.0,
+    198.0,
+    217.16
+  ],
+  "risk_reward_ratio": 2.18,
+  "why": [
+    "Price: 160.9, EMA20: 218.05, MA50: 217.16",
+    "RSI: 52.35, MACD Histogram: 8.51",
+    "Sector change%: -4.81",
+    "Derived support/resistance: 156.07 / 165.0",
+    "Structure: trend_continuation (low)",
+    "Local range: 179.1 -> 225.0",
+    "Setup: breakout_watch, Score: 44/100, Confidence: 54%",
+    "Action: AVOID",
+    "QC gate: structure_confidence_low"
+  ],
+  "evidence_refs": [
+    "raw/screenshots/2026-03-18__UPPER__NEPSE__1D__market_context.png",
+    "raw/snapshots/2026-03-18__UPPER__NEPSE__1D__snapshot.txt",
+    "raw/tables/2026-03-18__UPPER__NEPSE__1D__market_extract.json",
+    "raw/snapshots/2026-03-18__UPPER__1W__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__UPPER__1W__stock_extract.json",
+    "raw/tables/2026-03-18__UPPER__1W__bar_extract.json",
+    "raw/tables/2026-03-18__UPPER__1W__indicator_extract.json",
+    "raw/screenshots/2026-03-18__UPPER__1W__clean_v2.png",
+    "raw/screenshots/2026-03-18__UPPER__1W__annotated_v2.png",
+    "raw/tables/2026-03-18__UPPER__HYDROPOWER__sector_extract.json",
+    "raw/screenshots/2026-03-18__UPPER__HYDROPOWER__sector.png",
+    "raw/snapshots/2026-03-18__UPPER__HYDROPOWER__sector_snapshot.txt",
+    "raw/tables/2026-03-18__UPPER__1W__decision_qc.json"
+  ],
+  "score_max": 100
+}

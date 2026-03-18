@@ -1,0 +1,10 @@
+{
+  "extraction_type": "stock_chart",
+  "symbol": "KBL",
+  "timeframe": "1W",
+  "data": {
+    "recent_bars": [],
+    "recent_bar_count": 0,
+    "total_bar_count": 0
+  }
+}

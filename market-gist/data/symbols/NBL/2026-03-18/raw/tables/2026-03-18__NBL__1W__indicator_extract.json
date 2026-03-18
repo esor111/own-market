@@ -1,0 +1,13 @@
+{
+  "extraction_type": "indicator_values",
+  "symbol": "NBL",
+  "timeframe": "1W",
+  "data": {
+    "macd_line": 1.26,
+    "signal_line": -7.12,
+    "histogram": -8.37,
+    "rsi": 46.64,
+    "ema_20": 212.53,
+    "ma_50": 209.08
+  }
+}

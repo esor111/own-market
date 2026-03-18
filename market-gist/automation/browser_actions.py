@@ -17,8 +17,10 @@ class BrowserAutomation:
     def __init__(self):
         self.playwright = None
         self.browser = None
+        self.context = None
         self.page = None
         self.frame = None
+        self._owns_page = False
         
     async def start(self):
         """Start browser and navigate to NEPSE Alpha"""
@@ -29,16 +31,15 @@ class BrowserAutomation:
             print("  Attempting to connect to existing Chrome browser...")
             self.browser = await self.playwright.chromium.connect_over_cdp("http://localhost:9222")
             
-            # Get existing page or create new one
+            # Always allocate a dedicated page for this run so parallel analyses
+            # do not fight over symbol/timeframe state in the same tab.
             if self.browser.contexts:
-                context = self.browser.contexts[0]
-                if context.pages:
-                    self.page = context.pages[0]
-                else:
-                    self.page = await context.new_page()
+                self.context = self.browser.contexts[0]
             else:
-                context = await self.browser.new_context()
-                self.page = await context.new_page()
+                self.context = await self.browser.new_context()
+
+            self.page = await self.context.new_page()
+            self._owns_page = True
             
             print("✓ Connected to existing Chrome browser")
             
@@ -93,8 +94,11 @@ class BrowserAutomation:
         
     async def close(self):
         """Close browser"""
-        if self.browser:
-            await self.browser.close()
+        if self._owns_page and self.page:
+            try:
+                await self.page.close()
+            except Exception:
+                pass
         if self.playwright:
             await self.playwright.stop()
         print("✓ Browser closed")
@@ -143,39 +147,103 @@ class BrowserAutomation:
         try:
             await random_delay(500, 1000)
 
-            timeframe_candidates = {
-                "1D": ["1 day", "D", "1D"],
-                "1W": ["1 week", "W", "1W"],
-                "1M": ["1 month", "M", "1M"]
+            timeframe_labels = {
+                "1D": "1 day",
+                "1W": "1 week",
+                "1M": "1 month"
             }
+            timeframe_codes = {
+                "1D": "1D",
+                "1W": "1W",
+                "1M": "1M"
+            }
+            top_toolbar = self.frame.locator("div.layout__area--top").first
+            target_label = timeframe_labels.get(timeframe, timeframe)
+            target_code = timeframe_codes.get(timeframe, timeframe)
 
-            candidates = timeframe_candidates.get(timeframe, [timeframe])
-            clicked = False
+            # Prefer TradingView's own chart API when available. This avoids flaky
+            # toolbar/menu interactions and lets us verify the applied resolution.
+            api_result = await self.frame.evaluate(
+                """
+                async (targetCode) => {
+                    const widget = window.chartWidget;
+                    if (!widget || typeof widget.getResolution !== 'function' || typeof widget.setResolution !== 'function') {
+                        return { available: false };
+                    }
 
-            for candidate in candidates:
-                try:
-                    locator = self.frame.get_by_role("button", name=candidate).first
-                    if await locator.count() > 0:
-                        await locator.click()
-                        clicked = True
-                        break
-                except:
-                    pass
+                    const before = widget.getResolution();
+                    if (String(before || '').toUpperCase() === String(targetCode).toUpperCase()) {
+                        return { available: true, changed: false, before, after: before, verified: true };
+                    }
 
-            # Last-resort fallback to text match when role-based selectors do not resolve.
-            if not clicked:
-                for candidate in candidates:
-                    try:
-                        locator = self.frame.get_by_text(candidate, exact=True).first
-                        if await locator.count() > 0:
-                            await locator.click()
-                            clicked = True
-                            break
-                    except:
-                        pass
+                    widget.setResolution(targetCode);
 
-            if not clicked:
+                    const started = Date.now();
+                    while (Date.now() - started < 5000) {
+                        await new Promise(resolve => setTimeout(resolve, 200));
+                        const after = widget.getResolution();
+                        if (String(after || '').toUpperCase() === String(targetCode).toUpperCase()) {
+                            return { available: true, changed: true, before, after, verified: true };
+                        }
+                    }
+
+                    return { available: true, changed: true, before, after: widget.getResolution(), verified: false };
+                }
+                """,
+                target_code
+            )
+
+            if api_result.get("available") and api_result.get("verified"):
+                await random_delay(1200, 2000)
+                print(f"✓ Set timeframe: {timeframe}")
+                return True
+
+            interval_button = top_toolbar.locator("button.menu-S_1OCXUK").first
+            if await interval_button.count() == 0:
+                interval_button = top_toolbar.locator(
+                    "button[aria-label*='minute'], button[aria-label*='hour'], button[aria-label*='day'], button[aria-label*='week'], button[aria-label*='month']"
+                ).first
+
+            if await interval_button.count() == 0:
                 raise Exception(f"Timeframe control not found for: {timeframe}")
+
+            current_label = await interval_button.get_attribute("aria-label") or ""
+            if current_label.strip().lower() == target_label.lower():
+                print(f"✓ Set timeframe: {timeframe}")
+                return True
+
+            await interval_button.click()
+            await random_delay(400, 800)
+            clicked = await self.frame.evaluate(
+                """
+                (targetLabel) => {
+                    const isVisible = (element) => {
+                        if (!element) return false;
+                        const rect = element.getBoundingClientRect();
+                        const style = window.getComputedStyle(element);
+                        return rect.width > 0 && rect.height > 0 &&
+                            style.visibility !== 'hidden' &&
+                            style.display !== 'none';
+                    };
+
+                    const nodes = Array.from(document.querySelectorAll('*'))
+                        .filter((element) => isVisible(element) && element.textContent.trim() === targetLabel);
+
+                    const candidate = nodes[nodes.length - 1];
+                    if (!candidate) return false;
+
+                    const clickable = candidate.closest('button, [role="menuitem"], [role="option"]') || candidate;
+                    clickable.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+                    clickable.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+                    clickable.click();
+                    return true;
+                }
+                """,
+                target_label
+            )
+
+            if not clicked:
+                raise Exception(f"Timeframe option not found in menu for: {timeframe}")
             
             await random_delay(1500, 2500)
             
@@ -415,6 +483,67 @@ class BrowserAutomation:
             import traceback
             traceback.print_exc()
             return {}
+
+    async def extract_recent_bars(self, limit=60):
+        """Extract recent OHLCV bars from the TradingView data source."""
+        try:
+            await asyncio.sleep(1)
+            payload = await self.frame.evaluate(
+                """
+(barLimit) => {
+    const series = window.chartWidget?._model?.mainSeries?.();
+    const source = series?._seriesSource;
+    const data = source?.data?.();
+    if (!data || typeof data.each !== 'function' || typeof data.size !== 'function') {
+        return { total_bars: 0, bars: [], available: false };
+    }
+
+    const totalBars = data.size();
+    const startIndex = Math.max(0, totalBars - barLimit);
+    const bars = [];
+
+    data.each((index, item) => {
+        if (!Array.isArray(item) || index < startIndex) {
+            return;
+        }
+
+        bars.push({
+            index,
+            time: item[0] ?? null,
+            open: item[1] ?? null,
+            high: item[2] ?? null,
+            low: item[3] ?? null,
+            close: item[4] ?? null,
+            volume: item[5] ?? null,
+            close_time_ms: item[6] ?? null
+        });
+    });
+
+    return {
+        total_bars: totalBars,
+        extracted_bars: bars.length,
+        bars,
+        available: bars.length > 0
+    };
+}
+                """,
+                limit
+            )
+            print(
+                f"✓ Extracted recent bars: total={payload.get('total_bars', 0)}, "
+                f"captured={payload.get('extracted_bars', 0)}"
+            )
+            return payload
+        except Exception as e:
+            print(f"✗ Error extracting recent bars: {e}")
+            import traceback
+            traceback.print_exc()
+            return {
+                "total_bars": 0,
+                "extracted_bars": 0,
+                "bars": [],
+                "available": False
+            }
     
     async def extract_indicator_values(self):
         """Extract indicator values from chart legend"""

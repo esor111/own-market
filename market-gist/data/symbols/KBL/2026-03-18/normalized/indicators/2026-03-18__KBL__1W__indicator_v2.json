@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__KBL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T14:15:26.253942",
+  "source": "nepsealpha_chart",
+  "symbol": "KBL",
+  "timeframe": "1W",
+  "ema_20": null,
+  "ma_50": null,
+  "ma_200": null,
+  "rsi": null,
+  "macd_line": null,
+  "signal_line": null,
+  "histogram": null,
+  "price_above_ema_20": null,
+  "price_above_ma_50": null,
+  "price_above_ma_200": null,
+  "momentum_label": "",
+  "confidence_source": "",
+  "evidence_refs": [
+    "raw/screenshots/2026-03-18__KBL__NEPSE__1D__market_context.png",
+    "raw/tables/2026-03-18__KBL__NEPSE__1D__market_extract.json",
+    "raw/tables/2026-03-18__KBL__1W__stock_extract.json",
+    "raw/tables/2026-03-18__KBL__1W__bar_extract.json",
+    "raw/tables/2026-03-18__KBL__1W__indicator_extract.json",
+    "raw/screenshots/2026-03-18__KBL__1W__clean_v2.png",
+    "raw/screenshots/2026-03-18__KBL__1W__annotated_v2.png",
+    "raw/tables/2026-03-18__KBL__BANKING__sector_extract.json",
+    "raw/screenshots/2026-03-18__KBL__BANKING__sector.png"
+  ],
+  "notes": null
+}

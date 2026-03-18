@@ -1,0 +1,13 @@
+{
+  "extraction_type": "indicator_values",
+  "symbol": "UPPER",
+  "timeframe": "1W",
+  "data": {
+    "macd_line": -1.29,
+    "signal_line": 7.22,
+    "histogram": 8.51,
+    "rsi": 52.35,
+    "ema_20": 218.05,
+    "ma_50": 217.16
+  }
+}

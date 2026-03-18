@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "session_id": "2026-03-18__SMHL__v2",
   "run_date": "2026-03-18",
-  "captured_at": "2026-03-18T09:11:21.882329",
+  "captured_at": "2026-03-18T16:46:15.228050",
   "source": "nepsealpha",
   "symbol": "SMHL",
   "status": "completed",
@@ -12,11 +12,12 @@
     "timeframe_selection",
     "indicator_setup",
     "clean_chart_capture",
-    "sector_evidence_capture"
+    "sector_evidence_capture",
+    "official_event_capture",
+    "decision_qc"
   ],
   "stages_skipped": [
-    "event_enrichment",
     "broker_flow_capture"
   ],
-  "notes": "Automated analysis run"
+  "notes": "Automated analysis run; qc_gate=structure_not_actionable:trend_breakdown"
 }

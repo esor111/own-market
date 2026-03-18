@@ -1,0 +1,120 @@
+{
+  "run_date": "2026-03-18",
+  "timeframe": "1W",
+  "symbols": [
+    "SMHL",
+    "UPPER",
+    "NABIL",
+    "NBL",
+    "EBL",
+    "HBL",
+    "KBL",
+    "SANIMA"
+  ],
+  "results": [
+    {
+      "symbol": "SMHL",
+      "timeframe": "1W",
+      "action": "avoid",
+      "setup_type": "no_setup",
+      "score": 37,
+      "confidence": 47,
+      "qc_status": "fail",
+      "qc_findings": [
+        "structure_not_actionable:trend_breakdown"
+      ],
+      "session_notes": "Automated analysis run; qc_gate=structure_not_actionable:trend_breakdown"
+    },
+    {
+      "symbol": "UPPER",
+      "timeframe": "1W",
+      "action": "avoid",
+      "setup_type": "breakout_watch",
+      "score": 45,
+      "confidence": 55,
+      "qc_status": "fail",
+      "qc_findings": [
+        "structure_confidence_low"
+      ],
+      "session_notes": "Automated analysis run; qc_gate=structure_confidence_low"
+    },
+    {
+      "symbol": "NABIL",
+      "timeframe": "1W",
+      "action": "avoid",
+      "setup_type": "breakout_watch",
+      "score": 49,
+      "confidence": 59,
+      "qc_status": "fail",
+      "qc_findings": [
+        "risk_reward_below_minimum"
+      ],
+      "session_notes": "Automated analysis run; qc_gate=risk_reward_below_minimum"
+    },
+    {
+      "symbol": "NBL",
+      "timeframe": "1W",
+      "action": "watch_only",
+      "setup_type": "continuation",
+      "score": 64,
+      "confidence": 74,
+      "qc_status": "pass",
+      "qc_findings": [],
+      "session_notes": "Automated analysis run"
+    },
+    {
+      "symbol": "EBL",
+      "timeframe": "1W",
+      "action": "buy",
+      "setup_type": "continuation",
+      "score": 69,
+      "confidence": 79,
+      "qc_status": "pass",
+      "qc_findings": [],
+      "session_notes": "Automated analysis run"
+    },
+    {
+      "symbol": "HBL",
+      "timeframe": "1W",
+      "action": "avoid",
+      "setup_type": "breakout_watch",
+      "score": 48,
+      "confidence": 58,
+      "qc_status": "fail",
+      "qc_findings": [
+        "risk_reward_below_minimum"
+      ],
+      "session_notes": "Automated analysis run; qc_gate=risk_reward_below_minimum"
+    },
+    {
+      "symbol": "KBL",
+      "timeframe": "1W",
+      "action": "avoid",
+      "setup_type": "breakout_watch",
+      "score": 40,
+      "confidence": 50,
+      "qc_status": "fail",
+      "qc_findings": [
+        "structure_confidence_low"
+      ],
+      "session_notes": "Automated analysis run; qc_gate=structure_confidence_low"
+    },
+    {
+      "symbol": "SANIMA",
+      "timeframe": "1W",
+      "action": "watch_only",
+      "setup_type": "continuation",
+      "score": 55,
+      "confidence": 65,
+      "qc_status": "pass",
+      "qc_findings": [],
+      "session_notes": "Automated analysis run"
+    }
+  ],
+  "action_counts": {
+    "avoid": 5,
+    "watch_only": 2,
+    "buy": 1
+  },
+  "qc_fail_count": 5
+}

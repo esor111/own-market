@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__HBL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T14:13:33.322531",
+  "source": "nepsealpha",
+  "symbol": "HBL",
+  "status": "completed",
+  "stages_completed": [
+    "market_context_capture",
+    "symbol_chart_load",
+    "timeframe_selection",
+    "indicator_setup",
+    "clean_chart_capture",
+    "sector_evidence_capture",
+    "decision_qc"
+  ],
+  "stages_skipped": [
+    "event_enrichment",
+    "broker_flow_capture"
+  ],
+  "notes": "Automated analysis run; qc_gate=risk_reward_below_minimum"
+}

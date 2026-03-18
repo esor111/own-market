@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__UPPER__v2",
+  "run_date": "2026-03-18",
+  "symbol": "UPPER",
+  "scores": {
+    "market_alignment": 3,
+    "sector_alignment": 3,
+    "trend_filter_quality": 2,
+    "momentum_confirmation": 7,
+    "relative_strength": 6,
+    "structure_quality": 5,
+    "location_quality": 5,
+    "volume_confirmation": 2,
+    "event_quality": 5,
+    "risk_reward_quality": 6
+  },
+  "score_total": 44,
+  "score_max": 100,
+  "confidence_source": "derived",
+  "evidence_refs": [
+    "raw/screenshots/2026-03-18__UPPER__NEPSE__1D__market_context.png",
+    "raw/snapshots/2026-03-18__UPPER__NEPSE__1D__snapshot.txt",
+    "raw/tables/2026-03-18__UPPER__NEPSE__1D__market_extract.json",
+    "raw/snapshots/2026-03-18__UPPER__1W__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__UPPER__1W__stock_extract.json",
+    "raw/tables/2026-03-18__UPPER__1W__bar_extract.json",
+    "raw/tables/2026-03-18__UPPER__1W__indicator_extract.json",
+    "raw/screenshots/2026-03-18__UPPER__1W__clean_v2.png",
+    "raw/screenshots/2026-03-18__UPPER__1W__annotated_v2.png",
+    "raw/tables/2026-03-18__UPPER__HYDROPOWER__sector_extract.json",
+    "raw/screenshots/2026-03-18__UPPER__HYDROPOWER__sector.png",
+    "raw/snapshots/2026-03-18__UPPER__HYDROPOWER__sector_snapshot.txt",
+    "raw/tables/2026-03-18__UPPER__1W__decision_qc.json"
+  ],
+  "score_percent": 44,
+  "notes": "structure_confidence_low; qc_gate:structure_confidence_low"
+}

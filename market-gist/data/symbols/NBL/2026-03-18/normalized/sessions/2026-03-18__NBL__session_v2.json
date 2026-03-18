@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__NBL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T14:09:44.336448",
+  "source": "nepsealpha",
+  "symbol": "NBL",
+  "status": "completed",
+  "stages_completed": [
+    "market_context_capture",
+    "symbol_chart_load",
+    "timeframe_selection",
+    "indicator_setup",
+    "clean_chart_capture",
+    "sector_evidence_capture",
+    "decision_qc"
+  ],
+  "stages_skipped": [
+    "event_enrichment",
+    "broker_flow_capture"
+  ],
+  "notes": "Automated analysis run"
+}

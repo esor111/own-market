@@ -2,63 +2,72 @@
   "schema_version": "1.0",
   "session_id": "2026-03-18__SMHL__v2",
   "run_date": "2026-03-18",
-  "captured_at": "2026-03-18T09:11:21.882329",
+  "captured_at": "2026-03-18T16:46:15.228050",
   "source": "nepsealpha_chart",
   "symbol": "SMHL",
   "timeframe": "1W",
-  "close": 527.0,
-  "open": 530.0,
-  "high": 535.0,
-  "low": 511.0,
+  "close": 979.7,
+  "open": 1003.8,
+  "high": 1034.8,
+  "low": 952.5,
   "volume": null,
-  "trend_label": "uptrend",
-  "structure_label": "price_vs_moving_averages",
+  "trend_label": "downtrend",
+  "structure_label": "trend_breakdown",
   "swing_highs": [
-    530.0,
-    535.0
+    1003.8,
+    1034.8,
+    1067.83,
+    1159.99
   ],
   "swing_lows": [
-    527.0,
-    516.09,
-    511.0,
-    495.34
+    952.5,
+    490.1,
+    443.0
   ],
   "support_zones": [
     [
-      521.73,
-      532.27
+      942.98,
+      962.02
     ],
     [
-      510.93,
-      521.25
+      485.2,
+      495.0
     ],
     [
-      505.89,
-      516.11
+      438.57,
+      447.43
     ]
   ],
   "resistance_zones": [
     [
-      524.7,
-      535.3
+      993.76,
+      1013.84
     ],
     [
-      529.65,
-      540.35
+      1024.45,
+      1045.15
+    ],
+    [
+      1057.15,
+      1078.51
     ]
   ],
-  "breakout_level": 530.0,
-  "breakdown_level": 527.0,
-  "invalidation_level": 516.09,
-  "location_label": "near_support",
+  "breakout_level": 1003.8,
+  "breakdown_level": 952.5,
+  "invalidation_level": 490.1,
+  "location_label": "near_resistance",
   "confidence_source": "extracted_plus_derived",
   "evidence_refs": [
-    "2026-03-18__SMHL__NEPSE__1D__market_context.png",
-    "2026-03-18__SMHL__NEPSE__1D__snapshot.txt",
-    "2026-03-18__SMHL__1W__pre_indicators_snapshot.txt",
-    "2026-03-18__SMHL__1W__clean_v2.png",
-    "2026-03-18__SMHL__1W__annotated_v2.png",
-    "2026-03-18__SMHL__HYDROPOWER__sector.png",
-    "2026-03-18__SMHL__HYDROPOWER__sector_snapshot.txt"
-  ]
+    "raw/snapshots/2026-03-18__SMHL__1W__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__SMHL__1W__stock_extract.json",
+    "raw/tables/2026-03-18__SMHL__1W__bar_extract.json",
+    "raw/tables/2026-03-18__SMHL__1W__indicator_extract.json",
+    "raw/screenshots/2026-03-18__SMHL__1W__clean_v2.png",
+    "raw/screenshots/2026-03-18__SMHL__1W__annotated_v2.png"
+  ],
+  "local_range_high": 581.0,
+  "local_range_low": 443.0,
+  "range_width_pct": 31.15,
+  "structure_confidence": "high",
+  "structure_confidence_reasons": []
 }

@@ -1,0 +1,98 @@
+{
+  "run_date": "2026-03-18",
+  "timeframe": "1W",
+  "symbols": [
+    "SMHL",
+    "UPPER",
+    "NABIL",
+    "NBL",
+    "EBL",
+    "HBL",
+    "KBL",
+    "SANIMA"
+  ],
+  "results": [
+    {
+      "symbol": "SMHL",
+      "timeframe": "1W",
+      "decision_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\SMHL\\2026-03-18\\normalized\\decisions\\2026-03-18__SMHL__decision_v2.json",
+      "action": "watch_only",
+      "score": 57,
+      "confidence": 66,
+      "outcome_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\SMHL\\2026-03-18\\outcomes\\realized_results\\2026-03-18__SMHL__1W__outcome_v1.json",
+      "outcome_label": "pending"
+    },
+    {
+      "symbol": "UPPER",
+      "timeframe": "1W",
+      "decision_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\UPPER\\2026-03-18\\normalized\\decisions\\2026-03-18__UPPER__decision_v2.json",
+      "action": "avoid",
+      "score": 44,
+      "confidence": 54,
+      "outcome_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\UPPER\\2026-03-18\\outcomes\\realized_results\\2026-03-18__UPPER__1W__outcome_v1.json",
+      "outcome_label": "not_applicable"
+    },
+    {
+      "symbol": "NABIL",
+      "timeframe": "1W",
+      "decision_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\NABIL\\2026-03-18\\normalized\\decisions\\2026-03-18__NABIL__decision_v2.json",
+      "action": "avoid",
+      "score": 49,
+      "confidence": 59,
+      "outcome_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\NABIL\\2026-03-18\\outcomes\\realized_results\\2026-03-18__NABIL__1W__outcome_v1.json",
+      "outcome_label": "not_applicable"
+    },
+    {
+      "symbol": "NBL",
+      "timeframe": "1W",
+      "decision_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\NBL\\2026-03-18\\normalized\\decisions\\2026-03-18__NBL__decision_v2.json",
+      "action": "watch_only",
+      "score": 64,
+      "confidence": 74,
+      "outcome_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\NBL\\2026-03-18\\outcomes\\realized_results\\2026-03-18__NBL__1W__outcome_v1.json",
+      "outcome_label": "pending"
+    },
+    {
+      "symbol": "EBL",
+      "timeframe": "1W",
+      "decision_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\EBL\\2026-03-18\\normalized\\decisions\\2026-03-18__EBL__decision_v2.json",
+      "action": "buy",
+      "score": 68,
+      "confidence": 78,
+      "outcome_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\EBL\\2026-03-18\\outcomes\\realized_results\\2026-03-18__EBL__1W__outcome_v1.json",
+      "outcome_label": "pending"
+    },
+    {
+      "symbol": "HBL",
+      "timeframe": "1W",
+      "decision_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\HBL\\2026-03-18\\normalized\\decisions\\2026-03-18__HBL__decision_v2.json",
+      "action": "avoid",
+      "score": 48,
+      "confidence": 58,
+      "outcome_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\HBL\\2026-03-18\\outcomes\\realized_results\\2026-03-18__HBL__1W__outcome_v1.json",
+      "outcome_label": "not_applicable"
+    },
+    {
+      "symbol": "KBL",
+      "timeframe": "1W",
+      "decision_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\KBL\\2026-03-18\\normalized\\decisions\\2026-03-18__KBL__decision_v2.json",
+      "action": "incomplete_data",
+      "score": 0,
+      "confidence": 0,
+      "outcome_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\KBL\\2026-03-18\\outcomes\\realized_results\\2026-03-18__KBL__1W__outcome_v1.json",
+      "outcome_label": "not_applicable"
+    },
+    {
+      "symbol": "SANIMA",
+      "timeframe": "1W",
+      "decision_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\SANIMA\\2026-03-18\\normalized\\decisions\\2026-03-18__SANIMA__decision_v2.json",
+      "action": "watch_only",
+      "score": 55,
+      "confidence": 65,
+      "outcome_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\symbols\\SANIMA\\2026-03-18\\outcomes\\realized_results\\2026-03-18__SANIMA__1W__outcome_v1.json",
+      "outcome_label": "pending"
+    }
+  ],
+  "calibration_summary_path": "C:\\Users\\ishwor\\Music\\own-organize\\own-market\\market-gist\\data\\validation\\confidence_calibration_summary.json",
+  "usable_calibration_samples": 0
+}

@@ -107,7 +107,12 @@ class FileGenerator:
             "breakout_level": chart_data.get("breakout_level"),
             "breakdown_level": chart_data.get("breakdown_level"),
             "invalidation_level": chart_data.get("invalidation_level"),
+            "local_range_high": chart_data.get("local_range_high"),
+            "local_range_low": chart_data.get("local_range_low"),
+            "range_width_pct": chart_data.get("range_width_pct"),
             "location_label": chart_data.get("location_label", ""),
+            "structure_confidence": chart_data.get("structure_confidence"),
+            "structure_confidence_reasons": chart_data.get("structure_confidence_reasons", []),
             "confidence_source": chart_data.get("confidence_source", ""),
             "evidence_refs": evidence_refs
         })
@@ -225,15 +230,22 @@ class FileGenerator:
         self.save_json(template, filepath)
         return filepath
     
-    def generate_event_record(self, symbol, event_found, evidence_refs, notes=""):
-        """Generate event record (or no-event record)"""
+    def generate_event_record(self, symbol, event_data, evidence_refs):
+        """Generate event record from structured event context."""
         template = self.load_template("event")
         template.update({
             "session_id": self.session_id,
             "run_date": self.run_date,
+            "captured_at": self.timestamp,
             "symbol": symbol,
-            "event_found": event_found,
-            "notes": notes or "No corporate actions or significant events found during chart review.",
+            "source": event_data.get("source", ""),
+            "event_date": event_data.get("event_date", ""),
+            "event_type": event_data.get("event_type", ""),
+            "sentiment": event_data.get("sentiment", ""),
+            "impact_window_days": event_data.get("impact_window_days"),
+            "relevance_now": event_data.get("relevance_now", ""),
+            "details": event_data.get("details", {}),
+            "confidence_source": event_data.get("confidence_source", ""),
             "evidence_refs": evidence_refs
         })
         
@@ -255,5 +267,58 @@ class FileGenerator:
         })
         
         filepath = os.path.join(self.run_dirs["normalized_broker_flow"], f"{self.run_date}__{symbol}__broker_flow_v2.json")
+        self.save_json(template, filepath)
+        return filepath
+
+    def generate_model_input_record(self, symbol, model_input_data, evidence_refs):
+        """Generate model-input package for a stronger reasoning model."""
+        template = self.load_template("model_input")
+        template.update({
+            "session_id": self.session_id,
+            "run_date": self.run_date,
+            "captured_at": self.timestamp,
+            "symbol": symbol,
+            "primary_horizon": model_input_data.get("primary_horizon", "swing"),
+            "market": model_input_data.get("market", {}),
+            "sector": model_input_data.get("sector", {}),
+            "timeframes": model_input_data.get("timeframes", {}),
+            "derived_alignment": model_input_data.get("derived_alignment", {}),
+            "event_context": model_input_data.get("event_context", {}),
+            "quality_flags": model_input_data.get("quality_flags", {}),
+            "uncertainties": model_input_data.get("uncertainties", []),
+            "decision_inputs": model_input_data.get("decision_inputs", {}),
+            "evidence_refs": evidence_refs
+        })
+
+        filepath = os.path.join(
+            self.run_dirs["features_model_inputs"],
+            f"{self.run_date}__{symbol}__model_input_v1.json"
+        )
+        self.save_json(template, filepath)
+        return filepath
+
+    def generate_outcome_record(self, symbol, timeframe, outcome_data, evidence_refs):
+        """Generate realized outcome record for a prior decision."""
+        template = self.load_template("outcome")
+        template.update({
+            "session_id": self.session_id,
+            "decision_session_id": outcome_data.get("decision_session_id", self.session_id),
+            "symbol": symbol,
+            "evaluation_date": outcome_data.get("evaluation_date", self.run_date),
+            "time_horizon": outcome_data.get("time_horizon", timeframe),
+            "outcome_label": outcome_data.get("outcome_label", ""),
+            "target_1_hit": outcome_data.get("target_1_hit"),
+            "target_2_hit": outcome_data.get("target_2_hit"),
+            "target_3_hit": outcome_data.get("target_3_hit"),
+            "stop_hit": outcome_data.get("stop_hit"),
+            "max_favorable_excursion_pct": outcome_data.get("max_favorable_excursion_pct"),
+            "max_adverse_excursion_pct": outcome_data.get("max_adverse_excursion_pct"),
+            "notes": outcome_data.get("notes")
+        })
+
+        filepath = os.path.join(
+            self.run_dirs["outcomes_realized_results"],
+            f"{self.run_date}__{symbol}__{timeframe}__outcome_v1.json"
+        )
         self.save_json(template, filepath)
         return filepath

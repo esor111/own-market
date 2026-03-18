@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__HBL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T14:13:33.322531",
+  "source": "nepsealpha_chart",
+  "symbol": "HBL",
+  "timeframe": "1W",
+  "close": 253.0,
+  "open": 258.0,
+  "high": 261.0,
+  "low": 247.0,
+  "volume": null,
+  "trend_label": "sideways",
+  "structure_label": "range",
+  "swing_highs": [
+    258.0,
+    261.0
+  ],
+  "swing_lows": [
+    247.0,
+    184.4
+  ],
+  "support_zones": [
+    [
+      244.53,
+      249.47
+    ],
+    [
+      182.56,
+      186.24
+    ]
+  ],
+  "resistance_zones": [
+    [
+      255.42,
+      260.58
+    ],
+    [
+      258.39,
+      263.61
+    ]
+  ],
+  "breakout_level": 258.0,
+  "breakdown_level": 247.0,
+  "invalidation_level": 184.4,
+  "location_label": "near_resistance",
+  "confidence_source": "extracted_plus_derived",
+  "evidence_refs": [
+    "raw/screenshots/2026-03-18__HBL__NEPSE__1D__market_context.png",
+    "raw/snapshots/2026-03-18__HBL__NEPSE__1D__snapshot.txt",
+    "raw/tables/2026-03-18__HBL__NEPSE__1D__market_extract.json",
+    "raw/snapshots/2026-03-18__HBL__1W__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__HBL__1W__stock_extract.json",
+    "raw/tables/2026-03-18__HBL__1W__bar_extract.json",
+    "raw/tables/2026-03-18__HBL__1W__indicator_extract.json",
+    "raw/screenshots/2026-03-18__HBL__1W__clean_v2.png",
+    "raw/screenshots/2026-03-18__HBL__1W__annotated_v2.png",
+    "raw/tables/2026-03-18__HBL__BANKING__sector_extract.json",
+    "raw/screenshots/2026-03-18__HBL__BANKING__sector.png",
+    "raw/snapshots/2026-03-18__HBL__BANKING__sector_snapshot.txt",
+    "raw/tables/2026-03-18__HBL__1W__decision_qc.json"
+  ],
+  "local_range_high": 220.5,
+  "local_range_low": 184.4,
+  "range_width_pct": 19.58,
+  "structure_confidence": "high",
+  "structure_confidence_reasons": []
+}

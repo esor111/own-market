@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "session_id": "",
+  "run_date": "",
+  "captured_at": "",
+  "symbol": "",
+  "primary_horizon": "",
+  "market": {},
+  "sector": {},
+  "timeframes": {},
+  "derived_alignment": {},
+  "event_context": {},
+  "quality_flags": {},
+  "uncertainties": [],
+  "decision_inputs": {},
+  "evidence_refs": []
+}

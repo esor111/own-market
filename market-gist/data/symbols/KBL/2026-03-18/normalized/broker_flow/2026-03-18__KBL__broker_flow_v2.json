@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__KBL__v2",
+  "run_date": "2026-03-18",
+  "source": "floorsheet_or_broker_view",
+  "symbol": "KBL",
+  "activity_label": "",
+  "accumulation_signal": null,
+  "distribution_signal": null,
+  "notes": "Floorsheet data requires authentication. Cannot access without login.",
+  "confidence_source": "",
+  "evidence_refs": [
+    "raw/screenshots/2026-03-18__KBL__NEPSE__1D__market_context.png",
+    "raw/tables/2026-03-18__KBL__NEPSE__1D__market_extract.json",
+    "raw/tables/2026-03-18__KBL__1W__stock_extract.json",
+    "raw/tables/2026-03-18__KBL__1W__bar_extract.json",
+    "raw/tables/2026-03-18__KBL__1W__indicator_extract.json",
+    "raw/screenshots/2026-03-18__KBL__1W__clean_v2.png",
+    "raw/screenshots/2026-03-18__KBL__1W__annotated_v2.png",
+    "raw/tables/2026-03-18__KBL__BANKING__sector_extract.json",
+    "raw/screenshots/2026-03-18__KBL__BANKING__sector.png"
+  ],
+  "data_available": false,
+  "unavailable_reason": "floorsheet_requires_login"
+}

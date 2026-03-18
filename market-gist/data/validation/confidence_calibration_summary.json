@@ -1,0 +1,165 @@
+{
+  "total_decisions": 9,
+  "decisions_with_usable_outcomes": 0,
+  "decisions_excluded_from_calibration": 9,
+  "minimum_sample_warning": true,
+  "confidence_buckets": {},
+  "score_buckets": {},
+  "excluded_records": [
+    {
+      "session_id": "2026-03-18__EBL__v2",
+      "symbol": "EBL",
+      "reason": "pending"
+    },
+    {
+      "session_id": "2026-03-18__HBL__v2",
+      "symbol": "HBL",
+      "reason": "not_applicable"
+    },
+    {
+      "session_id": "2026-03-18__KBL__v2",
+      "symbol": "KBL",
+      "reason": "not_applicable"
+    },
+    {
+      "session_id": "2026-03-18__NABIL__v2",
+      "symbol": "NABIL",
+      "reason": "not_applicable"
+    },
+    {
+      "session_id": "2026-03-18__NBL__v2",
+      "symbol": "NBL",
+      "reason": "pending"
+    },
+    {
+      "session_id": "2026-03-18__SANIMA__v2",
+      "symbol": "SANIMA",
+      "reason": "pending"
+    },
+    {
+      "session_id": "2026-03-17__SMHL__v2",
+      "symbol": "SMHL",
+      "reason": "missing"
+    },
+    {
+      "session_id": "2026-03-18__SMHL__v2",
+      "symbol": "SMHL",
+      "reason": "pending"
+    },
+    {
+      "session_id": "2026-03-18__UPPER__v2",
+      "symbol": "UPPER",
+      "reason": "not_applicable"
+    }
+  ],
+  "records": [
+    {
+      "session_id": "2026-03-18__EBL__v2",
+      "symbol": "EBL",
+      "action": "buy",
+      "setup_type": "continuation",
+      "score": 68,
+      "confidence": 78,
+      "confidence_bucket": "70-79",
+      "score_bucket": "60-69",
+      "outcome_label": "pending",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__HBL__v2",
+      "symbol": "HBL",
+      "action": "avoid",
+      "setup_type": "breakout_watch",
+      "score": 48,
+      "confidence": 58,
+      "confidence_bucket": "50-59",
+      "score_bucket": "40-49",
+      "outcome_label": "not_applicable",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__KBL__v2",
+      "symbol": "KBL",
+      "action": "incomplete_data",
+      "setup_type": "no_setup",
+      "score": 0,
+      "confidence": 0,
+      "confidence_bucket": "0-9",
+      "score_bucket": "0-9",
+      "outcome_label": "not_applicable",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__NABIL__v2",
+      "symbol": "NABIL",
+      "action": "avoid",
+      "setup_type": "breakout_watch",
+      "score": 49,
+      "confidence": 59,
+      "confidence_bucket": "50-59",
+      "score_bucket": "40-49",
+      "outcome_label": "not_applicable",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__NBL__v2",
+      "symbol": "NBL",
+      "action": "watch_only",
+      "setup_type": "continuation",
+      "score": 64,
+      "confidence": 74,
+      "confidence_bucket": "70-79",
+      "score_bucket": "60-69",
+      "outcome_label": "pending",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__SANIMA__v2",
+      "symbol": "SANIMA",
+      "action": "watch_only",
+      "setup_type": "continuation",
+      "score": 55,
+      "confidence": 65,
+      "confidence_bucket": "60-69",
+      "score_bucket": "50-59",
+      "outcome_label": "pending",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-17__SMHL__v2",
+      "symbol": "SMHL",
+      "action": "watch_only",
+      "setup_type": "continuation",
+      "score": 60,
+      "confidence": 70,
+      "confidence_bucket": "70-79",
+      "score_bucket": "60-69",
+      "outcome_label": "missing",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__SMHL__v2",
+      "symbol": "SMHL",
+      "action": "watch_only",
+      "setup_type": "breakout_watch",
+      "score": 57,
+      "confidence": 66,
+      "confidence_bucket": "60-69",
+      "score_bucket": "50-59",
+      "outcome_label": "pending",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__UPPER__v2",
+      "symbol": "UPPER",
+      "action": "avoid",
+      "setup_type": "breakout_watch",
+      "score": 44,
+      "confidence": 54,
+      "confidence_bucket": "50-59",
+      "score_bucket": "40-49",
+      "outcome_label": "not_applicable",
+      "success": null
+    }
+  ]
+}

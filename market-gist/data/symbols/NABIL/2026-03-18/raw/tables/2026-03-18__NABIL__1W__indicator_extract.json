@@ -1,0 +1,13 @@
+{
+  "extraction_type": "indicator_values",
+  "symbol": "NABIL",
+  "timeframe": "1W",
+  "data": {
+    "macd_line": 10.07,
+    "signal_line": -12.61,
+    "histogram": -22.68,
+    "rsi": 50.65,
+    "ema_20": 464.44,
+    "ma_50": 454.31
+  }
+}

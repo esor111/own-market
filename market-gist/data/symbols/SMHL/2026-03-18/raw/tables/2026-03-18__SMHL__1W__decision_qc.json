@@ -1,0 +1,34 @@
+{
+  "extraction_type": "decision_qc",
+  "symbol": "SMHL",
+  "timeframe": "1W",
+  "data": {
+    "status": "fail",
+    "findings": [
+      "structure_not_actionable:trend_breakdown"
+    ],
+    "decision": {
+      "setup_type": "no_setup",
+      "score": 37,
+      "score_max": 100,
+      "confidence": 47,
+      "action": "avoid",
+      "entry_zone": [],
+      "stop_loss": null,
+      "invalidation_level": null,
+      "targets": [],
+      "risk_reward_ratio": null,
+      "why": [
+        "Price: 979.7, EMA20: 1067.83, MA50: 1159.99",
+        "RSI: 51.66, MACD Histogram: 143.68",
+        "Sector change%: -0.0",
+        "Event: no_recent_official_event_match (inactive)",
+        "Derived support/resistance: 952.5 / 1003.8",
+        "Structure: trend_breakdown (high)",
+        "Local range: 443.0 -> 581.0",
+        "Setup: no_setup, Score: 37/100, Confidence: 47%",
+        "Action: AVOID"
+      ]
+    }
+  }
+}

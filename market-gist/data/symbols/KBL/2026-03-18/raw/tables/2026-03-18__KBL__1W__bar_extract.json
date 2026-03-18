@@ -1,0 +1,11 @@
+{
+  "extraction_type": "recent_bars",
+  "symbol": "KBL",
+  "timeframe": "1W",
+  "data": {
+    "total_bars": 0,
+    "extracted_bars": 0,
+    "bars": [],
+    "available": false
+  }
+}

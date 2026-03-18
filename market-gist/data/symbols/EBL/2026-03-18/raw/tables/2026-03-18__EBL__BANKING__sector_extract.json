@@ -1,0 +1,13 @@
+{
+  "extraction_type": "sector_chart",
+  "sector_symbol": "BANKING",
+  "data": {
+    "open": 388.03,
+    "high": 469.04,
+    "low": 388.03,
+    "close": 454.55,
+    "change": 66.52,
+    "change_pct": 17.14,
+    "series_title": "Commercial Banking"
+  }
+}

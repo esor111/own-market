@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__NABIL__v2",
+  "decision_session_id": "2026-03-18__NABIL__v2",
+  "symbol": "NABIL",
+  "evaluation_date": "2026-03-18",
+  "time_horizon": "1W",
+  "outcome_label": "not_applicable",
+  "target_1_hit": null,
+  "target_2_hit": null,
+  "target_3_hit": null,
+  "stop_hit": null,
+  "max_favorable_excursion_pct": null,
+  "max_adverse_excursion_pct": null,
+  "notes": "Decision did not produce an actionable trade plan."
+}

@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__EBL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T19:44:33.647460",
+  "source": "sebon_prospectus",
+  "symbol": "EBL",
+  "event_date": "",
+  "event_type": "no_recent_official_event_match",
+  "sentiment": "neutral",
+  "impact_window_days": 0,
+  "relevance_now": "inactive",
+  "details": {
+    "company_name": "Everest Bank Limited",
+    "symbol": "EBL",
+    "pages_checked": [
+      "https://sebon.gov.np/prospectus",
+      "https://sebon.gov.np/prospectus?page=2",
+      "https://sebon.gov.np/prospectus?page=3"
+    ]
+  },
+  "confidence_source": "page_text",
+  "evidence_refs": [
+    "raw/screenshots/2026-03-18__EBL__NEPSE__1D__market_context.png",
+    "raw/snapshots/2026-03-18__EBL__NEPSE__1D__snapshot.txt",
+    "raw/tables/2026-03-18__EBL__NEPSE__1D__market_extract.json",
+    "raw/snapshots/2026-03-18__EBL__1M__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__EBL__1M__stock_extract.json",
+    "raw/tables/2026-03-18__EBL__1M__bar_extract.json",
+    "raw/tables/2026-03-18__EBL__1M__indicator_extract.json",
+    "raw/screenshots/2026-03-18__EBL__1M__clean_v2.png",
+    "raw/screenshots/2026-03-18__EBL__1M__annotated_v2.png",
+    "raw/tables/2026-03-18__EBL__BANKING__sector_extract.json",
+    "raw/screenshots/2026-03-18__EBL__BANKING__sector.png",
+    "raw/snapshots/2026-03-18__EBL__BANKING__sector_snapshot.txt",
+    "raw/tables/2026-03-18__EBL__event_extract.json",
+    "raw/tables/2026-03-18__EBL__1M__decision_qc.json"
+  ]
+}

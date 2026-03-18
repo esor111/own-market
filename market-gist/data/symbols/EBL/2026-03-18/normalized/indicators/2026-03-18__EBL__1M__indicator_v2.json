@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__EBL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T19:44:33.647460",
+  "source": "nepsealpha_chart",
+  "symbol": "EBL",
+  "timeframe": "1M",
+  "ema_20": 359.57,
+  "ma_50": 360.54,
+  "ma_200": null,
+  "rsi": 38.23,
+  "macd_line": 3.06,
+  "signal_line": -35.17,
+  "histogram": -38.23,
+  "price_above_ema_20": false,
+  "price_above_ma_50": false,
+  "price_above_ma_200": null,
+  "momentum_label": "weak_or_reversal_watch",
+  "confidence_source": "",
+  "evidence_refs": [
+    "raw/snapshots/2026-03-18__EBL__1M__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__EBL__1M__stock_extract.json",
+    "raw/tables/2026-03-18__EBL__1M__bar_extract.json",
+    "raw/tables/2026-03-18__EBL__1M__indicator_extract.json",
+    "raw/screenshots/2026-03-18__EBL__1M__clean_v2.png",
+    "raw/screenshots/2026-03-18__EBL__1M__annotated_v2.png"
+  ],
+  "notes": null
+}

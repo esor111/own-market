@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__NBL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T14:09:44.336448",
+  "symbol": "NBL",
+  "setup_type": "continuation",
+  "score": 64,
+  "confidence": 74,
+  "action": "watch_only",
+  "entry_zone": [
+    209.08,
+    215.0
+  ],
+  "stop_loss": 202.0,
+  "invalidation_level": 202.0,
+  "targets": [
+    244.0,
+    255.0,
+    281.0
+  ],
+  "risk_reward_ratio": 4.93,
+  "why": [
+    "Price: 215.0, EMA20: 212.53, MA50: 209.08",
+    "RSI: 46.64, MACD Histogram: -8.37",
+    "Sector change%: -1.95",
+    "Derived support/resistance: 209.08 / 244.0",
+    "Structure: trend_continuation (high)",
+    "Local range: 237.0 -> 281.0",
+    "Setup: continuation, Score: 64/100, Confidence: 74%",
+    "Action: WATCH_ONLY"
+  ],
+  "evidence_refs": [
+    "raw/screenshots/2026-03-18__NBL__NEPSE__1D__market_context.png",
+    "raw/snapshots/2026-03-18__NBL__NEPSE__1D__snapshot.txt",
+    "raw/tables/2026-03-18__NBL__NEPSE__1D__market_extract.json",
+    "raw/snapshots/2026-03-18__NBL__1W__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__NBL__1W__stock_extract.json",
+    "raw/tables/2026-03-18__NBL__1W__bar_extract.json",
+    "raw/tables/2026-03-18__NBL__1W__indicator_extract.json",
+    "raw/screenshots/2026-03-18__NBL__1W__clean_v2.png",
+    "raw/screenshots/2026-03-18__NBL__1W__annotated_v2.png",
+    "raw/tables/2026-03-18__NBL__BANKING__sector_extract.json",
+    "raw/screenshots/2026-03-18__NBL__BANKING__sector.png",
+    "raw/snapshots/2026-03-18__NBL__BANKING__sector_snapshot.txt",
+    "raw/tables/2026-03-18__NBL__1W__decision_qc.json"
+  ],
+  "score_max": 100
+}

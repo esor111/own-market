@@ -1,0 +1,40 @@
+{
+  "extraction_type": "decision_qc",
+  "symbol": "KBL",
+  "timeframe": "1W",
+  "data": {
+    "status": "fail",
+    "findings": [
+      "structure_confidence_low"
+    ],
+    "decision": {
+      "setup_type": "breakout_watch",
+      "score": 40,
+      "score_max": 100,
+      "confidence": 50,
+      "action": "avoid",
+      "entry_zone": [
+        139.42,
+        142.21
+      ],
+      "stop_loss": 127.84,
+      "invalidation_level": 127.84,
+      "targets": [
+        186.6,
+        198.1,
+        231.0
+      ],
+      "risk_reward_ratio": 4.07,
+      "why": [
+        "Price: 136.0, EMA20: 139.44, MA50: 139.42",
+        "RSI: 42.28, MACD Histogram: -4.47",
+        "Sector change%: -1.21",
+        "Derived support/resistance: 131.92 / 139.42",
+        "Structure: trend_continuation (low)",
+        "Local range: 178.4 -> 231.0",
+        "Setup: breakout_watch, Score: 40/100, Confidence: 50%",
+        "Action: AVOID"
+      ]
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "extraction_type": "decision_qc",
+  "symbol": "NBL",
+  "timeframe": "1W",
+  "data": {
+    "status": "pass",
+    "findings": [],
+    "decision": {
+      "setup_type": "continuation",
+      "score": 64,
+      "score_max": 100,
+      "confidence": 74,
+      "action": "watch_only",
+      "entry_zone": [
+        209.08,
+        215.0
+      ],
+      "stop_loss": 202.0,
+      "invalidation_level": 202.0,
+      "targets": [
+        244.0,
+        255.0,
+        281.0
+      ],
+      "risk_reward_ratio": 4.93,
+      "why": [
+        "Price: 215.0, EMA20: 212.53, MA50: 209.08",
+        "RSI: 46.64, MACD Histogram: -8.37",
+        "Sector change%: -1.95",
+        "Derived support/resistance: 209.08 / 244.0",
+        "Structure: trend_continuation (high)",
+        "Local range: 237.0 -> 281.0",
+        "Setup: continuation, Score: 64/100, Confidence: 74%",
+        "Action: WATCH_ONLY"
+      ]
+    }
+  }
+}
