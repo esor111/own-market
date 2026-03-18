@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-17__NABIL__v2",
+  "run_date": "2026-03-17",
+  "symbol": "NABIL",
+  "timeframe": "1D",
+  "current_volume": null,
+  "volume_vs_average": "",
+  "breakout_volume_signal": "",
+  "pullback_volume_signal": "",
+  "participation_label": "",
+  "confidence_source": "",
+  "evidence_refs": [
+    "2026-03-17__NABIL__NEPSE__1D__market_context.png",
+    "2026-03-17__NABIL__NEPSE__1D__snapshot.txt",
+    "2026-03-17__NABIL__1D__pre_indicators_snapshot.txt",
+    "2026-03-17__NABIL__1D__clean_v2.png",
+    "2026-03-17__NABIL__1D__annotated_v2.png",
+    "2026-03-17__NABIL__BANKING__sector.png",
+    "2026-03-17__NABIL__BANKING__sector_snapshot.txt"
+  ],
+  "notes": null
+}

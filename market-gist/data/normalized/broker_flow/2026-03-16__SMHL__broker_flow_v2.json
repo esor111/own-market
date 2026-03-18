@@ -2,16 +2,21 @@
   "schema_version": "1.0",
   "session_id": "2026-03-16__SMHL__v2",
   "run_date": "2026-03-16",
+  "source": "floorsheet_or_broker_view",
   "symbol": "SMHL",
-  "data_available": false,
-  "unavailable_reason": "floorsheet_requires_login",
-  "top_buyers": [],
-  "top_sellers": [],
-  "net_institutional_flow": null,
-  "flow_label": "unknown",
-  "notes": "Floorsheet data on NEPSE Alpha requires user login. Cannot access broker flow data without authentication. This is a known limitation of the free tier.",
-  "confidence_source": "system_limitation",
+  "activity_label": "",
+  "accumulation_signal": null,
+  "distribution_signal": null,
+  "notes": "Floorsheet data requires authentication. Cannot access without login.",
+  "confidence_source": "",
   "evidence_refs": [
-    "2026-03-16__SMHL__1W__with_indicators_snapshot.txt"
-  ]
+    "2026-03-16__SMHL__NEPSE__1D__market_context.png",
+    "2026-03-16__SMHL__NEPSE__1D__snapshot.txt",
+    "2026-03-16__SMHL__1W__pre_indicators_snapshot.txt",
+    "2026-03-16__SMHL__1W__clean_v2.png",
+    "2026-03-16__SMHL__1W__annotated_v2.png",
+    "2026-03-16__SMHL__HYDROPOWER__sector.png"
+  ],
+  "data_available": false,
+  "unavailable_reason": "floorsheet_requires_login"
 }

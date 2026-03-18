@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-17__NABIL__v2",
+  "run_date": "2026-03-17",
+  "symbol": "NABIL",
+  "scores": {
+    "market_alignment": 5,
+    "sector_alignment": 5,
+    "trend_filter_quality": 2,
+    "momentum_confirmation": 5,
+    "relative_strength": 2,
+    "structure_quality": 4,
+    "location_quality": 6,
+    "volume_confirmation": 3,
+    "event_quality": 5,
+    "risk_reward_quality": 5
+  },
+  "score_total": 42,
+  "score_max": 100,
+  "confidence_source": "derived",
+  "evidence_refs": [
+    "2026-03-17__NABIL__NEPSE__1D__market_context.png",
+    "2026-03-17__NABIL__NEPSE__1D__snapshot.txt",
+    "2026-03-17__NABIL__1D__pre_indicators_snapshot.txt",
+    "2026-03-17__NABIL__1D__clean_v2.png",
+    "2026-03-17__NABIL__1D__annotated_v2.png",
+    "2026-03-17__NABIL__BANKING__sector.png",
+    "2026-03-17__NABIL__BANKING__sector_snapshot.txt"
+  ],
+  "score_percent": 42,
+  "notes": null
+}

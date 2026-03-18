@@ -2,24 +2,22 @@
   "schema_version": "1.0",
   "session_id": "2026-03-16__SMHL__v2",
   "run_date": "2026-03-16",
-  "captured_at": "2026-03-16T21:28:25+05:45",
+  "captured_at": "2026-03-16T21:57:04.020094",
   "source": "nepsealpha",
-  "sector_name": "Hydropower",
+  "sector_name": "HYDROPOWER",
   "timeframe": "1W",
-  "close": 3758.48,
-  "change_pct": -0.56,
   "trend_label": "sideways_to_up",
-  "relative_strength_vs_market": "outperforming",
-  "ema_20": 3519.60,
-  "ma_50": 3492.44,
-  "rsi": 63.69,
-  "macd_line": 41.82,
-  "signal_line": 62.49,
-  "histogram": 20.67,
-  "notes": "Hydropower sector showing relative strength vs NEPSE. Price above both EMA 20 and MA 50. RSI at 63.69 indicates bullish momentum without being overbought. MACD positive but histogram declining.",
-  "confidence_source": "visual_from_screenshot",
+  "relative_strength_vs_market": "",
+  "notes": null,
+  "confidence_source": "",
   "evidence_refs": [
-    "2026-03-16__Hydropower__sector_snapshot.txt",
-    "2026-03-16__Hydropower__sector.png"
-  ]
+    "2026-03-16__SMHL__NEPSE__1D__market_context.png",
+    "2026-03-16__SMHL__NEPSE__1D__snapshot.txt",
+    "2026-03-16__SMHL__1W__pre_indicators_snapshot.txt",
+    "2026-03-16__SMHL__1W__clean_v2.png",
+    "2026-03-16__SMHL__1W__annotated_v2.png",
+    "2026-03-16__SMHL__HYDROPOWER__sector.png"
+  ],
+  "close": 3758.48,
+  "change_pct": -0.56
 }

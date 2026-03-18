@@ -4,16 +4,19 @@
   "run_date": "2026-03-16",
   "symbol": "SMHL",
   "timeframe": "1W",
-  "current_volume": 585772,
-  "volume_vs_average": "below_average",
-  "breakout_volume_signal": "none",
-  "pullback_volume_signal": "declining",
-  "participation_label": "low",
-  "notes": "Volume declining during downtrend, typical of distribution phase. No volume spike to indicate capitulation or reversal yet.",
-  "confidence_source": "visual_from_screenshot",
+  "current_volume": null,
+  "volume_vs_average": "",
+  "breakout_volume_signal": "",
+  "pullback_volume_signal": "",
+  "participation_label": "",
+  "confidence_source": "",
   "evidence_refs": [
+    "2026-03-16__SMHL__NEPSE__1D__market_context.png",
+    "2026-03-16__SMHL__NEPSE__1D__snapshot.txt",
+    "2026-03-16__SMHL__1W__pre_indicators_snapshot.txt",
     "2026-03-16__SMHL__1W__clean_v2.png",
     "2026-03-16__SMHL__1W__annotated_v2.png",
-    "2026-03-16__SMHL__1W__indicators_extracted.json"
-  ]
+    "2026-03-16__SMHL__HYDROPOWER__sector.png"
+  ],
+  "notes": null
 }

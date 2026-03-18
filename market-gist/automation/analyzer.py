@@ -102,7 +102,8 @@ class StockAnalyzer:
             "uptrend": 8,
             "downtrend": 4,
             "sideways": 6,
-            "reversal_setup": 7
+            "reversal_setup": 7,
+            "transition": 5
         }
         return structure_scores.get(trend_label, 5)
     
@@ -113,9 +114,19 @@ class StockAnalyzer:
             "above_average": 7,
             "average": 5,
             "below_average": 3,
-            "low": 2
+            "low": 2,
+            "available": 5,
+            "unknown": 2
         }
         return volume_scores.get(volume_label, 5)
+
+    def classify_trend(self, price, ema_20, ma_50):
+        """Classify trend from price and moving average alignment."""
+        if price >= ema_20 >= ma_50:
+            return "uptrend"
+        if price <= ema_20 <= ma_50:
+            return "downtrend"
+        return "sideways"
     
     def calculate_total_score(self, scores):
         """Calculate total score from individual components"""

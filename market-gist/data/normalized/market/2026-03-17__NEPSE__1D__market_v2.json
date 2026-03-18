@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-17__SMHL__v2",
+  "run_date": "2026-03-17",
+  "captured_at": "2026-03-17T17:46:15.152940",
+  "source": "nepsealpha",
+  "symbol": "NEPSE",
+  "timeframe": "1D",
+  "close": 2812.34,
+  "change_pct": 0,
+  "trend_label": "flat",
+  "market_phase": "unknown",
+  "support_levels": [],
+  "resistance_levels": [],
+  "volume_visible": true,
+  "confidence_source": "",
+  "evidence_refs": [
+    "2026-03-17__SMHL__NEPSE__1D__market_context.png",
+    "2026-03-17__SMHL__NEPSE__1D__snapshot.txt",
+    "2026-03-17__SMHL__1W__pre_indicators_snapshot.txt",
+    "2026-03-17__SMHL__1W__clean_v2.png",
+    "2026-03-17__SMHL__1W__annotated_v2.png",
+    "2026-03-17__SMHL__HYDROPOWER__sector.png",
+    "2026-03-17__SMHL__HYDROPOWER__sector_snapshot.txt"
+  ]
+}

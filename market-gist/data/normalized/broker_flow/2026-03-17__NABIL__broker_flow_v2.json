@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-17__NABIL__v2",
+  "run_date": "2026-03-17",
+  "source": "floorsheet_or_broker_view",
+  "symbol": "NABIL",
+  "activity_label": "",
+  "accumulation_signal": null,
+  "distribution_signal": null,
+  "notes": "Floorsheet data requires authentication. Cannot access without login.",
+  "confidence_source": "",
+  "evidence_refs": [
+    "2026-03-17__NABIL__NEPSE__1D__market_context.png",
+    "2026-03-17__NABIL__NEPSE__1D__snapshot.txt",
+    "2026-03-17__NABIL__1D__pre_indicators_snapshot.txt",
+    "2026-03-17__NABIL__1D__clean_v2.png",
+    "2026-03-17__NABIL__1D__annotated_v2.png",
+    "2026-03-17__NABIL__BANKING__sector.png",
+    "2026-03-17__NABIL__BANKING__sector_snapshot.txt"
+  ],
+  "data_available": false,
+  "unavailable_reason": "floorsheet_requires_login"
+}

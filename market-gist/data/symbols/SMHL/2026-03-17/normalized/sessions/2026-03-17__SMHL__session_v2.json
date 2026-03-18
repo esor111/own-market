@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-17__SMHL__v2",
+  "run_date": "2026-03-17",
+  "captured_at": "2026-03-17T21:11:56.155301",
+  "source": "nepsealpha",
+  "symbol": "SMHL",
+  "status": "completed",
+  "stages_completed": [
+    "market_context_capture",
+    "symbol_chart_load",
+    "timeframe_selection",
+    "indicator_setup",
+    "clean_chart_capture",
+    "sector_evidence_capture"
+  ],
+  "stages_skipped": [
+    "event_enrichment",
+    "broker_flow_capture"
+  ],
+  "notes": "Automated analysis run"
+}

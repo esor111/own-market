@@ -2,16 +2,24 @@
   "schema_version": "1.0",
   "session_id": "2026-03-16__SMHL__v2",
   "run_date": "2026-03-16",
+  "captured_at": "",
+  "source": "",
   "symbol": "SMHL",
-  "event_found": false,
-  "event_type": null,
-  "event_date": null,
-  "event_description": null,
-  "impact_label": "none",
-  "notes": "No corporate actions, dividends, or significant events found for SMHL during chart review. Event enrichment stage completed with no findings.",
-  "confidence_source": "visual_inspection",
+  "event_date": "",
+  "event_type": "",
+  "sentiment": "",
+  "impact_window_days": null,
+  "relevance_now": "",
+  "details": {},
+  "confidence_source": "",
   "evidence_refs": [
+    "2026-03-16__SMHL__NEPSE__1D__market_context.png",
+    "2026-03-16__SMHL__NEPSE__1D__snapshot.txt",
+    "2026-03-16__SMHL__1W__pre_indicators_snapshot.txt",
     "2026-03-16__SMHL__1W__clean_v2.png",
-    "2026-03-16__SMHL__1W__annotated_v2.png"
-  ]
+    "2026-03-16__SMHL__1W__annotated_v2.png",
+    "2026-03-16__SMHL__HYDROPOWER__sector.png"
+  ],
+  "event_found": false,
+  "notes": "No corporate actions or significant events found during chart review."
 }

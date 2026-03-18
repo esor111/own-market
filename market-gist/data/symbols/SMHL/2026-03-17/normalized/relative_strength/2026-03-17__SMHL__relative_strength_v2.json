@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-17__SMHL__v2",
+  "run_date": "2026-03-17",
+  "symbol": "SMHL",
+  "benchmark_market": "NEPSE",
+  "benchmark_sector": "HYDROPOWER",
+  "rs_vs_market_label": "outperforming",
+  "rs_vs_sector_label": "underperforming",
+  "rs_notes": "SMHL move -0.57% vs NEPSE -0.95%",
+  "confidence_source": "",
+  "evidence_refs": [
+    "2026-03-17__SMHL__NEPSE__1D__market_context.png",
+    "2026-03-17__SMHL__NEPSE__1D__snapshot.txt",
+    "2026-03-17__SMHL__1W__pre_indicators_snapshot.txt",
+    "2026-03-17__SMHL__1W__clean_v2.png",
+    "2026-03-17__SMHL__1W__annotated_v2.png",
+    "2026-03-17__SMHL__HYDROPOWER__sector.png",
+    "2026-03-17__SMHL__HYDROPOWER__sector_snapshot.txt"
+  ]
+}

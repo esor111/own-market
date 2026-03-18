@@ -1,0 +1,39 @@
+[
+  {
+    "symbol": "NEPSE",
+    "timeframe": null,
+    "loaded": true,
+    "chart_data": {
+      "open": 2801.0,
+      "high": 2807.86,
+      "low": 2787.47,
+      "close": 2800.37
+    }
+  },
+  {
+    "symbol": "HYDROPOWER",
+    "timeframe": null,
+    "loaded": true,
+    "chart_data": {
+      "open": 3766.87,
+      "high": 3811.42,
+      "low": 3748.87,
+      "close": 3802.87
+    }
+  },
+  {
+    "symbol": "SMHL",
+    "timeframe": "1W",
+    "loaded": true,
+    "chart_data": {
+      "open": 530.0,
+      "high": 535.0,
+      "low": 511.0,
+      "close": 519.0,
+      "change": -8.0,
+      "change_pct": -1.52
+    },
+    "indicators_already_present": false,
+    "indicator_data": {}
+  }
+]

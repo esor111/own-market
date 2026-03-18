@@ -6,7 +6,7 @@ These files are starter contracts for the records described in [RICH_DATA_SCHEMA
 
 1. Copy the matching template for the record you are writing.
 2. Fill all mandatory fields from the runbook.
-3. Save the completed file into the correct `data/normalized/`, `data/features/`, or `data/outcomes/` folder.
+3. Save the completed file into the correct symbol/date-scoped folder under `data/symbols/<SYMBOL>/<RUN_DATE>/...`.
 4. Keep `evidence_refs` updated so every decision can be traced back to proof.
 
 ## Minimum Prediction Run

@@ -1,0 +1,135 @@
+{
+  "timestamp": "2026-03-17T12:43:04.562574",
+  "url": "https://nepsealpha.com/nepse-chart?symbol=SMHL&interval=1W",
+  "frame_name": "tradingview_0895d",
+  "click_results": [
+    {
+      "control": "Symbol Search",
+      "ok": true
+    },
+    {
+      "control": "Compare or Add Symbol",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Candles",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Indicators & Strategies",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Indicator Templates",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Chart settings",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Take a snapshot",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Chart Modes",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Cross",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Trend Line",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Fib Retracement",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Brush",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Text",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Measure",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Zoom In",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Magnet Mode snaps drawings placed near price bars to the closest OHLC value",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Stay in Drawing Mode",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Lock All Drawing Tools",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Hide all drawings",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Show Object Tree",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Toggle Percentage",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Toggle Log Scale",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Toggle Auto Scale",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Go to",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    },
+    {
+      "control": "Timezone",
+      "ok": false,
+      "reason": "Timeout 4000ms exceeded."
+    }
+  ],
+  "counts": {
+    "ok": 1,
+    "failed": 24
+  }
+}

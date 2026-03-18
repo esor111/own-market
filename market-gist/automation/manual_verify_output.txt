@@ -1,0 +1,37 @@
+Traceback (most recent call last):
+  Attempting to connect to existing Chrome browser...
+  Could not connect to existing browser: 'charmap' codec can't encode character '\u2713' in position 0: character maps to <undefined>
+  Please run start_chrome.bat first!
+  File "C:\Users\ishwor\Music\own-organize\own-market\market-gist\automation\manual_verify_contexts.py", line 42, in main
+    await browser.start()
+  File "C:\Users\ishwor\Music\own-organize\own-market\market-gist\automation\browser_actions.py", line 48, in start
+    raise e
+  File "C:\Users\ishwor\Music\own-organize\own-market\market-gist\automation\browser_actions.py", line 43, in start
+    print("\u2713 Connected to existing Chrome browser")
+  File "C:\Users\ishwor\AppData\Local\Programs\Python\Python311\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 0: character maps to <undefined>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ishwor\Music\own-organize\own-market\market-gist\automation\manual_verify_contexts.py", line 56, in <module>
+    asyncio.run(main())
+  File "C:\Users\ishwor\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\ishwor\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ishwor\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 650, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\ishwor\Music\own-organize\own-market\market-gist\automation\manual_verify_contexts.py", line 52, in main
+    await browser.close()
+  File "C:\Users\ishwor\Music\own-organize\own-market\market-gist\automation\browser_actions.py", line 100, in close
+    print("\u2713 Browser closed")
+  File "C:\Users\ishwor\AppData\Local\Programs\Python\Python311\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 0: character maps to <undefined>

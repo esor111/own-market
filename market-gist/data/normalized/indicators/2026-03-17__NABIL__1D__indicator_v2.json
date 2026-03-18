@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-17__NABIL__v2",
+  "run_date": "2026-03-17",
+  "captured_at": "2026-03-17T15:27:41.489082",
+  "source": "nepsealpha_chart",
+  "symbol": "NABIL",
+  "timeframe": "1D",
+  "ema_20": 524.68,
+  "ma_50": 524.73,
+  "ma_200": null,
+  "rsi": 41.43,
+  "macd_line": -0.06,
+  "signal_line": -0.21,
+  "histogram": -0.16,
+  "price_above_ema_20": null,
+  "price_above_ma_50": null,
+  "price_above_ma_200": null,
+  "momentum_label": "",
+  "confidence_source": "",
+  "evidence_refs": [
+    "2026-03-17__NABIL__NEPSE__1D__market_context.png",
+    "2026-03-17__NABIL__NEPSE__1D__snapshot.txt",
+    "2026-03-17__NABIL__1D__pre_indicators_snapshot.txt",
+    "2026-03-17__NABIL__1D__clean_v2.png",
+    "2026-03-17__NABIL__1D__annotated_v2.png",
+    "2026-03-17__NABIL__BANKING__sector.png",
+    "2026-03-17__NABIL__BANKING__sector_snapshot.txt"
+  ],
+  "notes": null
+}

@@ -1,0 +1,142 @@
+{
+  "timestamp": "2026-03-17T12:42:20.091786",
+  "url": "https://nepsealpha.com/nepse-chart",
+  "frame_name": "tradingview_0895d",
+  "capabilities": {
+    "symbol_timeframe": [
+      {
+        "action": "open_symbol_search",
+        "ok": true
+      },
+      {
+        "action": "load_symbol_SMHL",
+        "ok": true
+      },
+      {
+        "action": "set_timeframe_1W",
+        "ok": true
+      }
+    ],
+    "indicators": [
+      {
+        "indicator": "MACD",
+        "ok": true,
+        "error": null
+      },
+      {
+        "indicator": "Relative Strength Index",
+        "ok": true,
+        "error": null
+      }
+    ],
+    "drawing": {
+      "selected_tool": "Trend Line",
+      "select_ok": true,
+      "draw_ok": true,
+      "error": null
+    },
+    "visible_toolbar_labels": {
+      "buttons": [
+        "Symbol Search",
+        "Compare or Add Symbol",
+        "1 week",
+        "Candles",
+        "Indicators & Strategies",
+        "Indicator Templates",
+        "Tick Chart",
+        "Multi Chart",
+        "Undo insert Relative Strength Index",
+        "Quick Search",
+        "Chart settings",
+        "Fullscreen mode",
+        "Take a snapshot",
+        "Chart Modes",
+        "Cross",
+        "Cursors",
+        "Trend Line",
+        "Trend line tools",
+        "Fib Retracement",
+        "Gann and Fibonacci tools",
+        "XABCD Pattern",
+        "Patterns",
+        "Long Position",
+        "Forecasting and measurement tools",
+        "Brush",
+        "Geometric shapes",
+        "Text",
+        "Annotation tools",
+        "Icon",
+        "Icons",
+        "Measure",
+        "Zoom In",
+        "Magnet Mode snaps drawings placed near price bars to the closest OHLC value",
+        "Stay in Drawing Mode",
+        "Lock All Drawing Tools",
+        "Hide all drawings",
+        "Remove 1 drawing",
+        "Show Object Tree",
+        "5 years in 1 week intervals",
+        "1 year in 1 week intervals",
+        "6 months in 2 hours intervals",
+        "3 months in 1 hour intervals",
+        "1 month in 30 minutes intervals",
+        "5 days in 5 minutes intervals",
+        "1 day in 1 minute intervals",
+        "Go to",
+        "Timezone",
+        "Toggle Percentage",
+        "Toggle Log Scale",
+        "Toggle Auto Scale",
+        "Toggle auto scale",
+        "Toggle log scale"
+      ],
+      "tools": []
+    }
+  },
+  "valuable_data": {
+    "series_text": "NSuper Madi Hydropower Limited1WHydro Power (nepsealpha.com)O1104.80H1214.30L1038.40C1042.901042.90\u2205\u221261.90 (\u22125.60%)Vol202.501K0.00 (0.00%)",
+    "ohlc_change": {
+      "open": 1104.8,
+      "high": 1214.3,
+      "low": 1038.4,
+      "close": 1042.9,
+      "change": -61.9,
+      "change_pct": -5.6
+    },
+    "indicator_legend_items": [
+      {
+        "title": "Volume",
+        "desc": "",
+        "values": [
+          "202.501K",
+          "\u2205",
+          "\u2205"
+        ]
+      },
+      {
+        "title": "MACD",
+        "desc": "12 26 close 9",
+        "values": [
+          "\u22125.47",
+          "159.52",
+          "164.99"
+        ]
+      },
+      {
+        "title": "RSI",
+        "desc": "14",
+        "values": [
+          "54.68",
+          "\u2205"
+        ]
+      }
+    ]
+  },
+  "artifacts": [
+    "..\\data\\raw\\screenshots\\manual_research\\20260317_124217__baseline.png",
+    "..\\data\\raw\\screenshots\\manual_research\\20260317_124217__smhl_1w.png",
+    "..\\data\\raw\\screenshots\\manual_research\\20260317_124217__with_indicators.png",
+    "..\\data\\raw\\screenshots\\manual_research\\20260317_124217__after_draw_attempt.png"
+  ],
+  "notes": []
+}

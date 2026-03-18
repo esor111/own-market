@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__SMHL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T09:11:21.882329",
+  "symbol": "SMHL",
+  "setup_type": "continuation",
+  "score": 55,
+  "confidence": 65,
+  "action": "watch_only",
+  "entry_zone": [
+    527.0,
+    527.0
+  ],
+  "stop_loss": 516.09,
+  "invalidation_level": 516.09,
+  "targets": [
+    530.0,
+    535.0,
+    553.35
+  ],
+  "risk_reward_ratio": 0.27,
+  "why": [
+    "Price: 527.0, EMA20: 516.09, MA50: 495.34",
+    "RSI: 38.6, MACD Histogram: -94.43",
+    "Sector change%: -3.57",
+    "Derived support/resistance: 527.0 / 530.0",
+    "Setup: continuation, Score: 55/100, Confidence: 65%",
+    "Action: WATCH_ONLY"
+  ],
+  "evidence_refs": [
+    "2026-03-18__SMHL__NEPSE__1D__market_context.png",
+    "2026-03-18__SMHL__NEPSE__1D__snapshot.txt",
+    "2026-03-18__SMHL__1W__pre_indicators_snapshot.txt",
+    "2026-03-18__SMHL__1W__clean_v2.png",
+    "2026-03-18__SMHL__1W__annotated_v2.png",
+    "2026-03-18__SMHL__HYDROPOWER__sector.png",
+    "2026-03-18__SMHL__HYDROPOWER__sector_snapshot.txt"
+  ],
+  "score_max": 100
+}

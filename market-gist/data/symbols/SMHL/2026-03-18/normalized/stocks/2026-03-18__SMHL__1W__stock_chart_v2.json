@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__SMHL__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T09:11:21.882329",
+  "source": "nepsealpha_chart",
+  "symbol": "SMHL",
+  "timeframe": "1W",
+  "close": 527.0,
+  "open": 530.0,
+  "high": 535.0,
+  "low": 511.0,
+  "volume": null,
+  "trend_label": "uptrend",
+  "structure_label": "price_vs_moving_averages",
+  "swing_highs": [
+    530.0,
+    535.0
+  ],
+  "swing_lows": [
+    527.0,
+    516.09,
+    511.0,
+    495.34
+  ],
+  "support_zones": [
+    [
+      521.73,
+      532.27
+    ],
+    [
+      510.93,
+      521.25
+    ],
+    [
+      505.89,
+      516.11
+    ]
+  ],
+  "resistance_zones": [
+    [
+      524.7,
+      535.3
+    ],
+    [
+      529.65,
+      540.35
+    ]
+  ],
+  "breakout_level": 530.0,
+  "breakdown_level": 527.0,
+  "invalidation_level": 516.09,
+  "location_label": "near_support",
+  "confidence_source": "extracted_plus_derived",
+  "evidence_refs": [
+    "2026-03-18__SMHL__NEPSE__1D__market_context.png",
+    "2026-03-18__SMHL__NEPSE__1D__snapshot.txt",
+    "2026-03-18__SMHL__1W__pre_indicators_snapshot.txt",
+    "2026-03-18__SMHL__1W__clean_v2.png",
+    "2026-03-18__SMHL__1W__annotated_v2.png",
+    "2026-03-18__SMHL__HYDROPOWER__sector.png",
+    "2026-03-18__SMHL__HYDROPOWER__sector_snapshot.txt"
+  ]
+}

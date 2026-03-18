@@ -7,6 +7,7 @@ from datetime import datetime
 # Base paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
+SYMBOLS_DIR = os.path.join(DATA_DIR, "symbols")
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 
 # Data subdirectories
@@ -25,8 +26,8 @@ DEFAULT_TIMEFRAME = "1D"
 
 # Browser configuration
 HEADLESS = False  # Set to True for production
-BROWSER_TIMEOUT = 30000  # 30 seconds
-SLOW_MO = 100  # Slow down by 100ms for stability
+BROWSER_TIMEOUT = 60000  # 60 seconds
+SLOW_MO = 200  # Slow down by 200ms for stability
 
 # Indicator configuration
 INDICATORS = {
@@ -82,3 +83,36 @@ def get_file_prefix(symbol, date=None):
     if date is None:
         date = datetime.now().strftime("%Y-%m-%d")
     return f"{date}__{symbol}"
+
+
+def get_run_directories(symbol, date=None):
+    """Return symbol/date-scoped directories for a single analysis run."""
+    if date is None:
+        date = datetime.now().strftime("%Y-%m-%d")
+
+    symbol = symbol.upper()
+    base = os.path.join(SYMBOLS_DIR, symbol, date)
+
+    return {
+        "base": base,
+        "raw": os.path.join(base, "raw"),
+        "raw_screenshots": os.path.join(base, "raw", "screenshots"),
+        "raw_snapshots": os.path.join(base, "raw", "snapshots"),
+        "raw_tables": os.path.join(base, "raw", "tables"),
+        "normalized": os.path.join(base, "normalized"),
+        "normalized_sessions": os.path.join(base, "normalized", "sessions"),
+        "normalized_market": os.path.join(base, "normalized", "market"),
+        "normalized_sectors": os.path.join(base, "normalized", "sectors"),
+        "normalized_candidates": os.path.join(base, "normalized", "candidates"),
+        "normalized_stocks": os.path.join(base, "normalized", "stocks"),
+        "normalized_indicators": os.path.join(base, "normalized", "indicators"),
+        "normalized_events": os.path.join(base, "normalized", "events"),
+        "normalized_broker_flow": os.path.join(base, "normalized", "broker_flow"),
+        "normalized_relative_strength": os.path.join(base, "normalized", "relative_strength"),
+        "normalized_decisions": os.path.join(base, "normalized", "decisions"),
+        "features": os.path.join(base, "features"),
+        "features_setup_scores": os.path.join(base, "features", "setup_scores"),
+        "features_model_inputs": os.path.join(base, "features", "model_inputs"),
+        "outcomes": os.path.join(base, "outcomes"),
+        "outcomes_realized_results": os.path.join(base, "outcomes", "realized_results")
+    }

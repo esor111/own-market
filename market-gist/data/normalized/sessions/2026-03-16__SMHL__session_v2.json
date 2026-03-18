@@ -2,23 +2,21 @@
   "schema_version": "1.0",
   "session_id": "2026-03-16__SMHL__v2",
   "run_date": "2026-03-16",
-  "captured_at": "2026-03-16T21:30:06+05:45",
+  "captured_at": "2026-03-16T21:57:04.020094",
   "source": "nepsealpha",
   "symbol": "SMHL",
   "status": "completed",
   "stages_completed": [
     "market_context_capture",
-    "market_data_extraction",
     "symbol_chart_load",
     "timeframe_selection",
     "indicator_setup",
     "clean_chart_capture",
-    "sector_evidence_capture",
-    "annotated_chart_capture"
+    "sector_evidence_capture"
   ],
   "stages_skipped": [
     "event_enrichment",
     "broker_flow_capture"
   ],
-  "notes": "Version 2 reliability-first run with stricter evidence capture. Added full indicator suite (EMA 20, MA 50, MACD, RSI). Captured actual Hydropower sector screenshot. Skipped events (none found) and broker flow (floorsheet not accessible without login)."
+  "notes": "Automated analysis run"
 }

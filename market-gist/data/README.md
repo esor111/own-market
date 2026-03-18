@@ -2,12 +2,42 @@
 
 This folder stores the full reliability-first analysis pipeline.
 
+## Primary Organization
+
+Runs should now be organized by symbol and date first.
+
+Recommended structure:
+
+```text
+data/
+  symbols/
+    SMHL/
+      2026-03-17/
+        raw/
+        normalized/
+        features/
+        outcomes/
+    NABIL/
+      2026-03-17/
+        raw/
+        normalized/
+        features/
+        outcomes/
+```
+
+This keeps every run self-contained and easier to inspect.
+
 ## Layers
 
 - `raw/`: direct evidence captured from Playwright MCP runs
 - `normalized/`: structured records used for scoring and decisions
 - `features/`: derived scoring inputs and model-ready fields
 - `outcomes/`: later result labels for calibration and learning
+
+## Legacy Shared Layout
+
+Older files may still exist directly under shared folders like `raw/` and `normalized/`.
+Those are legacy outputs from the earlier layout.
 
 ## Raw
 
@@ -44,7 +74,7 @@ Starter JSON templates live in [`templates/`](/C:/Users/ishwor/Music/own-organiz
 
 ## Naming
 
-Use this file naming pattern whenever possible:
+Inside each symbol/date folder, use this file naming pattern whenever possible:
 
 ```text
 YYYY-MM-DD__SYMBOL__TIMEFRAME__record_type.json

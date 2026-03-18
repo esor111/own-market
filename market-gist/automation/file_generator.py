@@ -4,14 +4,15 @@ Generate normalized JSON files from templates
 import json
 import os
 from datetime import datetime
-from config import TEMPLATES_DIR, NORMALIZED_DIR, FEATURES_DIR, RAW_TABLES_DIR
+from config import TEMPLATES_DIR
 
 
 class FileGenerator:
-    def __init__(self, session_id, run_date):
+    def __init__(self, session_id, run_date, run_dirs):
         self.session_id = session_id
         self.run_date = run_date
         self.timestamp = datetime.now().isoformat()
+        self.run_dirs = run_dirs
     
     def load_template(self, template_name):
         """Load a JSON template"""
@@ -40,7 +41,7 @@ class FileGenerator:
             "notes": notes
         })
         
-        filepath = os.path.join(NORMALIZED_DIR, "sessions", f"{self.run_date}__{symbol}__session_v2.json")
+        filepath = os.path.join(self.run_dirs["normalized_sessions"], f"{self.run_date}__{symbol}__session_v2.json")
         self.save_json(template, filepath)
         return filepath
     
@@ -58,7 +59,7 @@ class FileGenerator:
             "evidence_refs": evidence_refs
         })
         
-        filepath = os.path.join(NORMALIZED_DIR, "market", f"{self.run_date}__NEPSE__1D__market_v2.json")
+        filepath = os.path.join(self.run_dirs["normalized_market"], f"{self.run_date}__NEPSE__1D__market_v2.json")
         self.save_json(template, filepath)
         return filepath
     
@@ -79,7 +80,7 @@ class FileGenerator:
             "evidence_refs": evidence_refs
         })
         
-        filepath = os.path.join(NORMALIZED_DIR, "sectors", f"{self.run_date}__{sector_name}__sector_v2.json")
+        filepath = os.path.join(self.run_dirs["normalized_sectors"], f"{self.run_date}__{sector_name}__sector_v2.json")
         self.save_json(template, filepath)
         return filepath
     
@@ -103,11 +104,15 @@ class FileGenerator:
             "swing_lows": chart_data.get("swing_lows", []),
             "support_zones": chart_data.get("support_zones", []),
             "resistance_zones": chart_data.get("resistance_zones", []),
+            "breakout_level": chart_data.get("breakout_level"),
+            "breakdown_level": chart_data.get("breakdown_level"),
+            "invalidation_level": chart_data.get("invalidation_level"),
             "location_label": chart_data.get("location_label", ""),
+            "confidence_source": chart_data.get("confidence_source", ""),
             "evidence_refs": evidence_refs
         })
         
-        filepath = os.path.join(NORMALIZED_DIR, "stocks", f"{self.run_date}__{symbol}__{timeframe}__stock_chart_v2.json")
+        filepath = os.path.join(self.run_dirs["normalized_stocks"], f"{self.run_date}__{symbol}__{timeframe}__stock_chart_v2.json")
         self.save_json(template, filepath)
         return filepath
     
@@ -134,7 +139,7 @@ class FileGenerator:
             "evidence_refs": evidence_refs
         })
         
-        filepath = os.path.join(NORMALIZED_DIR, "indicators", f"{self.run_date}__{symbol}__{timeframe}__indicator_v2.json")
+        filepath = os.path.join(self.run_dirs["normalized_indicators"], f"{self.run_date}__{symbol}__{timeframe}__indicator_v2.json")
         self.save_json(template, filepath)
         return filepath
     
@@ -153,7 +158,7 @@ class FileGenerator:
             "evidence_refs": evidence_refs
         })
         
-        filepath = os.path.join(NORMALIZED_DIR, "stocks", f"{self.run_date}__{symbol}__{timeframe}__volume_v2.json")
+        filepath = os.path.join(self.run_dirs["normalized_stocks"], f"{self.run_date}__{symbol}__{timeframe}__volume_v2.json")
         self.save_json(template, filepath)
         return filepath
     
@@ -171,7 +176,7 @@ class FileGenerator:
             "evidence_refs": evidence_refs
         })
         
-        filepath = os.path.join(NORMALIZED_DIR, "relative_strength", f"{self.run_date}__{symbol}__relative_strength_v2.json")
+        filepath = os.path.join(self.run_dirs["normalized_relative_strength"], f"{self.run_date}__{symbol}__relative_strength_v2.json")
         self.save_json(template, filepath)
         return filepath
     
@@ -190,7 +195,7 @@ class FileGenerator:
             "evidence_refs": evidence_refs
         })
         
-        filepath = os.path.join(FEATURES_DIR, "setup_scores", f"{self.run_date}__{symbol}__feature_score_v2.json")
+        filepath = os.path.join(self.run_dirs["features_setup_scores"], f"{self.run_date}__{symbol}__feature_score_v2.json")
         self.save_json(template, filepath)
         return filepath
     
@@ -216,7 +221,7 @@ class FileGenerator:
             "evidence_refs": evidence_refs
         })
         
-        filepath = os.path.join(NORMALIZED_DIR, "decisions", f"{self.run_date}__{symbol}__decision_v2.json")
+        filepath = os.path.join(self.run_dirs["normalized_decisions"], f"{self.run_date}__{symbol}__decision_v2.json")
         self.save_json(template, filepath)
         return filepath
     
@@ -232,7 +237,7 @@ class FileGenerator:
             "evidence_refs": evidence_refs
         })
         
-        filepath = os.path.join(NORMALIZED_DIR, "events", f"{self.run_date}__{symbol}__event_v2.json")
+        filepath = os.path.join(self.run_dirs["normalized_events"], f"{self.run_date}__{symbol}__event_v2.json")
         self.save_json(template, filepath)
         return filepath
     
@@ -249,6 +254,6 @@ class FileGenerator:
             "evidence_refs": evidence_refs
         })
         
-        filepath = os.path.join(NORMALIZED_DIR, "broker_flow", f"{self.run_date}__{symbol}__broker_flow_v2.json")
+        filepath = os.path.join(self.run_dirs["normalized_broker_flow"], f"{self.run_date}__{symbol}__broker_flow_v2.json")
         self.save_json(template, filepath)
         return filepath

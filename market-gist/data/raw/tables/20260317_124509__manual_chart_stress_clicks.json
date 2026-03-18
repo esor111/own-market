@@ -1,0 +1,111 @@
+{
+  "timestamp": "2026-03-17T12:45:09.864455",
+  "url": "https://nepsealpha.com/nepse-chart?symbol=SMHL&interval=1W",
+  "frame_name": "tradingview_0895d",
+  "click_results": [
+    {
+      "control": "Symbol Search",
+      "ok": true
+    },
+    {
+      "control": "Compare or Add Symbol",
+      "ok": true
+    },
+    {
+      "control": "Candles",
+      "ok": true
+    },
+    {
+      "control": "Indicators & Strategies",
+      "ok": true
+    },
+    {
+      "control": "Indicator Templates",
+      "ok": true
+    },
+    {
+      "control": "Chart settings",
+      "ok": true
+    },
+    {
+      "control": "Take a snapshot",
+      "ok": true
+    },
+    {
+      "control": "Chart Modes",
+      "ok": true
+    },
+    {
+      "control": "Cross",
+      "ok": true
+    },
+    {
+      "control": "Trend Line",
+      "ok": true
+    },
+    {
+      "control": "Fib Retracement",
+      "ok": true
+    },
+    {
+      "control": "Brush",
+      "ok": true
+    },
+    {
+      "control": "Text",
+      "ok": true
+    },
+    {
+      "control": "Measure",
+      "ok": true
+    },
+    {
+      "control": "Zoom In",
+      "ok": true
+    },
+    {
+      "control": "Magnet Mode snaps drawings placed near price bars to the closest OHLC value",
+      "ok": true
+    },
+    {
+      "control": "Stay in Drawing Mode",
+      "ok": true
+    },
+    {
+      "control": "Lock All Drawing Tools",
+      "ok": true
+    },
+    {
+      "control": "Hide all drawings",
+      "ok": true
+    },
+    {
+      "control": "Show Object Tree",
+      "ok": true
+    },
+    {
+      "control": "Toggle Percentage",
+      "ok": true
+    },
+    {
+      "control": "Toggle Log Scale",
+      "ok": true
+    },
+    {
+      "control": "Toggle Auto Scale",
+      "ok": true
+    },
+    {
+      "control": "Go to",
+      "ok": true
+    },
+    {
+      "control": "Timezone",
+      "ok": true
+    }
+  ],
+  "counts": {
+    "ok": 25,
+    "failed": 0
+  }
+}
