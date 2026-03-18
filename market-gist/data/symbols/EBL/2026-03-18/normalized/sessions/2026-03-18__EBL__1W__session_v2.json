@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__EBL__1W__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T20:38:17.955798",
+  "source": "nepsealpha",
+  "symbol": "EBL",
+  "status": "completed",
+  "stages_completed": [
+    "market_context_capture",
+    "symbol_chart_load",
+    "timeframe_selection",
+    "indicator_setup",
+    "clean_chart_capture",
+    "sector_evidence_capture",
+    "official_event_capture",
+    "decision_qc"
+  ],
+  "stages_skipped": [
+    "broker_flow_capture"
+  ],
+  "notes": "Automated analysis run",
+  "timeframe": "1W"
+}

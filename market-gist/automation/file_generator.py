@@ -4,7 +4,12 @@ Generate normalized JSON files from templates
 import json
 import os
 from datetime import datetime
-from config import TEMPLATES_DIR
+from config import (
+    TEMPLATES_DIR,
+    get_decision_filename,
+    get_model_input_filename,
+    get_session_filename,
+)
 
 
 class FileGenerator:
@@ -27,7 +32,7 @@ class FileGenerator:
             json.dump(data, f, indent=2)
         print(f"✓ Created: {filepath}")
     
-    def generate_session_record(self, symbol, stages_completed, stages_skipped, notes):
+    def generate_session_record(self, symbol, timeframe, stages_completed, stages_skipped, notes):
         """Generate session record"""
         template = self.load_template("session")
         template.update({
@@ -35,13 +40,17 @@ class FileGenerator:
             "run_date": self.run_date,
             "captured_at": self.timestamp,
             "symbol": symbol,
+            "timeframe": timeframe,
             "status": "completed",
             "stages_completed": stages_completed,
             "stages_skipped": stages_skipped,
             "notes": notes
         })
         
-        filepath = os.path.join(self.run_dirs["normalized_sessions"], f"{self.run_date}__{symbol}__session_v2.json")
+        filepath = os.path.join(
+            self.run_dirs["normalized_sessions"],
+            get_session_filename(symbol, timeframe, self.run_date)
+        )
         self.save_json(template, filepath)
         return filepath
     
@@ -204,7 +213,7 @@ class FileGenerator:
         self.save_json(template, filepath)
         return filepath
     
-    def generate_decision_record(self, symbol, decision_data, evidence_refs):
+    def generate_decision_record(self, symbol, timeframe, decision_data, evidence_refs):
         """Generate decision record"""
         template = self.load_template("decision")
         template.update({
@@ -212,6 +221,7 @@ class FileGenerator:
             "run_date": self.run_date,
             "captured_at": self.timestamp,
             "symbol": symbol,
+            "timeframe": timeframe,
             "setup_type": decision_data.get("setup_type", ""),
             "score": decision_data.get("score"),
             "score_max": decision_data.get("score_max", 100),
@@ -226,7 +236,10 @@ class FileGenerator:
             "evidence_refs": evidence_refs
         })
         
-        filepath = os.path.join(self.run_dirs["normalized_decisions"], f"{self.run_date}__{symbol}__decision_v2.json")
+        filepath = os.path.join(
+            self.run_dirs["normalized_decisions"],
+            get_decision_filename(symbol, timeframe, self.run_date)
+        )
         self.save_json(template, filepath)
         return filepath
     
@@ -270,7 +283,7 @@ class FileGenerator:
         self.save_json(template, filepath)
         return filepath
 
-    def generate_model_input_record(self, symbol, model_input_data, evidence_refs):
+    def generate_model_input_record(self, symbol, timeframe, model_input_data, evidence_refs):
         """Generate model-input package for a stronger reasoning model."""
         template = self.load_template("model_input")
         template.update({
@@ -278,6 +291,7 @@ class FileGenerator:
             "run_date": self.run_date,
             "captured_at": self.timestamp,
             "symbol": symbol,
+            "timeframe": timeframe,
             "primary_horizon": model_input_data.get("primary_horizon", "swing"),
             "market": model_input_data.get("market", {}),
             "sector": model_input_data.get("sector", {}),
@@ -292,7 +306,7 @@ class FileGenerator:
 
         filepath = os.path.join(
             self.run_dirs["features_model_inputs"],
-            f"{self.run_date}__{symbol}__model_input_v1.json"
+            get_model_input_filename(symbol, timeframe, self.run_date)
         )
         self.save_json(template, filepath)
         return filepath

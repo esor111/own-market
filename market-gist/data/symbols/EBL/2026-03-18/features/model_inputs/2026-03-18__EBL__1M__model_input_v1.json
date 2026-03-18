@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "session_id": "2026-03-18__EBL__1M__v2",
+  "run_date": "2026-03-18",
+  "captured_at": "2026-03-18T20:40:25.394531",
+  "symbol": "EBL",
+  "primary_horizon": "swing",
+  "market": {
+    "symbol": "NEPSE",
+    "timeframe": "1D",
+    "close": 2739.95,
+    "change_pct": -0.65,
+    "trend_label": "down",
+    "market_phase": "unknown",
+    "structure_confidence": "medium"
+  },
+  "sector": {
+    "name": "BANKING",
+    "timeframe": "1D",
+    "close": 454.55,
+    "change_pct": 17.14,
+    "trend_label": "up",
+    "relative_strength_vs_market": "underperforming",
+    "structure_confidence": "medium"
+  },
+  "timeframes": {
+    "1M": {
+      "close": 329.4,
+      "trend_label": "downtrend",
+      "structure_label": "trend_continuation",
+      "support_zones": [
+        [
+          315.02,
+          321.38
+        ]
+      ],
+      "resistance_zones": [
+        [
+          334.32,
+          341.08
+        ],
+        [
+          341.35,
+          348.25
+        ],
+        [
+          355.97,
+          363.17
+        ]
+      ],
+      "breakout_level": 337.7,
+      "invalidation_level": 308.65,
+      "ema_20": 359.57,
+      "ma_50": 360.54,
+      "rsi": 38.23,
+      "macd_histogram": -38.23,
+      "volume_participation": "volume_unconfirmed",
+      "structure_confidence": "medium"
+    }
+  },
+  "derived_alignment": {
+    "higher_timeframe_alignment": "higher_tf_conflict",
+    "structure_agreement": "insufficient_timeframe_data",
+    "trigger_readiness": "not_ready",
+    "invalidation_quality": "weak",
+    "trade_quality": "not_actionable"
+  },
+  "event_context": {
+    "has_active_event": false,
+    "event_type": "no_recent_official_event_match",
+    "event_date": "",
+    "event_sentiment": "neutral",
+    "event_status": "inactive",
+    "impact_window_days": 0,
+    "event_confidence": "medium",
+    "details": {
+      "company_name": "Everest Bank Limited",
+      "symbol": "EBL",
+      "pages_checked": [
+        "https://sebon.gov.np/prospectus",
+        "https://sebon.gov.np/prospectus?page=2",
+        "https://sebon.gov.np/prospectus?page=3"
+      ]
+    }
+  },
+  "quality_flags": {
+    "market_data_quality": "high",
+    "sector_data_quality": "high",
+    "stock_structure_quality": "medium",
+    "indicator_quality": "high",
+    "event_data_quality": "medium",
+    "outcome_history_quality": "low"
+  },
+  "uncertainties": [
+    "official_event_layer_found_no_recent_match",
+    "qc_gate_not_pass",
+    "usable_calibration_samples_still_low"
+  ],
+  "decision_inputs": {
+    "setup_type": "reversal_watch",
+    "score": 44,
+    "confidence": 54,
+    "action": "avoid",
+    "entry_zone": [],
+    "stop_loss": null,
+    "targets": [],
+    "risk_reward_ratio": null,
+    "qc_status": "fail",
+    "qc_findings": [
+      "risk_reward_below_minimum"
+    ]
+  },
+  "evidence_refs": [
+    "raw/screenshots/2026-03-18__EBL__NEPSE__1D__market_context.png",
+    "raw/snapshots/2026-03-18__EBL__NEPSE__1D__snapshot.txt",
+    "raw/tables/2026-03-18__EBL__NEPSE__1D__market_extract.json",
+    "raw/snapshots/2026-03-18__EBL__1M__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__EBL__1M__stock_extract.json",
+    "raw/tables/2026-03-18__EBL__1M__bar_extract.json",
+    "raw/tables/2026-03-18__EBL__1M__indicator_extract.json",
+    "raw/screenshots/2026-03-18__EBL__1M__clean_v2.png",
+    "raw/screenshots/2026-03-18__EBL__1M__annotated_v2.png",
+    "raw/tables/2026-03-18__EBL__BANKING__sector_extract.json",
+    "raw/screenshots/2026-03-18__EBL__BANKING__sector.png",
+    "raw/snapshots/2026-03-18__EBL__BANKING__sector_snapshot.txt",
+    "raw/tables/2026-03-18__EBL__event_extract.json",
+    "raw/tables/2026-03-18__EBL__1M__decision_qc.json"
+  ],
+  "timeframe": "1M"
+}

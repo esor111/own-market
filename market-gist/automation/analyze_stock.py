@@ -37,7 +37,7 @@ class StockAnalysisAutomation:
         self.symbol = symbol.upper()
         self.timeframe = timeframe
         self.run_date = run_date or datetime.now().strftime("%Y-%m-%d")
-        self.session_id = get_session_id(self.symbol, self.run_date)
+        self.session_id = get_session_id(self.symbol, self.timeframe, self.run_date)
         self.file_prefix = get_file_prefix(self.symbol, self.run_date)
         self.run_dirs = get_run_directories(self.symbol, self.run_date)
         
@@ -958,6 +958,7 @@ class StockAnalysisAutomation:
         # Session record
         self.file_gen.generate_session_record(
             self.symbol,
+            self.timeframe,
             stages_completed=[
                 "market_context_capture", "symbol_chart_load",
                 "timeframe_selection", "indicator_setup",
@@ -1028,6 +1029,7 @@ class StockAnalysisAutomation:
         # Model-input record
         self.file_gen.generate_model_input_record(
             self.symbol,
+            self.timeframe,
             self._build_model_input_payload(),
             self.data["evidence_files"]
         )
@@ -1042,6 +1044,7 @@ class StockAnalysisAutomation:
         # Decision record
         self.file_gen.generate_decision_record(
             self.symbol,
+            self.timeframe,
             self.data["decision"],
             self.data["evidence_files"]
         )

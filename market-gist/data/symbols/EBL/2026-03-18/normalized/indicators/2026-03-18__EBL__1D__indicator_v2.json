@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "session_id": "2026-03-18__EBL__v2",
+  "session_id": "2026-03-18__EBL__1W__v2",
   "run_date": "2026-03-18",
-  "captured_at": "2026-03-18T19:21:43.973693",
+  "captured_at": "2026-03-18T20:38:17.955798",
   "source": "nepsealpha_chart",
   "symbol": "EBL",
   "timeframe": "1D",

@@ -10,7 +10,13 @@ import sys
 from datetime import datetime
 
 from analyze_stock import StockAnalysisAutomation
-from config import VALIDATION_DIR, get_run_directories, resolve_symbols
+from config import (
+    VALIDATION_DIR,
+    get_decision_filename,
+    get_run_directories,
+    get_session_filename,
+    resolve_symbols,
+)
 
 
 def load_json(path):
@@ -23,8 +29,14 @@ async def run_symbol(symbol, timeframe, run_date):
     await automation.run()
 
     run_dirs = get_run_directories(symbol, run_date)
-    decision_path = os.path.join(run_dirs["normalized_decisions"], f"{run_date}__{symbol}__decision_v2.json")
-    session_path = os.path.join(run_dirs["normalized_sessions"], f"{run_date}__{symbol}__session_v2.json")
+    decision_path = os.path.join(
+        run_dirs["normalized_decisions"],
+        get_decision_filename(symbol, timeframe, run_date)
+    )
+    session_path = os.path.join(
+        run_dirs["normalized_sessions"],
+        get_session_filename(symbol, timeframe, run_date)
+    )
     qc_path = os.path.join(run_dirs["raw_tables"], f"{run_date}__{symbol}__{timeframe}__decision_qc.json")
 
     decision = load_json(decision_path) if os.path.exists(decision_path) else {}

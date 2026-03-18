@@ -29,7 +29,16 @@ class BrowserAutomation:
         # Try to connect to existing Chrome instance first
         try:
             print("  Attempting to connect to existing Chrome browser...")
-            self.browser = await self.playwright.chromium.connect_over_cdp("http://localhost:9222")
+            endpoints = ["http://127.0.0.1:9222", "http://localhost:9222"]
+            last_error = None
+            for endpoint in endpoints:
+                try:
+                    self.browser = await self.playwright.chromium.connect_over_cdp(endpoint)
+                    break
+                except Exception as exc:
+                    last_error = exc
+            if not self.browser:
+                raise last_error
             
             # Always allocate a dedicated page for this run so parallel analyses
             # do not fight over symbol/timeframe state in the same tab.

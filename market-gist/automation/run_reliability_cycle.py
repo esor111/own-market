@@ -11,7 +11,7 @@ from datetime import datetime
 
 from analyze_stock import StockAnalysisAutomation
 from calibration_report import build_calibration_summary
-from config import VALIDATION_DIR, get_run_directories, resolve_symbols
+from config import VALIDATION_DIR, get_decision_filename, get_run_directories, resolve_symbols
 from evaluate_outcome import evaluate_outcome_for_run
 
 for stream_name in ("stdout", "stderr"):
@@ -34,7 +34,10 @@ async def run_symbol(symbol, timeframe, run_date):
     outcome_result = await evaluate_outcome_for_run(symbol, run_date, timeframe)
 
     run_dirs = get_run_directories(symbol, run_date)
-    decision_path = os.path.join(run_dirs["normalized_decisions"], f"{run_date}__{symbol}__decision_v2.json")
+    decision_path = os.path.join(
+        run_dirs["normalized_decisions"],
+        get_decision_filename(symbol, timeframe, run_date)
+    )
     decision = load_json(decision_path)
 
     return {

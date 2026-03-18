@@ -9,7 +9,7 @@ import sys
 from datetime import datetime
 
 from browser_actions import BrowserAutomation
-from config import get_run_directories, get_session_id
+from config import get_decision_filename, get_run_directories, get_session_id
 from file_generator import FileGenerator
 from outcome_tracker import OutcomeTracker
 
@@ -31,7 +31,10 @@ async def evaluate_outcome_for_run(symbol, run_date, timeframe="1W", evaluation_
     symbol = symbol.upper()
     evaluation_date = evaluation_date or datetime.now().strftime("%Y-%m-%d")
     run_dirs = get_run_directories(symbol, run_date)
-    decision_path = os.path.join(run_dirs["normalized_decisions"], f"{run_date}__{symbol}__decision_v2.json")
+    decision_path = os.path.join(
+        run_dirs["normalized_decisions"],
+        get_decision_filename(symbol, timeframe, run_date)
+    )
     bars_path = os.path.join(run_dirs["raw_tables"], f"{run_date}__{symbol}__{timeframe}__bar_extract.json")
 
     if not os.path.exists(decision_path):
@@ -71,7 +74,7 @@ async def evaluate_outcome_for_run(symbol, run_date, timeframe="1W", evaluation_
     tracker = OutcomeTracker()
     outcome_data = tracker.evaluate(decision_record, future_bars, evaluation_date, timeframe)
 
-    file_gen = FileGenerator(get_session_id(symbol, run_date), run_date, run_dirs)
+    file_gen = FileGenerator(get_session_id(symbol, timeframe, run_date), run_date, run_dirs)
     evidence_refs = [
         os.path.relpath(decision_path, run_dirs["base"]).replace("\\", "/"),
         os.path.relpath(bars_path, run_dirs["base"]).replace("\\", "/"),

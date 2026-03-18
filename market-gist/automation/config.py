@@ -77,10 +77,20 @@ DECISION_THRESHOLDS = {
     "avoid": 0
 }
 
-def get_session_id(symbol, date=None):
-    """Generate session ID"""
+
+def normalize_timeframe_token(timeframe):
+    """Return a filesystem-safe timeframe token."""
+    return str(timeframe).upper().replace("/", "_")
+
+
+def get_session_id(symbol, timeframe=None, date=None):
+    """Generate a timeframe-safe session ID."""
     if date is None:
         date = datetime.now().strftime("%Y-%m-%d")
+    symbol = str(symbol).upper()
+    if timeframe:
+        timeframe = normalize_timeframe_token(timeframe)
+        return f"{date}__{symbol}__{timeframe}__v2"
     return f"{date}__{symbol}__v2"
 
 def get_file_prefix(symbol, date=None):
@@ -88,6 +98,33 @@ def get_file_prefix(symbol, date=None):
     if date is None:
         date = datetime.now().strftime("%Y-%m-%d")
     return f"{date}__{symbol}"
+
+
+def get_session_filename(symbol, timeframe, date=None):
+    """Return the timeframe-safe session record filename."""
+    if date is None:
+        date = datetime.now().strftime("%Y-%m-%d")
+    symbol = str(symbol).upper()
+    timeframe = normalize_timeframe_token(timeframe)
+    return f"{date}__{symbol}__{timeframe}__session_v2.json"
+
+
+def get_decision_filename(symbol, timeframe, date=None):
+    """Return the timeframe-safe decision record filename."""
+    if date is None:
+        date = datetime.now().strftime("%Y-%m-%d")
+    symbol = str(symbol).upper()
+    timeframe = normalize_timeframe_token(timeframe)
+    return f"{date}__{symbol}__{timeframe}__decision_v2.json"
+
+
+def get_model_input_filename(symbol, timeframe, date=None):
+    """Return the timeframe-safe model-input filename."""
+    if date is None:
+        date = datetime.now().strftime("%Y-%m-%d")
+    symbol = str(symbol).upper()
+    timeframe = normalize_timeframe_token(timeframe)
+    return f"{date}__{symbol}__{timeframe}__model_input_v1.json"
 
 
 def get_run_directories(symbol, date=None):

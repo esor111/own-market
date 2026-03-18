@@ -10,7 +10,13 @@ import sys
 from glob import glob
 
 from calibration_report import build_calibration_summary
-from config import VALIDATION_DIR, SYMBOLS_DIR, get_run_directories, resolve_symbols
+from config import (
+    VALIDATION_DIR,
+    SYMBOLS_DIR,
+    get_decision_filename,
+    get_run_directories,
+    resolve_symbols,
+)
 from evaluate_outcome import evaluate_outcome_for_run
 
 for stream_name in ("stdout", "stderr"):
@@ -34,7 +40,7 @@ def discover_symbols_for_run(run_date, timeframe):
         run_date,
         "normalized",
         "decisions",
-        f"{run_date}__*__decision_v2.json"
+        f"{run_date}__*__{timeframe.upper()}__decision_v2.json"
     )
     symbols = []
     for path in glob(pattern):
@@ -85,7 +91,7 @@ def build_cycle_summary(run_date, timeframe, symbols, calibration_path, calibrat
         run_dirs = get_run_directories(symbol, run_date)
         decision_path = os.path.join(
             run_dirs["normalized_decisions"],
-            f"{run_date}__{symbol}__decision_v2.json"
+            get_decision_filename(symbol, timeframe, run_date)
         )
         outcome_path = os.path.join(
             run_dirs["outcomes_realized_results"],
