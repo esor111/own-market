@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv/
+venv/
+ENV/
+env/
+
+# Markdown reports (keep templates, ignore generated reports)
+market-gist/*_2026-*.md
+market-gist/LEARNING_JOURNAL.md
+market-gist/ONBOARDING.md
+market-gist/COMPLETE_PROJECT_CONTEXT_SUMMARY.md
+market-gist/NEXT_SESSION_HANDOFF_*.md
+
+# Agent folders
+market-gist/agent-*/
+market-gist/agents/
+market-gist/one/
+market-gist/findings-research-me/
+market-gist/forward_shadow_system/
+market-gist/shadow_book/
+all-chat/
+external/
+.claude/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Other data scraping projects
+sharesansar_datascrape/
+
+# Kiro
+.kiro/
+.zencoder/
+.zenflow/
