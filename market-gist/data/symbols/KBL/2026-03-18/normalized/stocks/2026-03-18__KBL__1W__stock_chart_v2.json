@@ -1,41 +1,69 @@
 {
   "schema_version": "1.0",
-  "session_id": "2026-03-18__KBL__v2",
+  "session_id": "2026-03-18__KBL__1W__v2",
   "run_date": "2026-03-18",
-  "captured_at": "2026-03-18T14:15:26.253942",
+  "captured_at": "2026-03-18T23:13:04.548963",
   "source": "nepsealpha_chart",
   "symbol": "KBL",
   "timeframe": "1W",
-  "close": null,
-  "open": null,
-  "high": null,
-  "low": null,
+  "close": 220.9,
+  "open": 227.4,
+  "high": 231.0,
+  "low": 213.1,
   "volume": null,
-  "trend_label": "",
-  "structure_label": "",
-  "swing_highs": [],
-  "swing_lows": [],
-  "support_zones": [],
-  "resistance_zones": [],
-  "breakout_level": null,
-  "breakdown_level": null,
-  "invalidation_level": null,
-  "location_label": "",
-  "confidence_source": "",
+  "trend_label": "uptrend",
+  "structure_label": "trend_continuation",
+  "swing_highs": [
+    227.4,
+    231.0
+  ],
+  "swing_lows": [
+    213.1,
+    199.98,
+    195.63,
+    178.4,
+    177.5
+  ],
+  "support_zones": [
+    [
+      210.97,
+      215.23
+    ],
+    [
+      197.98,
+      201.98
+    ],
+    [
+      193.67,
+      197.59
+    ]
+  ],
+  "resistance_zones": [
+    [
+      225.13,
+      229.67
+    ],
+    [
+      228.69,
+      233.31
+    ]
+  ],
+  "breakout_level": 227.4,
+  "breakdown_level": 213.1,
+  "invalidation_level": 178.4,
+  "location_label": "near_resistance",
+  "confidence_source": "extracted_plus_derived",
   "evidence_refs": [
-    "raw/screenshots/2026-03-18__KBL__NEPSE__1D__market_context.png",
-    "raw/tables/2026-03-18__KBL__NEPSE__1D__market_extract.json",
+    "raw/snapshots/2026-03-18__KBL__1W__pre_indicators_snapshot.txt",
     "raw/tables/2026-03-18__KBL__1W__stock_extract.json",
     "raw/tables/2026-03-18__KBL__1W__bar_extract.json",
     "raw/tables/2026-03-18__KBL__1W__indicator_extract.json",
     "raw/screenshots/2026-03-18__KBL__1W__clean_v2.png",
-    "raw/screenshots/2026-03-18__KBL__1W__annotated_v2.png",
-    "raw/tables/2026-03-18__KBL__BANKING__sector_extract.json",
-    "raw/screenshots/2026-03-18__KBL__BANKING__sector.png"
+    "raw/screenshots/2026-03-18__KBL__1W__annotated_v2.png"
   ],
-  "local_range_high": null,
-  "local_range_low": null,
-  "range_width_pct": null,
-  "structure_confidence": null,
+  "local_range_high": 231.0,
+  "local_range_low": 178.4,
+  "range_width_pct": 29.48,
+  "structure_confidence": "high",
   "structure_confidence_reasons": []
 }

@@ -1,15 +1,35 @@
 {
-  "total_decisions": 9,
+  "total_decisions": 28,
   "decisions_with_usable_outcomes": 0,
-  "decisions_excluded_from_calibration": 9,
+  "decisions_excluded_from_calibration": 28,
   "minimum_sample_warning": true,
   "confidence_buckets": {},
   "score_buckets": {},
   "excluded_records": [
     {
+      "session_id": "2026-03-18__EBL__1M__v2",
+      "symbol": "EBL",
+      "reason": "missing"
+    },
+    {
+      "session_id": "2026-03-18__EBL__1W__v2",
+      "symbol": "EBL",
+      "reason": "missing"
+    },
+    {
       "session_id": "2026-03-18__EBL__v2",
       "symbol": "EBL",
       "reason": "pending"
+    },
+    {
+      "session_id": "2026-03-19__EBL__1W__v2",
+      "symbol": "EBL",
+      "reason": "open"
+    },
+    {
+      "session_id": "2026-03-18__HBL__1W__v2",
+      "symbol": "HBL",
+      "reason": "missing"
     },
     {
       "session_id": "2026-03-18__HBL__v2",
@@ -17,9 +37,34 @@
       "reason": "not_applicable"
     },
     {
+      "session_id": "2026-03-19__HBL__1W__v2",
+      "symbol": "HBL",
+      "reason": "missing"
+    },
+    {
+      "session_id": "2026-03-19__HIDCL__1W__v2",
+      "symbol": "HIDCL",
+      "reason": "open"
+    },
+    {
+      "session_id": "2026-03-18__KBL__1W__v2",
+      "symbol": "KBL",
+      "reason": "missing"
+    },
+    {
       "session_id": "2026-03-18__KBL__v2",
       "symbol": "KBL",
       "reason": "not_applicable"
+    },
+    {
+      "session_id": "2026-03-19__KBL__1W__v2",
+      "symbol": "KBL",
+      "reason": "missing"
+    },
+    {
+      "session_id": "2026-03-18__NABIL__1W__v2",
+      "symbol": "NABIL",
+      "reason": "missing"
     },
     {
       "session_id": "2026-03-18__NABIL__v2",
@@ -27,9 +72,34 @@
       "reason": "not_applicable"
     },
     {
+      "session_id": "2026-03-19__NABIL__1W__v2",
+      "symbol": "NABIL",
+      "reason": "missing"
+    },
+    {
+      "session_id": "2026-03-18__NBL__1W__v2",
+      "symbol": "NBL",
+      "reason": "missing"
+    },
+    {
       "session_id": "2026-03-18__NBL__v2",
       "symbol": "NBL",
       "reason": "pending"
+    },
+    {
+      "session_id": "2026-03-19__NBL__1W__v2",
+      "symbol": "NBL",
+      "reason": "missing"
+    },
+    {
+      "session_id": "2026-03-19__NGPL__1W__v2",
+      "symbol": "NGPL",
+      "reason": "open"
+    },
+    {
+      "session_id": "2026-03-18__SANIMA__1W__v2",
+      "symbol": "SANIMA",
+      "reason": "missing"
     },
     {
       "session_id": "2026-03-18__SANIMA__v2",
@@ -37,7 +107,17 @@
       "reason": "pending"
     },
     {
+      "session_id": "2026-03-19__SANIMA__1W__v2",
+      "symbol": "SANIMA",
+      "reason": "missing"
+    },
+    {
       "session_id": "2026-03-17__SMHL__v2",
+      "symbol": "SMHL",
+      "reason": "missing"
+    },
+    {
+      "session_id": "2026-03-18__SMHL__1W__v2",
       "symbol": "SMHL",
       "reason": "missing"
     },
@@ -47,22 +127,85 @@
       "reason": "pending"
     },
     {
+      "session_id": "2026-03-19__SMHL__1W__v2",
+      "symbol": "SMHL",
+      "reason": "missing"
+    },
+    {
+      "session_id": "2026-03-18__UPPER__1W__v2",
+      "symbol": "UPPER",
+      "reason": "missing"
+    },
+    {
       "session_id": "2026-03-18__UPPER__v2",
       "symbol": "UPPER",
       "reason": "not_applicable"
+    },
+    {
+      "session_id": "2026-03-19__UPPER__1W__v2",
+      "symbol": "UPPER",
+      "reason": "missing"
     }
   ],
   "records": [
     {
+      "session_id": "2026-03-18__EBL__1M__v2",
+      "symbol": "EBL",
+      "action": "avoid",
+      "setup_type": "reversal_watch",
+      "score": 44,
+      "confidence": 54,
+      "confidence_bucket": "50-59",
+      "score_bucket": "40-49",
+      "outcome_label": "missing",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__EBL__1W__v2",
+      "symbol": "EBL",
+      "action": "watch_only",
+      "setup_type": "continuation",
+      "score": 59,
+      "confidence": 69,
+      "confidence_bucket": "60-69",
+      "score_bucket": "50-59",
+      "outcome_label": "missing",
+      "success": null
+    },
+    {
       "session_id": "2026-03-18__EBL__v2",
       "symbol": "EBL",
-      "action": "buy",
+      "action": "avoid",
+      "setup_type": "reversal_watch",
+      "score": 44,
+      "confidence": 54,
+      "confidence_bucket": "50-59",
+      "score_bucket": "40-49",
+      "outcome_label": "pending",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-19__EBL__1W__v2",
+      "symbol": "EBL",
+      "action": "watch_only",
       "setup_type": "continuation",
-      "score": 68,
-      "confidence": 78,
+      "score": 62,
+      "confidence": 72,
       "confidence_bucket": "70-79",
       "score_bucket": "60-69",
-      "outcome_label": "pending",
+      "outcome_label": "open",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__HBL__1W__v2",
+      "symbol": "HBL",
+      "action": "avoid",
+      "setup_type": "continuation",
+      "score": 58,
+      "confidence": 67,
+      "confidence_bucket": "60-69",
+      "score_bucket": "50-59",
+      "outcome_label": "missing",
       "success": null
     },
     {
@@ -78,6 +221,42 @@
       "success": null
     },
     {
+      "session_id": "2026-03-19__HBL__1W__v2",
+      "symbol": "HBL",
+      "action": "watch_only",
+      "setup_type": "continuation",
+      "score": 61,
+      "confidence": 71,
+      "confidence_bucket": "70-79",
+      "score_bucket": "60-69",
+      "outcome_label": "missing",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-19__HIDCL__1W__v2",
+      "symbol": "HIDCL",
+      "action": "watch_only",
+      "setup_type": "continuation",
+      "score": 60,
+      "confidence": 70,
+      "confidence_bucket": "70-79",
+      "score_bucket": "60-69",
+      "outcome_label": "open",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__KBL__1W__v2",
+      "symbol": "KBL",
+      "action": "avoid",
+      "setup_type": "continuation",
+      "score": 55,
+      "confidence": 65,
+      "confidence_bucket": "60-69",
+      "score_bucket": "50-59",
+      "outcome_label": "missing",
+      "success": null
+    },
+    {
       "session_id": "2026-03-18__KBL__v2",
       "symbol": "KBL",
       "action": "incomplete_data",
@@ -87,6 +266,30 @@
       "confidence_bucket": "0-9",
       "score_bucket": "0-9",
       "outcome_label": "not_applicable",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-19__KBL__1W__v2",
+      "symbol": "KBL",
+      "action": "avoid",
+      "setup_type": "continuation",
+      "score": 58,
+      "confidence": 67,
+      "confidence_bucket": "60-69",
+      "score_bucket": "50-59",
+      "outcome_label": "missing",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__NABIL__1W__v2",
+      "symbol": "NABIL",
+      "action": "avoid",
+      "setup_type": "breakout_watch",
+      "score": 54,
+      "confidence": 64,
+      "confidence_bucket": "60-69",
+      "score_bucket": "50-59",
+      "outcome_label": "missing",
       "success": null
     },
     {
@@ -102,6 +305,30 @@
       "success": null
     },
     {
+      "session_id": "2026-03-19__NABIL__1W__v2",
+      "symbol": "NABIL",
+      "action": "avoid",
+      "setup_type": "breakout_watch",
+      "score": 57,
+      "confidence": 66,
+      "confidence_bucket": "60-69",
+      "score_bucket": "50-59",
+      "outcome_label": "missing",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__NBL__1W__v2",
+      "symbol": "NBL",
+      "action": "avoid",
+      "setup_type": "continuation",
+      "score": 55,
+      "confidence": 65,
+      "confidence_bucket": "60-69",
+      "score_bucket": "50-59",
+      "outcome_label": "missing",
+      "success": null
+    },
+    {
       "session_id": "2026-03-18__NBL__v2",
       "symbol": "NBL",
       "action": "watch_only",
@@ -111,6 +338,42 @@
       "confidence_bucket": "70-79",
       "score_bucket": "60-69",
       "outcome_label": "pending",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-19__NBL__1W__v2",
+      "symbol": "NBL",
+      "action": "avoid",
+      "setup_type": "continuation",
+      "score": 58,
+      "confidence": 67,
+      "confidence_bucket": "60-69",
+      "score_bucket": "50-59",
+      "outcome_label": "missing",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-19__NGPL__1W__v2",
+      "symbol": "NGPL",
+      "action": "watch_only",
+      "setup_type": "breakout_watch",
+      "score": 60,
+      "confidence": 70,
+      "confidence_bucket": "70-79",
+      "score_bucket": "60-69",
+      "outcome_label": "open",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__SANIMA__1W__v2",
+      "symbol": "SANIMA",
+      "action": "avoid",
+      "setup_type": "continuation",
+      "score": 57,
+      "confidence": 66,
+      "confidence_bucket": "60-69",
+      "score_bucket": "50-59",
+      "outcome_label": "missing",
       "success": null
     },
     {
@@ -126,6 +389,18 @@
       "success": null
     },
     {
+      "session_id": "2026-03-19__SANIMA__1W__v2",
+      "symbol": "SANIMA",
+      "action": "watch_only",
+      "setup_type": "continuation",
+      "score": 60,
+      "confidence": 70,
+      "confidence_bucket": "70-79",
+      "score_bucket": "60-69",
+      "outcome_label": "missing",
+      "success": null
+    },
+    {
       "session_id": "2026-03-17__SMHL__v2",
       "symbol": "SMHL",
       "action": "watch_only",
@@ -138,15 +413,51 @@
       "success": null
     },
     {
-      "session_id": "2026-03-18__SMHL__v2",
+      "session_id": "2026-03-18__SMHL__1W__v2",
       "symbol": "SMHL",
       "action": "watch_only",
       "setup_type": "breakout_watch",
-      "score": 57,
-      "confidence": 66,
+      "score": 55,
+      "confidence": 65,
       "confidence_bucket": "60-69",
       "score_bucket": "50-59",
+      "outcome_label": "missing",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__SMHL__v2",
+      "symbol": "SMHL",
+      "action": "avoid",
+      "setup_type": "no_setup",
+      "score": 37,
+      "confidence": 47,
+      "confidence_bucket": "40-49",
+      "score_bucket": "30-39",
       "outcome_label": "pending",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-19__SMHL__1W__v2",
+      "symbol": "SMHL",
+      "action": "avoid",
+      "setup_type": "breakout_watch",
+      "score": 58,
+      "confidence": 67,
+      "confidence_bucket": "60-69",
+      "score_bucket": "50-59",
+      "outcome_label": "missing",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-18__UPPER__1W__v2",
+      "symbol": "UPPER",
+      "action": "avoid",
+      "setup_type": "continuation",
+      "score": 58,
+      "confidence": 67,
+      "confidence_bucket": "60-69",
+      "score_bucket": "50-59",
+      "outcome_label": "missing",
       "success": null
     },
     {
@@ -159,6 +470,18 @@
       "confidence_bucket": "50-59",
       "score_bucket": "40-49",
       "outcome_label": "not_applicable",
+      "success": null
+    },
+    {
+      "session_id": "2026-03-19__UPPER__1W__v2",
+      "symbol": "UPPER",
+      "action": "watch_only",
+      "setup_type": "continuation",
+      "score": 61,
+      "confidence": 71,
+      "confidence_bucket": "70-79",
+      "score_bucket": "60-69",
+      "outcome_label": "missing",
       "success": null
     }
   ]

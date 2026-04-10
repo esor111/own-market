@@ -2,51 +2,55 @@
   "schema_version": "1.0",
   "session_id": "2026-03-18__EBL__1W__v2",
   "run_date": "2026-03-18",
-  "captured_at": "2026-03-18T20:38:17.955798",
+  "captured_at": "2026-03-18T23:09:23.183979",
   "source": "nepsealpha_chart",
   "symbol": "EBL",
   "timeframe": "1W",
-  "close": 564.2,
-  "open": 614.9,
-  "high": 616.6,
-  "low": 547.9,
+  "close": 706.0,
+  "open": 719.0,
+  "high": 719.0,
+  "low": 695.0,
   "volume": null,
-  "trend_label": "downtrend",
+  "trend_label": "uptrend",
   "structure_label": "trend_continuation",
   "swing_highs": [
-    585.48,
-    605.82,
-    614.9,
-    616.6,
-    683.5,
+    719.0,
     734.0
   ],
   "swing_lows": [
-    547.9
+    695.0,
+    681.58,
+    678.74,
+    663.2,
+    652.0
   ],
   "support_zones": [
     [
-      542.42,
-      553.38
+      688.05,
+      701.95
+    ],
+    [
+      674.76,
+      688.4
+    ],
+    [
+      671.95,
+      685.53
     ]
   ],
   "resistance_zones": [
     [
-      579.63,
-      591.33
+      711.81,
+      726.19
     ],
     [
-      599.76,
-      611.88
-    ],
-    [
-      608.75,
-      621.05
+      726.66,
+      741.34
     ]
   ],
-  "breakout_level": 585.48,
-  "breakdown_level": 547.9,
-  "invalidation_level": 531.46,
+  "breakout_level": 719.0,
+  "breakdown_level": 695.0,
+  "invalidation_level": 663.2,
   "location_label": "near_support",
   "confidence_source": "extracted_plus_derived",
   "evidence_refs": [
@@ -60,8 +64,6 @@
   "local_range_high": 734.0,
   "local_range_low": 652.0,
   "range_width_pct": 12.58,
-  "structure_confidence": "medium",
-  "structure_confidence_reasons": [
-    "limited_chart_structure"
-  ]
+  "structure_confidence": "high",
+  "structure_confidence_reasons": []
 }

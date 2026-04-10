@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
-  "session_id": "2026-03-18__NABIL__v2",
+  "session_id": "2026-03-18__NABIL__1W__v2",
   "run_date": "2026-03-18",
   "symbol": "NABIL",
   "benchmark_market": "NEPSE",
   "benchmark_sector": "BANKING",
   "rs_vs_market_label": "underperforming",
-  "rs_vs_sector_label": "outperforming",
-  "rs_notes": "NABIL move -1.52% vs NEPSE -0.65%",
+  "rs_vs_sector_label": "underperforming",
+  "rs_notes": "NABIL move -0.6% vs NEPSE 0.41%",
   "confidence_source": "",
   "evidence_refs": [
     "raw/screenshots/2026-03-18__NABIL__NEPSE__1D__market_context.png",
@@ -19,9 +19,18 @@
     "raw/tables/2026-03-18__NABIL__1W__indicator_extract.json",
     "raw/screenshots/2026-03-18__NABIL__1W__clean_v2.png",
     "raw/screenshots/2026-03-18__NABIL__1W__annotated_v2.png",
+    "raw/snapshots/2026-03-18__NABIL__1D__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__NABIL__1D__stock_extract.json",
+    "raw/tables/2026-03-18__NABIL__1D__bar_extract.json",
+    "raw/tables/2026-03-18__NABIL__1D__indicator_extract.json",
+    "raw/screenshots/2026-03-18__NABIL__1D__clean_v2.png",
+    "raw/screenshots/2026-03-18__NABIL__1D__annotated_v2.png",
     "raw/tables/2026-03-18__NABIL__BANKING__sector_extract.json",
     "raw/screenshots/2026-03-18__NABIL__BANKING__sector.png",
     "raw/snapshots/2026-03-18__NABIL__BANKING__sector_snapshot.txt",
+    "raw/tables/2026-03-18__NABIL__event_extract.json",
+    "raw/tables/2026-03-18__NABIL__api_truth_bundle.json",
+    "raw/tables/2026-03-18__NABIL__1W__api_truth_comparison.json",
     "raw/tables/2026-03-18__NABIL__1W__decision_qc.json"
   ]
 }

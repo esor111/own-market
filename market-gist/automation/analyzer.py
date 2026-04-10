@@ -6,6 +6,8 @@ from config import SCORING_RULES, DECISION_THRESHOLDS
 
 class StockAnalyzer:
     MIN_TARGET_DISTANCE_PCT = 0.03
+    MIN_TARGET_RISK_REWARD = 1.0
+    MIN_WATCHLIST_RISK_REWARD = 1.2
 
     def __init__(self):
         self.scoring_rules = SCORING_RULES
@@ -227,6 +229,37 @@ class StockAnalyzer:
                     break
         
         return targets[:3]
+
+    def filter_viable_targets(self, entry, stop, resistance_levels):
+        """Keep only targets that provide at least the minimum risk/reward."""
+        raw_targets = self.calculate_targets(entry, resistance_levels)
+        viable = []
+        for target in raw_targets:
+            if self.calculate_risk_reward(entry, stop, target) >= self.MIN_TARGET_RISK_REWARD:
+                viable.append(target)
+        return viable[:3]
+
+    def select_continuation_entry(self, price, nearest_support, ema_20, ma_50, invalidation_level):
+        """Prefer dynamic-support pullback entries over current-price chasing."""
+        candidates = []
+        for level in [ema_20, ma_50]:
+            if (
+                level is not None
+                and price is not None
+                and invalidation_level is not None
+                and invalidation_level < level < price
+            ):
+                candidates.append(level)
+
+        if candidates:
+            entry = max(candidates)
+        elif nearest_support is not None and nearest_support < price:
+            entry = nearest_support
+        else:
+            entry = price
+
+        upper = min(price, round(entry * 1.01, 2))
+        return [round(entry, 2), round(max(entry, upper), 2)]
     
     def calculate_risk_reward(self, entry, stop, target):
         """Calculate risk/reward ratio"""
@@ -256,3 +289,169 @@ class StockAnalyzer:
             base_confidence -= 10
         
         return max(0, min(100, base_confidence))
+
+    def evaluate_timeframe_alignment(self, monthly_context, weekly_context, daily_context, setup_type):
+        """Evaluate top-down monthly/weekly/daily alignment for swing setups."""
+        monthly_trend = (monthly_context or {}).get("trend_label")
+        weekly_trend = (weekly_context or {}).get("trend_label")
+        daily_trend = (daily_context or {}).get("trend_label")
+        monthly_structure = (monthly_context or {}).get("structure_label")
+        weekly_structure = (weekly_context or {}).get("structure_label")
+        daily_structure = (daily_context or {}).get("structure_label")
+
+        findings = []
+        score = 0
+
+        if monthly_trend == "uptrend":
+            score += 2
+        elif monthly_trend == "downtrend":
+            score -= 2
+            findings.append("monthly_trend_against_setup")
+
+        if weekly_trend == "uptrend":
+            score += 2
+        elif weekly_trend == "downtrend":
+            score -= 2
+            findings.append("weekly_trend_against_setup")
+
+        if daily_trend == "uptrend":
+            score += 1
+        elif daily_trend == "downtrend":
+            if setup_type == "continuation":
+                findings.append("daily_pullback_against_continuation")
+            else:
+                score -= 1
+                findings.append("daily_trigger_not_supportive")
+
+        if monthly_trend and weekly_trend and monthly_trend == weekly_trend:
+            score += 1
+        elif (
+            monthly_trend in {"uptrend", "downtrend"}
+            and weekly_trend in {"uptrend", "downtrend"}
+            and monthly_trend != weekly_trend
+        ):
+            score -= 1
+            findings.append("monthly_weekly_conflict")
+
+        if weekly_trend and daily_trend and weekly_trend == daily_trend:
+            score += 1
+        elif (
+            weekly_trend in {"uptrend", "downtrend"}
+            and daily_trend in {"uptrend", "downtrend"}
+            and weekly_trend != daily_trend
+        ):
+            score -= 1
+            findings.append("weekly_daily_conflict")
+
+        if monthly_structure == "trend_breakdown":
+            score -= 1
+            findings.append("monthly_structure_broken")
+        if weekly_structure == "trend_breakdown":
+            score -= 1
+            findings.append("weekly_structure_broken")
+        if setup_type == "breakout_watch" and daily_structure == "trend_breakdown":
+            score -= 1
+            findings.append("daily_breakout_trigger_weak")
+
+        if score >= 4:
+            alignment = "strong"
+        elif score >= 1:
+            alignment = "mixed_but_acceptable"
+        else:
+            alignment = "conflicted"
+
+        return {
+            "status": alignment,
+            "score": score,
+            "findings": findings,
+            "is_supportive": alignment != "conflicted"
+        }
+
+    def rank_watchlist_candidate(
+        self,
+        action,
+        setup_type,
+        score,
+        confidence,
+        risk_reward_ratio,
+        structure_confidence,
+        location_label
+    ):
+        """Rank watchlist-quality setups and optionally downgrade weak continuation ideas."""
+        if action != "watch_only":
+            return {
+                "action": action,
+                "watchlist_tier": None,
+                "watchlist_priority": None,
+                "watchlist_score": None,
+                "notes": []
+            }
+
+        rank_score = 0
+        notes = []
+
+        if risk_reward_ratio is not None:
+            if risk_reward_ratio < self.MIN_WATCHLIST_RISK_REWARD:
+                notes.append("risk_reward_below_watchlist_minimum")
+            elif risk_reward_ratio >= 2.0:
+                rank_score += 3
+            elif risk_reward_ratio >= 1.5:
+                rank_score += 2
+            elif risk_reward_ratio >= self.MIN_WATCHLIST_RISK_REWARD:
+                rank_score += 1
+        else:
+            notes.append("risk_reward_missing")
+
+        if score >= 58:
+            rank_score += 2
+        elif score >= 55:
+            rank_score += 1
+
+        if confidence >= 68:
+            rank_score += 2
+        elif confidence >= 65:
+            rank_score += 1
+
+        if structure_confidence == "high":
+            rank_score += 1
+
+        if setup_type == "breakout_watch":
+            rank_score += 1
+
+        if setup_type == "continuation" and location_label == "near_resistance":
+            rank_score -= 1
+            notes.append("continuation_setup_is_extended")
+
+        if rank_score >= 7:
+            tier = "A"
+            priority = 1
+        elif rank_score >= 5:
+            tier = "B"
+            priority = 2
+        elif rank_score >= 3:
+            tier = "C"
+            priority = 3
+        else:
+            tier = None
+            priority = None
+
+        adjusted_action = action
+        if risk_reward_ratio is None or risk_reward_ratio < self.MIN_WATCHLIST_RISK_REWARD:
+            adjusted_action = "avoid"
+            tier = None
+            priority = None
+            notes.append("watchlist_requires_better_risk_reward")
+        elif tier == "C":
+            adjusted_action = "avoid"
+            notes.append("watchlist_rank_too_weak")
+        elif tier is None:
+            adjusted_action = "avoid"
+            notes.append("watchlist_rank_too_weak")
+
+        return {
+            "action": adjusted_action,
+            "watchlist_tier": tier,
+            "watchlist_priority": priority,
+            "watchlist_score": rank_score,
+            "notes": notes
+        }

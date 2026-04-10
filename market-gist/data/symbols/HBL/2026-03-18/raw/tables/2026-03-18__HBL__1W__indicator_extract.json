@@ -3,11 +3,11 @@
   "symbol": "HBL",
   "timeframe": "1W",
   "data": {
-    "macd_line": -0.8,
-    "signal_line": 14.75,
-    "histogram": 15.55,
-    "rsi": 54.87,
-    "ema_20": 255.55,
-    "ma_50": 254.27
+    "macd_line": 3.95,
+    "signal_line": -0.57,
+    "histogram": -4.52,
+    "rsi": 64.36,
+    "ema_20": 200.55,
+    "ma_50": 197.13
   }
 }

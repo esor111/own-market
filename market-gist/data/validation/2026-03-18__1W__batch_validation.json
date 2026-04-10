@@ -13,108 +13,126 @@
   ],
   "results": [
     {
-      "symbol": "SMHL",
+      "symbol": "EBL",
+      "timeframe": "1W",
+      "action": "watch_only",
+      "setup_type": "continuation",
+      "score": 59,
+      "confidence": 69,
+      "watchlist_tier": "A",
+      "watchlist_priority": 1,
+      "risk_reward_ratio": 2.04,
+      "qc_status": "pass",
+      "qc_findings": [],
+      "session_notes": "Automated analysis run; truth_source=nepse_scraper"
+    },
+    {
+      "symbol": "HBL",
       "timeframe": "1W",
       "action": "avoid",
-      "setup_type": "no_setup",
-      "score": 37,
-      "confidence": 47,
-      "qc_status": "fail",
-      "qc_findings": [
-        "structure_not_actionable:trend_breakdown"
-      ],
-      "session_notes": "Automated analysis run; qc_gate=structure_not_actionable:trend_breakdown"
+      "setup_type": "continuation",
+      "score": 58,
+      "confidence": 67,
+      "watchlist_tier": "C",
+      "watchlist_priority": 3,
+      "risk_reward_ratio": null,
+      "qc_status": "pass",
+      "qc_findings": [],
+      "session_notes": "Automated analysis run; truth_source=nepse_scraper"
     },
     {
       "symbol": "UPPER",
       "timeframe": "1W",
       "action": "avoid",
+      "setup_type": "continuation",
+      "score": 58,
+      "confidence": 67,
+      "watchlist_tier": "C",
+      "watchlist_priority": 3,
+      "risk_reward_ratio": null,
+      "qc_status": "pass",
+      "qc_findings": [],
+      "session_notes": "Automated analysis run; truth_source=nepse_scraper"
+    },
+    {
+      "symbol": "SANIMA",
+      "timeframe": "1W",
+      "action": "avoid",
+      "setup_type": "continuation",
+      "score": 57,
+      "confidence": 66,
+      "watchlist_tier": "C",
+      "watchlist_priority": 3,
+      "risk_reward_ratio": null,
+      "qc_status": "pass",
+      "qc_findings": [],
+      "session_notes": "Automated analysis run; truth_source=nepse_scraper"
+    },
+    {
+      "symbol": "KBL",
+      "timeframe": "1W",
+      "action": "avoid",
+      "setup_type": "continuation",
+      "score": 55,
+      "confidence": 65,
+      "watchlist_tier": "C",
+      "watchlist_priority": 3,
+      "risk_reward_ratio": null,
+      "qc_status": "pass",
+      "qc_findings": [],
+      "session_notes": "Automated analysis run; truth_source=nepse_scraper"
+    },
+    {
+      "symbol": "NBL",
+      "timeframe": "1W",
+      "action": "avoid",
+      "setup_type": "continuation",
+      "score": 55,
+      "confidence": 65,
+      "watchlist_tier": "C",
+      "watchlist_priority": 3,
+      "risk_reward_ratio": null,
+      "qc_status": "pass",
+      "qc_findings": [],
+      "session_notes": "Automated analysis run; truth_source=nepse_scraper"
+    },
+    {
+      "symbol": "SMHL",
+      "timeframe": "1W",
+      "action": "watch_only",
       "setup_type": "breakout_watch",
-      "score": 45,
-      "confidence": 55,
-      "qc_status": "fail",
-      "qc_findings": [
-        "structure_confidence_low"
-      ],
-      "session_notes": "Automated analysis run; qc_gate=structure_confidence_low"
+      "score": 55,
+      "confidence": 65,
+      "watchlist_tier": "C",
+      "watchlist_priority": 3,
+      "risk_reward_ratio": 1.02,
+      "qc_status": "pass",
+      "qc_findings": [],
+      "session_notes": "Automated analysis run; truth_source=nepse_scraper"
     },
     {
       "symbol": "NABIL",
       "timeframe": "1W",
       "action": "avoid",
       "setup_type": "breakout_watch",
-      "score": 49,
-      "confidence": 59,
-      "qc_status": "fail",
-      "qc_findings": [
-        "risk_reward_below_minimum"
-      ],
-      "session_notes": "Automated analysis run; qc_gate=risk_reward_below_minimum"
-    },
-    {
-      "symbol": "NBL",
-      "timeframe": "1W",
-      "action": "watch_only",
-      "setup_type": "continuation",
-      "score": 64,
-      "confidence": 74,
+      "score": 54,
+      "confidence": 64,
+      "watchlist_tier": null,
+      "watchlist_priority": null,
+      "risk_reward_ratio": null,
       "qc_status": "pass",
       "qc_findings": [],
-      "session_notes": "Automated analysis run"
-    },
-    {
-      "symbol": "EBL",
-      "timeframe": "1W",
-      "action": "buy",
-      "setup_type": "continuation",
-      "score": 69,
-      "confidence": 79,
-      "qc_status": "pass",
-      "qc_findings": [],
-      "session_notes": "Automated analysis run"
-    },
-    {
-      "symbol": "HBL",
-      "timeframe": "1W",
-      "action": "avoid",
-      "setup_type": "breakout_watch",
-      "score": 48,
-      "confidence": 58,
-      "qc_status": "fail",
-      "qc_findings": [
-        "risk_reward_below_minimum"
-      ],
-      "session_notes": "Automated analysis run; qc_gate=risk_reward_below_minimum"
-    },
-    {
-      "symbol": "KBL",
-      "timeframe": "1W",
-      "action": "avoid",
-      "setup_type": "breakout_watch",
-      "score": 40,
-      "confidence": 50,
-      "qc_status": "fail",
-      "qc_findings": [
-        "structure_confidence_low"
-      ],
-      "session_notes": "Automated analysis run; qc_gate=structure_confidence_low"
-    },
-    {
-      "symbol": "SANIMA",
-      "timeframe": "1W",
-      "action": "watch_only",
-      "setup_type": "continuation",
-      "score": 55,
-      "confidence": 65,
-      "qc_status": "pass",
-      "qc_findings": [],
-      "session_notes": "Automated analysis run"
+      "session_notes": "Automated analysis run; truth_source=nepse_scraper"
     }
   ],
   "action_counts": {
-    "avoid": 5,
     "watch_only": 2,
-    "buy": 1
+    "avoid": 6
   },
-  "qc_fail_count": 5
+  "qc_fail_count": 0,
+  "watchlist_priority_counts": {
+    "C": 6,
+    "none": 1,
+    "A": 1
+  }
 }

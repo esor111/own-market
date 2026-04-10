@@ -2,5 +2,12 @@
   "extraction_type": "indicator_values",
   "symbol": "KBL",
   "timeframe": "1W",
-  "data": {}
+  "data": {
+    "macd_line": 5.17,
+    "signal_line": 3.68,
+    "histogram": -1.49,
+    "rsi": 68.13,
+    "ema_20": 199.98,
+    "ma_50": 195.63
+  }
 }

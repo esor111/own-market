@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "session_id": "2026-03-18__UPPER__v2",
+  "session_id": "2026-03-18__UPPER__1W__v2",
   "run_date": "2026-03-18",
   "symbol": "UPPER",
   "timeframe": "1W",
@@ -11,19 +11,12 @@
   "participation_label": "volume_unconfirmed",
   "confidence_source": "",
   "evidence_refs": [
-    "raw/screenshots/2026-03-18__UPPER__NEPSE__1D__market_context.png",
-    "raw/snapshots/2026-03-18__UPPER__NEPSE__1D__snapshot.txt",
-    "raw/tables/2026-03-18__UPPER__NEPSE__1D__market_extract.json",
     "raw/snapshots/2026-03-18__UPPER__1W__pre_indicators_snapshot.txt",
     "raw/tables/2026-03-18__UPPER__1W__stock_extract.json",
     "raw/tables/2026-03-18__UPPER__1W__bar_extract.json",
     "raw/tables/2026-03-18__UPPER__1W__indicator_extract.json",
     "raw/screenshots/2026-03-18__UPPER__1W__clean_v2.png",
-    "raw/screenshots/2026-03-18__UPPER__1W__annotated_v2.png",
-    "raw/tables/2026-03-18__UPPER__HYDROPOWER__sector_extract.json",
-    "raw/screenshots/2026-03-18__UPPER__HYDROPOWER__sector.png",
-    "raw/snapshots/2026-03-18__UPPER__HYDROPOWER__sector_snapshot.txt",
-    "raw/tables/2026-03-18__UPPER__1W__decision_qc.json"
+    "raw/screenshots/2026-03-18__UPPER__1W__annotated_v2.png"
   ],
   "notes": "Volume not extracted from chart."
 }

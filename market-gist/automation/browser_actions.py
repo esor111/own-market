@@ -378,12 +378,67 @@ class BrowserAutomation:
             return (symbol_code or "").strip()
         except Exception:
             return ""
+
+    async def _focus_latest_visible_bar(self):
+        """Move the mouse to the latest visible candle so legend values reflect the newest bar."""
+        try:
+            frame_name = getattr(self.frame, "name", None)
+            if callable(frame_name):
+                frame_name = frame_name()
+            if not frame_name:
+                return False
+
+            iframe_locator = self.page.locator(f'iframe[name="{frame_name}"]').first
+            iframe_box = await iframe_locator.bounding_box()
+            if not iframe_box:
+                return False
+
+            chart_rect = await self.frame.evaluate(
+                """
+() => {
+    const canvases = Array.from(document.querySelectorAll('canvas'))
+        .filter((canvas) => {
+            if (!canvas) return false;
+            const rect = canvas.getBoundingClientRect();
+            const style = window.getComputedStyle(canvas);
+            return rect.width > 200 &&
+                rect.height > 120 &&
+                style.visibility !== 'hidden' &&
+                style.display !== 'none';
+        })
+        .map((canvas) => {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                left: rect.left,
+                top: rect.top,
+                width: rect.width,
+                height: rect.height,
+                area: rect.width * rect.height
+            };
+        })
+        .sort((a, b) => b.area - a.area);
+
+    return canvases[0] || null;
+}
+                """
+            )
+            if not chart_rect:
+                return False
+
+            target_x = iframe_box["x"] + chart_rect["left"] + max(chart_rect["width"] - 12, chart_rect["width"] * 0.97)
+            target_y = iframe_box["y"] + chart_rect["top"] + min(max(chart_rect["height"] * 0.30, 20), chart_rect["height"] - 10)
+            await self.page.mouse.move(target_x, target_y)
+            await asyncio.sleep(0.4)
+            return True
+        except Exception:
+            return False
     
     async def extract_chart_data(self):
         """Extract OHLCV and indicator data from chart"""
         try:
             # Wait a bit for data to load
             await asyncio.sleep(2)
+            await self._focus_latest_visible_bar()
 
             # Prefer visible active series legend text so hidden/stale nodes do not pollute parsing.
             series_payload = await self.frame.evaluate(
@@ -558,6 +613,7 @@ class BrowserAutomation:
         """Extract indicator values from chart legend"""
         try:
             await asyncio.sleep(1)
+            await self._focus_latest_visible_bar()
 
             indicators = {}
 

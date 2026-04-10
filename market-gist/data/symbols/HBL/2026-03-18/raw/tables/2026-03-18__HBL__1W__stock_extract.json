@@ -3,12 +3,12 @@
   "symbol": "HBL",
   "timeframe": "1W",
   "data": {
-    "open": 258.0,
-    "high": 261.0,
-    "low": 247.0,
-    "close": 253.0,
-    "change": -1.0,
-    "change_pct": -0.39,
+    "open": 216.0,
+    "high": 219.9,
+    "low": 206.0,
+    "close": 217.0,
+    "change": 1.0,
+    "change_pct": 0.46,
     "series_title": "Himalayan Bank Limited",
     "recent_bars": [
       {
@@ -613,6 +613,7 @@
       }
     ],
     "recent_bar_count": 60,
-    "total_bar_count": 466
+    "total_bar_count": 466,
+    "inferred_timeframe": "1W"
   }
 }

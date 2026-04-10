@@ -56,6 +56,15 @@ Thumbs.db
 # Other data scraping projects
 sharesansar_datascrape/
 
+# Large local datasets and experiment outputs (keep on disk, do not track in this repo)
+market-gist/data/
+market-gist/broker_flow_ledger/
+experiments/**/data/
+experiments/**/results/
+
+# Local virtual environments with custom suffixes
+market-gist/automation/.venv_ocr/
+
 # Kiro
 .kiro/
 .zencoder/

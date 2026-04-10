@@ -11,7 +11,8 @@ from datetime import datetime
 
 from analyze_stock import StockAnalysisAutomation
 from calibration_report import build_calibration_summary
-from config import VALIDATION_DIR, get_decision_filename, get_run_directories, resolve_symbols
+from config import VALIDATION_DIR, get_decision_filename, get_latest_validation_filename, get_run_directories, resolve_symbols
+from config import build_run_label, get_validation_filename
 from evaluate_outcome import evaluate_outcome_for_run
 
 for stream_name in ("stdout", "stderr"):
@@ -30,7 +31,19 @@ def load_json(path):
 
 async def run_symbol(symbol, timeframe, run_date):
     automation = StockAnalysisAutomation(symbol, timeframe, run_date=run_date)
-    await automation.run()
+    success = await automation.run()
+    if not success:
+        return {
+            "symbol": symbol,
+            "timeframe": timeframe,
+            "decision_path": None,
+            "action": "run_error",
+            "score": None,
+            "confidence": None,
+            "outcome_path": None,
+            "outcome_label": "run_error"
+        }
+
     outcome_result = await evaluate_outcome_for_run(symbol, run_date, timeframe)
 
     run_dirs = get_run_directories(symbol, run_date)
@@ -58,12 +71,14 @@ async def main():
         sys.exit(1)
 
     timeframe = sys.argv[1]
+    raw_symbol_args = sys.argv[2:]
     try:
-        symbols = resolve_symbols(sys.argv[2:])
+        symbols = resolve_symbols(raw_symbol_args)
     except ValueError as exc:
         print(str(exc))
         sys.exit(1)
     run_date = datetime.now().strftime("%Y-%m-%d")
+    run_label = build_run_label(raw_symbol_args, symbols)
 
     results = []
     for symbol in symbols:
@@ -73,6 +88,7 @@ async def main():
     cycle_summary = {
         "run_date": run_date,
         "timeframe": timeframe,
+        "run_label": run_label,
         "symbols": symbols,
         "results": results,
         "calibration_summary_path": calibration_path,
@@ -80,11 +96,22 @@ async def main():
     }
 
     os.makedirs(VALIDATION_DIR, exist_ok=True)
-    cycle_path = os.path.join(VALIDATION_DIR, f"{run_date}__{timeframe}__reliability_cycle.json")
+    cycle_path = os.path.join(
+        VALIDATION_DIR,
+        get_validation_filename("reliability_cycle", timeframe, run_date, run_label)
+    )
     with open(cycle_path, "w", encoding="utf-8") as f:
         json.dump(cycle_summary, f, indent=2)
 
+    latest_cycle_path = os.path.join(
+        VALIDATION_DIR,
+        get_latest_validation_filename("reliability_cycle", timeframe, run_label)
+    )
+    with open(latest_cycle_path, "w", encoding="utf-8") as f:
+        json.dump(cycle_summary, f, indent=2)
+
     print(f"Reliability cycle saved: {cycle_path}")
+    print(f"Latest reliability pointer saved: {latest_cycle_path}")
     print(json.dumps(cycle_summary, indent=2))
 
 

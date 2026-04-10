@@ -3,11 +3,11 @@
   "symbol": "SANIMA",
   "timeframe": "1W",
   "data": {
-    "macd_line": 2.15,
-    "signal_line": 1.5,
-    "histogram": -0.65,
-    "rsi": 54.05,
-    "ema_20": 247.61,
-    "ma_50": 244.24
+    "macd_line": 2.96,
+    "signal_line": 4.4,
+    "histogram": 1.44,
+    "rsi": 61.0,
+    "ema_20": 339.23,
+    "ma_50": 338.52
   }
 }

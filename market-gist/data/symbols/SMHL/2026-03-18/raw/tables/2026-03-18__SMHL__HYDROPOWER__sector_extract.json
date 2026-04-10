@@ -2,12 +2,12 @@
   "extraction_type": "sector_chart",
   "sector_symbol": "HYDROPOWER",
   "data": {
-    "open": 3811.19,
-    "high": 3811.19,
-    "low": 3810.36,
-    "close": 3811.02,
-    "change": -0.17,
-    "change_pct": -0.0,
+    "open": 3766.72,
+    "high": 3818.57,
+    "low": 3748.53,
+    "close": 3818.47,
+    "change": 51.75,
+    "change_pct": 1.37,
     "series_title": "Hydropower"
   }
 }

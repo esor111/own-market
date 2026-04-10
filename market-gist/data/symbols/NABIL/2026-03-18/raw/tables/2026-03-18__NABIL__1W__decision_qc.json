@@ -3,30 +3,36 @@
   "symbol": "NABIL",
   "timeframe": "1W",
   "data": {
-    "status": "fail",
-    "findings": [
-      "risk_reward_below_minimum"
-    ],
+    "status": "pass",
+    "findings": [],
     "decision": {
       "setup_type": "breakout_watch",
-      "score": 49,
+      "score": 54,
       "score_max": 100,
-      "confidence": 59,
-      "action": "avoid",
-      "entry_zone": [],
-      "stop_loss": null,
-      "invalidation_level": null,
-      "targets": [],
-      "risk_reward_ratio": null,
+      "confidence": 64,
+      "action": "watch_only",
+      "entry_zone": [
+        539.0,
+        544.39
+      ],
+      "stop_loss": 490.0,
+      "invalidation_level": 490.0,
+      "targets": [
+        592.9,
+        619.85
+      ],
+      "risk_reward_ratio": 1.1,
       "why": [
-        "Price: 479.1, EMA20: 464.44, MA50: 454.31",
-        "RSI: 50.65, MACD Histogram: -22.68",
-        "Sector change%: -1.95",
-        "Derived support/resistance: 464.44 / 486.5",
+        "Price: 525.8, EMA20: 508.7, MA50: 504.23",
+        "RSI: 61.72, MACD Histogram: -2.09",
+        "Sector change%: 1.02",
+        "Event: no_recent_official_event_match (inactive)",
+        "Derived support/resistance: 508.7 / 539.0",
         "Structure: range (high)",
         "Local range: 488.2 -> 555.0",
-        "Setup: breakout_watch, Score: 49/100, Confidence: 59%",
-        "Action: AVOID"
+        "Setup: breakout_watch, Score: 54/100, Confidence: 64%",
+        "Action: WATCH_ONLY",
+        "Truth daily close diff: 0.0"
       ]
     }
   }

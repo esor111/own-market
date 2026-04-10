@@ -13,6 +13,9 @@
   "invalidation_level": null,
   "targets": [],
   "risk_reward_ratio": null,
+  "watchlist_tier": null,
+  "watchlist_priority": null,
+  "watchlist_score": null,
   "why": [],
   "evidence_refs": []
 }

@@ -3,12 +3,12 @@
   "symbol": "NBL",
   "timeframe": "1W",
   "data": {
-    "open": 202.0,
-    "high": 216.9,
-    "low": 202.0,
-    "close": 215.0,
-    "change": 13.0,
-    "change_pct": 6.44,
+    "open": 268.0,
+    "high": 270.0,
+    "low": 259.0,
+    "close": 263.9,
+    "change": -2.1,
+    "change_pct": -0.79,
     "series_title": "Nepal Bank Limited",
     "recent_bars": [
       {
@@ -613,6 +613,7 @@
       }
     ],
     "recent_bar_count": 60,
-    "total_bar_count": 466
+    "total_bar_count": 466,
+    "inferred_timeframe": "1W"
   }
 }

@@ -16,11 +16,14 @@ from file_generator import FileGenerator
 from structure_signals import StructureSignalEngine
 from quality_gate import AnalysisQualityGate
 from event_sources import OfficialEventExtractor
+from data_sources import get_truth_source
+from truth_comparison import build_truth_comparison
 from config import (
     get_session_id, get_file_prefix,
     get_run_directories,
     INDICATORS,
-    SECTOR_MAP_FILE
+    SECTOR_MAP_FILE,
+    DEFAULT_TRUTH_SOURCE,
 )
 
 for stream_name in ("stdout", "stderr"):
@@ -49,6 +52,7 @@ class StockAnalysisAutomation:
         self.event_extractor = OfficialEventExtractor()
         self.file_gen = FileGenerator(self.session_id, self.run_date, self.run_dirs)
         self.sector_map = self._load_sector_map()
+        self.truth_source_name = DEFAULT_TRUTH_SOURCE
         
         self.data = {
             "market": {},
@@ -58,6 +62,8 @@ class StockAnalysisAutomation:
             "volume": {},
             "relative_strength": {},
             "event": {},
+            "truth": {},
+            "truth_comparison": {},
             "evidence_files": [],
             "timeframe_evidence": {},
             "timeframes": {},
@@ -109,8 +115,10 @@ class StockAnalysisAutomation:
         """Return the primary timeframe plus one supporting higher/lower context timeframe."""
         ordered = [self.timeframe]
         if self.timeframe == "1W":
-            ordered.append("1D")
+            ordered.extend(["1D", "1M"])
         elif self.timeframe == "1D":
+            ordered.extend(["1W", "1M"])
+        elif self.timeframe == "1M":
             ordered.append("1W")
 
         unique = []
@@ -335,16 +343,27 @@ class StockAnalysisAutomation:
                 "structure_confidence": stock_data.get("structure_confidence")
             }
 
+        monthly = timeframe_summary.get("1M", {})
         weekly = timeframe_summary.get("1W", {})
         daily = timeframe_summary.get("1D", {})
         weekly_trend = weekly.get("trend_label")
         daily_trend = daily.get("trend_label")
-        if weekly_trend == "uptrend" and daily_trend == "uptrend":
+        monthly_trend = monthly.get("trend_label")
+        if monthly_trend == "uptrend" and weekly_trend == "uptrend" and daily_trend == "uptrend":
+            alignment = "fully_aligned_bullish"
+            structure_agreement = "monthly_weekly_daily_supportive"
+        elif weekly_trend == "uptrend" and daily_trend == "uptrend":
             alignment = "aligned_bullish"
             structure_agreement = "weekly_and_daily_supportive"
+        elif monthly_trend == "downtrend" and weekly_trend == "downtrend":
+            alignment = "aligned_bearish"
+            structure_agreement = "monthly_and_weekly_weak"
         elif weekly_trend == "downtrend" and daily_trend == "downtrend":
             alignment = "aligned_bearish"
             structure_agreement = "weekly_and_daily_weak"
+        elif monthly_trend and weekly_trend and daily_trend:
+            alignment = "mixed"
+            structure_agreement = "multi_timeframe_conflict"
         elif weekly_trend and daily_trend:
             alignment = "mixed"
             structure_agreement = "timeframe_conflict"
@@ -378,7 +397,16 @@ class StockAnalysisAutomation:
             uncertainties.append("primary_structure_confidence_low")
         if self.data.get("qc", {}).get("status") != "pass":
             uncertainties.append("qc_gate_not_pass")
+        truth_close_diff = self.data.get("truth_comparison", {}).get("api_vs_browser_daily", {}).get("close_diff")
+        if truth_close_diff is None:
+            uncertainties.append("truth_comparison_unavailable")
+        elif abs(truth_close_diff) > 0.5:
+            uncertainties.append("api_browser_daily_close_mismatch")
         uncertainties.append("usable_calibration_samples_still_low")
+
+        timeframe_alignment = self.data.get("timeframe_alignment", {})
+        if timeframe_alignment.get("status") == "conflicted":
+            uncertainties.append("multi_timeframe_alignment_conflicted")
 
         return {
             "primary_horizon": "swing",
@@ -404,6 +432,9 @@ class StockAnalysisAutomation:
             "derived_alignment": {
                 "higher_timeframe_alignment": alignment,
                 "structure_agreement": structure_agreement,
+                "alignment_gate_status": timeframe_alignment.get("status"),
+                "alignment_gate_score": timeframe_alignment.get("score"),
+                "alignment_gate_findings": timeframe_alignment.get("findings", []),
                 "trigger_readiness": trigger_readiness,
                 "invalidation_quality": invalidation_quality,
                 "trade_quality": "good_but_needs_confirmation" if decision.get("action") in {"buy", "watch_only"} else "not_actionable"
@@ -423,7 +454,17 @@ class StockAnalysisAutomation:
                 "sector_data_quality": "high" if self.data["sector"].get("name") != "UNKNOWN" else "low",
                 "stock_structure_quality": self.data["stock"].get("structure_confidence", "low"),
                 "indicator_quality": "high" if self.data["indicators"].get("rsi") is not None and self.data["indicators"].get("ema_20") is not None else "low",
-                "event_data_quality": "medium" if self.data["event"].get("source") == "sebon_prospectus" else "low",
+                "event_data_quality": (
+                    "high" if str(self.data["event"].get("source", "")).startswith("nepse_")
+                    else "medium" if self.data["event"].get("source") == "sebon_prospectus"
+                    else "low"
+                ),
+                "truth_data_quality": "high" if self.data.get("truth") else "low",
+                "truth_alignment_quality": (
+                    "aligned"
+                    if truth_close_diff is not None and abs(truth_close_diff) <= 0.5
+                    else "mismatch" if truth_close_diff is not None else "unknown"
+                ),
                 "outcome_history_quality": "low"
             },
             "uncertainties": uncertainties,
@@ -432,6 +473,9 @@ class StockAnalysisAutomation:
                 "score": decision.get("score"),
                 "confidence": decision.get("confidence"),
                 "action": decision.get("action"),
+                "watchlist_tier": decision.get("watchlist_tier"),
+                "watchlist_priority": decision.get("watchlist_priority"),
+                "watchlist_score": decision.get("watchlist_score"),
                 "entry_zone": decision.get("entry_zone", []),
                 "stop_loss": decision.get("stop_loss"),
                 "targets": decision.get("targets", []),
@@ -461,30 +505,35 @@ class StockAnalysisAutomation:
             # Step 3: Capture sector evidence
             await self.capture_sector_evidence()
             
-            # Step 4: Capture official event context
+            # Step 4: Capture external truth layer
+            await self.capture_truth_layer()
+
+            # Step 5: Capture official event context
             await self.capture_event_context()
 
-            # Step 5: Generate analysis and decision
+            # Step 6: Generate analysis and decision
             await self.generate_analysis()
             
-            # Step 6: Create all normalized records
+            # Step 7: Create all normalized records
             await self.create_normalized_records()
             
             print(f"\n{'='*60}")
             print(f"✓ Analysis completed successfully!")
             print(f"{'='*60}\n")
+            return True
             
         except Exception as e:
             print(f"\n✗ Error during analysis: {e}")
             import traceback
             traceback.print_exc()
+            return False
         finally:
             await self.browser.close()
 
     
     async def capture_market_context(self):
         """Capture NEPSE market context"""
-        print("\n[1/5] Capturing market context...")
+        print("\n[1/7] Capturing market context...")
 
         # Navigate to NEPSE index (loads on 1D by default)
         await self.browser.search_and_load_symbol("NEPSE")
@@ -530,7 +579,7 @@ class StockAnalysisAutomation:
     
     async def analyze_symbol(self):
         """Load symbol and capture data"""
-        print(f"\n[2/5] Analyzing {self.symbol}...")
+        print(f"\n[2/7] Analyzing {self.symbol}...")
         
         # Search and load symbol
         await self.browser.search_and_load_symbol(self.symbol)
@@ -547,7 +596,7 @@ class StockAnalysisAutomation:
     
     async def capture_sector_evidence(self):
         """Capture sector chart evidence"""
-        print("\n[3/5] Capturing sector evidence...")
+        print("\n[3/7] Capturing sector evidence...")
         
         sector_symbol = self.sector_map.get(self.symbol)
         if not sector_symbol:
@@ -611,8 +660,8 @@ class StockAnalysisAutomation:
         print("✓ Sector evidence captured")
 
     async def capture_event_context(self):
-        """Capture minimal official event context from SEBON prospectus pages."""
-        print("\n[4/6] Capturing official event context...")
+        """Capture official event context from SEBON plus NEPSE truth-feed notices."""
+        print("\n[5/7] Capturing official event context...")
 
         company_name = (
             self.data.get("stock", {}).get("series_title")
@@ -623,7 +672,8 @@ class StockAnalysisAutomation:
             event_data = self.event_extractor.find_recent_official_event(
                 self.symbol,
                 company_name,
-                self.run_date
+                self.run_date,
+                truth_bundle=self.data.get("truth", {})
             )
         except Exception as exc:
             event_data = {
@@ -658,10 +708,79 @@ class StockAnalysisAutomation:
         )
         print("✓ Official event context captured")
 
+    async def capture_truth_layer(self):
+        """Capture external raw-data truth and compare it with browser evidence."""
+        print("\n[4/7] Capturing external truth layer...")
+
+        try:
+            truth_source = get_truth_source(self.truth_source_name, verify_ssl=False)
+            truth_bundle = truth_source.build_truth_bundle(self.symbol)
+            comparison = build_truth_comparison(
+                self.symbol,
+                self.run_date,
+                self.timeframe,
+                truth_bundle,
+                {
+                    "daily_stock": self.data.get("timeframes", {}).get("1D", {}).get("stock", {}),
+                    "primary_stock": self.data.get("stock", {}),
+                    "daily_indicator": self.data.get("timeframes", {}).get("1D", {}).get("indicators", {}),
+                    "market": self.data.get("market", {}),
+                    "sector": self.data.get("sector", {}),
+                }
+            )
+
+            self.data["truth"] = truth_bundle
+            self.data["truth_comparison"] = comparison
+
+            self._save_raw_json(
+                f"{self.file_prefix}__api_truth_bundle.json",
+                {
+                    "extraction_type": "external_truth_bundle",
+                    "truth_source": self.truth_source_name,
+                    "symbol": self.symbol,
+                    "data": truth_bundle
+                }
+            )
+            self._save_raw_json(
+                f"{self.file_prefix}__{self.timeframe}__api_truth_comparison.json",
+                {
+                    "extraction_type": "external_truth_comparison",
+                    "truth_source": self.truth_source_name,
+                    "symbol": self.symbol,
+                    "timeframe": self.timeframe,
+                    "data": comparison
+                }
+            )
+
+            close_diff = comparison.get("api_vs_browser_daily", {}).get("close_diff")
+            if close_diff is None:
+                print("  Truth comparison captured, but no direct daily close comparison was available.")
+            else:
+                print(f"  Truth comparison daily close diff: {close_diff}")
+            print("✓ External truth layer captured")
+        except Exception as exc:
+            self.data["truth"] = {
+                "truth_source": self.truth_source_name,
+                "status": "failed",
+                "error": str(exc)
+            }
+            self.data["truth_comparison"] = {}
+            self._save_raw_json(
+                f"{self.file_prefix}__{self.timeframe}__api_truth_comparison.json",
+                {
+                    "extraction_type": "external_truth_comparison",
+                    "truth_source": self.truth_source_name,
+                    "symbol": self.symbol,
+                    "timeframe": self.timeframe,
+                    "error": str(exc)
+                }
+            )
+            print(f"  Truth layer unavailable: {exc}")
+
     
     async def generate_analysis(self):
         """Generate scores and decision"""
-        print("\n[5/6] Generating analysis...")
+        print("\n[6/7] Generating analysis...")
 
         required_stock_fields = ["close", "change_pct"]
         required_indicator_fields = ["ema_20", "ma_50", "rsi"]
@@ -814,17 +933,31 @@ class StockAnalysisAutomation:
             structure_label=structure_label
         )
 
+        self._derive_timeframe_context("1M")
+        self._derive_timeframe_context("1W")
+        self._derive_timeframe_context("1D")
+        timeframe_alignment = self.analyzer.evaluate_timeframe_alignment(
+            (self.data.get("timeframes", {}).get("1M") or {}).get("stock", {}),
+            (self.data.get("timeframes", {}).get("1W") or {}).get("stock", {}),
+            (self.data.get("timeframes", {}).get("1D") or {}).get("stock", {}),
+            setup_type
+        )
+        self.data["timeframe_alignment"] = timeframe_alignment
+
         if setup_type == "continuation":
-            entry_zone = [
-                self.structure.round_price(min(price, nearest_support)),
-                self.structure.round_price(price)
-            ]
+            entry_zone = self.analyzer.select_continuation_entry(
+                price,
+                nearest_support,
+                ema_20,
+                ma_50,
+                price_levels["invalidation_level"]
+            )
             stop_loss = price_levels["invalidation_level"]
         elif setup_type in {"reversal_watch", "breakout_watch"}:
             breakout_level = price_levels["breakout_level"]
             entry_zone = [
                 breakout_level,
-                self.structure.round_price(breakout_level * 1.02)
+                self.structure.round_price(breakout_level * 1.01)
             ]
             stop_loss = price_levels["invalidation_level"]
         else:
@@ -836,7 +969,11 @@ class StockAnalysisAutomation:
         if entry_zone and stop_loss is not None:
             targets = [
                 self.structure.round_price(target)
-                for target in self.analyzer.calculate_targets(entry_zone[0], price_levels["resistance_levels"])
+                for target in self.analyzer.filter_viable_targets(
+                    entry_zone[0],
+                    stop_loss,
+                    price_levels["resistance_levels"]
+                )
             ]
             if targets:
                 risk_reward_ratio = self.analyzer.calculate_risk_reward(entry_zone[0], stop_loss, targets[0])
@@ -861,6 +998,13 @@ class StockAnalysisAutomation:
                 }
             )
             action = self.analyzer.determine_action(score_summary["percent"], confidence)
+
+        if timeframe_alignment["status"] == "conflicted" and action in {"watch_only", "buy", "strong_buy"}:
+            action = "avoid"
+            entry_zone = []
+            stop_loss = None
+            targets = []
+            risk_reward_ratio = None
 
         self.data["stock"].update({
             "trend_label": trend_label,
@@ -890,6 +1034,11 @@ class StockAnalysisAutomation:
             **score_summary,
             "notes": None if has_sector_change else "sector_change_pct_missing; sector alignment scored conservatively"
         }
+        if timeframe_alignment["status"] == "conflicted":
+            self.data["scores"]["notes"] = (
+                (self.data["scores"]["notes"] + "; " if self.data["scores"]["notes"] else "")
+                + f"timeframe_alignment:{','.join(timeframe_alignment['findings']) or 'conflicted'}"
+            )
         if structure_confidence == "low":
             if action in {"buy", "strong_buy"}:
                 action = "watch_only"
@@ -915,12 +1064,24 @@ class StockAnalysisAutomation:
                 f"Event: {self.data['event'].get('event_type')} ({self.data['event'].get('relevance_now')})",
                 f"Derived support/resistance: {nearest_support} / {nearest_resistance}",
                 f"Structure: {structure_label} ({structure_confidence})",
+                f"Timeframe alignment: {timeframe_alignment['status']} ({', '.join(timeframe_alignment['findings']) if timeframe_alignment['findings'] else 'supportive'})",
                 f"Local range: {price_levels.get('local_range_low')} -> {price_levels.get('local_range_high')}",
                 f"Setup: {setup_type}, Score: {score_summary['percent']}/100, Confidence: {confidence}%",
                 f"Action: {action.upper()}"
             ]
         }
-        qc_result = self.quality_gate.evaluate(decision_payload, self.data["stock"])
+        truth_close_diff = self.data.get("truth_comparison", {}).get("api_vs_browser_daily", {}).get("close_diff")
+        if truth_close_diff is not None:
+            decision_payload["why"].append(
+                f"Truth daily close diff: {truth_close_diff}"
+            )
+        qc_result = self.quality_gate.evaluate(
+            decision_payload,
+            self.data["stock"],
+            self.data.get("truth_comparison", {}),
+            self.data.get("truth", {}),
+            self.data.get("event", {})
+        )
         self.data["qc"] = qc_result
         self._save_raw_json(
             f"{self.file_prefix}__{self.timeframe}__decision_qc.json",
@@ -939,6 +1100,55 @@ class StockAnalysisAutomation:
             )
             decision_payload = qc_result["decision"]
             decision_payload["why"] = decision_payload.get("why", []) + [f"QC gate: {qc_notes}"]
+            if "truth_daily_close_mismatch_major" in qc_result["findings"]:
+                decision_payload["why"].append(
+                    "External truth layer disagreed materially with browser daily data, so the setup was downgraded for reliability."
+                )
+            active_event_findings = [
+                finding for finding in qc_result["findings"]
+                if finding.startswith("active_event_window:")
+            ]
+            if active_event_findings:
+                decision_payload["why"].append(
+                    "An active corporate-action window makes the technical setup less trustworthy right now."
+                )
+            if "liquidity_below_minimum" in qc_result["findings"]:
+                decision_payload["why"].append(
+                    "Truth-layer liquidity was too weak for a reliable actionable setup."
+                )
+            if "liquidity_unconfirmed" in qc_result["findings"]:
+                decision_payload["why"].append(
+                    "Truth-layer liquidity could not be confirmed, so the setup was downgraded conservatively."
+                )
+        else:
+            rank_result = self.analyzer.rank_watchlist_candidate(
+                decision_payload.get("action"),
+                decision_payload.get("setup_type"),
+                score_summary["percent"],
+                decision_payload.get("confidence") or 0,
+                decision_payload.get("risk_reward_ratio"),
+                structure_confidence,
+                self.data["stock"].get("location_label")
+            )
+            decision_payload["watchlist_tier"] = rank_result["watchlist_tier"]
+            decision_payload["watchlist_priority"] = rank_result["watchlist_priority"]
+            decision_payload["watchlist_score"] = rank_result["watchlist_score"]
+
+            if rank_result["action"] != decision_payload.get("action"):
+                decision_payload["action"] = rank_result["action"]
+                decision_payload["entry_zone"] = []
+                decision_payload["stop_loss"] = None
+                decision_payload["invalidation_level"] = None
+                decision_payload["targets"] = []
+                decision_payload["risk_reward_ratio"] = None
+
+            if rank_result["notes"]:
+                note_text = ", ".join(rank_result["notes"])
+                self.data["scores"]["notes"] = (
+                    (self.data["scores"]["notes"] + "; " if self.data["scores"]["notes"] else "")
+                    + f"watchlist_gate:{note_text}"
+                )
+                decision_payload["why"].append(f"Watchlist gate: {note_text}")
 
         self.data["decision"] = decision_payload
         
@@ -950,7 +1160,7 @@ class StockAnalysisAutomation:
     
     async def create_normalized_records(self):
         """Create all normalized JSON records"""
-        print("\n[6/6] Creating normalized records...")
+        print("\n[7/7] Creating normalized records...")
 
         for timeframe in self.data.get("timeframes", {}):
             self._derive_timeframe_context(timeframe)
@@ -965,6 +1175,7 @@ class StockAnalysisAutomation:
                 "clean_chart_capture",
                 "sector_evidence_capture" if self.data["sector"].get("name") != "UNKNOWN" else "sector_mapping_check",
                 "official_event_capture",
+                "external_truth_capture",
                 "decision_qc"
             ],
             stages_skipped=(
@@ -973,6 +1184,11 @@ class StockAnalysisAutomation:
             ),
             notes=(
                 "Automated analysis run"
+                + (
+                    f"; truth_source={self.truth_source_name}"
+                    if self.data.get("truth")
+                    else ""
+                )
                 + (
                     f"; qc_gate={','.join(self.data.get('qc', {}).get('findings', []))}"
                     if self.data.get("qc", {}).get("findings")

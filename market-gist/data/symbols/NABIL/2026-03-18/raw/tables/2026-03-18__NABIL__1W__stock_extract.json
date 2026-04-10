@@ -3,12 +3,12 @@
   "symbol": "NABIL",
   "timeframe": "1W",
   "data": {
-    "open": 486.5,
-    "high": 490.0,
-    "low": 462.6,
-    "close": 479.1,
-    "change": -7.4,
-    "change_pct": -1.52,
+    "open": 531.0,
+    "high": 539.0,
+    "low": 523.0,
+    "close": 525.8,
+    "change": -3.2,
+    "change_pct": -0.6,
     "series_title": "Nabil Bank Limited",
     "recent_bars": [
       {
@@ -613,6 +613,7 @@
       }
     ],
     "recent_bar_count": 60,
-    "total_bar_count": 466
+    "total_bar_count": 466,
+    "inferred_timeframe": "1W"
   }
 }

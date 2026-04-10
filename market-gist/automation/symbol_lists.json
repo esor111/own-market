@@ -1,4 +1,18 @@
 {
+  "dev_fast": [
+    "EBL",
+    "SMHL"
+  ],
+  "event_validated": [
+    "HIDCL",
+    "NGPL"
+  ],
+  "controlled_expansion_v1": [
+    "API",
+    "AKPL",
+    "PRVU",
+    "NIMB"
+  ],
   "core_reliability": [
     "SMHL",
     "NABIL"
@@ -6,11 +20,23 @@
   "expanded_reliability": [
     "SMHL",
     "UPPER",
+    "HIDCL",
+    "NGPL",
     "NABIL",
     "NBL",
     "EBL",
     "HBL",
     "KBL",
     "SANIMA"
+  ],
+  "replay_basket_v1": [
+    "EBL",
+    "NABIL",
+    "SANIMA",
+    "JBBL",
+    "MNBBL",
+    "API",
+    "AKPL",
+    "UPPER"
   ]
 }

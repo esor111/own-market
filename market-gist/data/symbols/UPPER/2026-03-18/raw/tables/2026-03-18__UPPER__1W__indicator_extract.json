@@ -3,11 +3,11 @@
   "symbol": "UPPER",
   "timeframe": "1W",
   "data": {
-    "macd_line": -1.29,
-    "signal_line": 7.22,
-    "histogram": 8.51,
-    "rsi": 52.35,
-    "ema_20": 218.05,
-    "ma_50": 217.16
+    "macd_line": 4.73,
+    "signal_line": 4.72,
+    "histogram": -0.0,
+    "rsi": 70.0,
+    "ema_20": 197.43,
+    "ma_50": 194.96
   }
 }

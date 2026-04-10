@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "session_id": "2026-03-18__EBL__1W__v2",
   "run_date": "2026-03-18",
-  "captured_at": "2026-03-18T20:38:17.955798",
+  "captured_at": "2026-03-18T23:09:23.183979",
   "source": "nepsealpha",
   "symbol": "EBL",
   "status": "completed",
@@ -14,11 +14,12 @@
     "clean_chart_capture",
     "sector_evidence_capture",
     "official_event_capture",
+    "external_truth_capture",
     "decision_qc"
   ],
   "stages_skipped": [
     "broker_flow_capture"
   ],
-  "notes": "Automated analysis run",
+  "notes": "Automated analysis run; truth_source=nepse_scraper",
   "timeframe": "1W"
 }

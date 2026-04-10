@@ -3,37 +3,36 @@
   "symbol": "UPPER",
   "timeframe": "1W",
   "data": {
-    "status": "fail",
-    "findings": [
-      "structure_confidence_low"
-    ],
+    "status": "pass",
+    "findings": [],
     "decision": {
-      "setup_type": "breakout_watch",
-      "score": 44,
+      "setup_type": "continuation",
+      "score": 58,
       "score_max": 100,
-      "confidence": 54,
-      "action": "avoid",
+      "confidence": 67,
+      "action": "watch_only",
       "entry_zone": [
-        165.0,
-        168.3
+        197.43,
+        199.4
       ],
-      "stop_loss": 151.25,
-      "invalidation_level": 151.25,
+      "stop_loss": 179.1,
+      "invalidation_level": 179.1,
       "targets": [
-        195.0,
-        198.0,
-        217.16
+        225.0,
+        217.17
       ],
-      "risk_reward_ratio": 2.18,
+      "risk_reward_ratio": 1.5,
       "why": [
-        "Price: 160.9, EMA20: 218.05, MA50: 217.16",
-        "RSI: 52.35, MACD Histogram: 8.51",
-        "Sector change%: -4.81",
-        "Derived support/resistance: 156.07 / 165.0",
-        "Structure: trend_continuation (low)",
+        "Price: 219.1, EMA20: 197.43, MA50: 194.96",
+        "RSI: 70.0, MACD Histogram: -0.0",
+        "Sector change%: 1.37",
+        "Event: no_recent_official_event_match (inactive)",
+        "Derived support/resistance: 209.1 / 225.0",
+        "Structure: trend_continuation (high)",
         "Local range: 179.1 -> 225.0",
-        "Setup: breakout_watch, Score: 44/100, Confidence: 54%",
-        "Action: AVOID"
+        "Setup: continuation, Score: 57/100, Confidence: 67%",
+        "Action: WATCH_ONLY",
+        "Truth daily close diff: 0.0"
       ]
     }
   }

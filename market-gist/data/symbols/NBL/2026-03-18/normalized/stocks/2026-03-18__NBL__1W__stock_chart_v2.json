@@ -1,70 +1,71 @@
 {
   "schema_version": "1.0",
-  "session_id": "2026-03-18__NBL__v2",
+  "session_id": "2026-03-18__NBL__1W__v2",
   "run_date": "2026-03-18",
-  "captured_at": "2026-03-18T14:09:44.336448",
+  "captured_at": "2026-03-18T23:07:29.669286",
   "source": "nepsealpha_chart",
   "symbol": "NBL",
   "timeframe": "1W",
-  "close": 215.0,
-  "open": 202.0,
-  "high": 216.9,
-  "low": 202.0,
+  "close": 263.9,
+  "open": 268.0,
+  "high": 270.0,
+  "low": 259.0,
   "volume": null,
   "trend_label": "uptrend",
   "structure_label": "trend_continuation",
   "swing_highs": [
-    244.0,
-    255.0,
+    268.0,
+    270.0,
     281.0
   ],
   "swing_lows": [
-    209.08,
-    202.0
+    259.0,
+    251.57,
+    249.17,
+    239.0,
+    237.0,
+    236.0
   ],
   "support_zones": [
     [
-      206.99,
-      211.17
+      256.41,
+      261.59
     ],
     [
-      199.98,
-      204.02
+      249.05,
+      254.09
+    ],
+    [
+      246.68,
+      251.66
     ]
   ],
   "resistance_zones": [
     [
-      241.56,
-      246.44
+      265.32,
+      270.68
     ],
     [
-      252.45,
-      257.55
+      267.3,
+      272.7
     ],
     [
       278.19,
       283.81
     ]
   ],
-  "breakout_level": 244.0,
-  "breakdown_level": 209.08,
-  "invalidation_level": 202.0,
-  "location_label": "near_support",
+  "breakout_level": 268.0,
+  "breakdown_level": 259.0,
+  "invalidation_level": 239.0,
+  "location_label": "near_resistance",
   "confidence_source": "extracted_plus_derived",
   "evidence_refs": [
-    "raw/screenshots/2026-03-18__NBL__NEPSE__1D__market_context.png",
-    "raw/snapshots/2026-03-18__NBL__NEPSE__1D__snapshot.txt",
-    "raw/tables/2026-03-18__NBL__NEPSE__1D__market_extract.json",
     "raw/snapshots/2026-03-18__NBL__1W__pre_indicators_snapshot.txt",
     "raw/tables/2026-03-18__NBL__1W__stock_extract.json",
     "raw/tables/2026-03-18__NBL__1W__bar_extract.json",
     "raw/tables/2026-03-18__NBL__1W__indicator_extract.json",
     "raw/screenshots/2026-03-18__NBL__1W__clean_v2.png",
-    "raw/screenshots/2026-03-18__NBL__1W__annotated_v2.png",
-    "raw/tables/2026-03-18__NBL__BANKING__sector_extract.json",
-    "raw/screenshots/2026-03-18__NBL__BANKING__sector.png",
-    "raw/snapshots/2026-03-18__NBL__BANKING__sector_snapshot.txt",
-    "raw/tables/2026-03-18__NBL__1W__decision_qc.json"
+    "raw/screenshots/2026-03-18__NBL__1W__annotated_v2.png"
   ],
   "local_range_high": 281.0,
   "local_range_low": 237.0,

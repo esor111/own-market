@@ -1,17 +1,25 @@
 {
   "schema_version": "1.0",
-  "session_id": "2026-03-18__NBL__v2",
+  "session_id": "2026-03-18__NBL__1W__v2",
   "run_date": "2026-03-18",
-  "captured_at": "",
-  "source": "",
+  "captured_at": "2026-03-18T23:07:29.669286",
+  "source": "sebon_prospectus",
   "symbol": "NBL",
   "event_date": "",
-  "event_type": "",
-  "sentiment": "",
-  "impact_window_days": null,
-  "relevance_now": "",
-  "details": {},
-  "confidence_source": "",
+  "event_type": "no_recent_official_event_match",
+  "sentiment": "neutral",
+  "impact_window_days": 0,
+  "relevance_now": "inactive",
+  "details": {
+    "company_name": "Nepal Bank Limited",
+    "symbol": "NBL",
+    "pages_checked": [
+      "https://sebon.gov.np/prospectus",
+      "https://sebon.gov.np/prospectus?page=2",
+      "https://sebon.gov.np/prospectus?page=3"
+    ]
+  },
+  "confidence_source": "page_text",
   "evidence_refs": [
     "raw/screenshots/2026-03-18__NBL__NEPSE__1D__market_context.png",
     "raw/snapshots/2026-03-18__NBL__NEPSE__1D__snapshot.txt",
@@ -22,11 +30,18 @@
     "raw/tables/2026-03-18__NBL__1W__indicator_extract.json",
     "raw/screenshots/2026-03-18__NBL__1W__clean_v2.png",
     "raw/screenshots/2026-03-18__NBL__1W__annotated_v2.png",
+    "raw/snapshots/2026-03-18__NBL__1D__pre_indicators_snapshot.txt",
+    "raw/tables/2026-03-18__NBL__1D__stock_extract.json",
+    "raw/tables/2026-03-18__NBL__1D__bar_extract.json",
+    "raw/tables/2026-03-18__NBL__1D__indicator_extract.json",
+    "raw/screenshots/2026-03-18__NBL__1D__clean_v2.png",
+    "raw/screenshots/2026-03-18__NBL__1D__annotated_v2.png",
     "raw/tables/2026-03-18__NBL__BANKING__sector_extract.json",
     "raw/screenshots/2026-03-18__NBL__BANKING__sector.png",
     "raw/snapshots/2026-03-18__NBL__BANKING__sector_snapshot.txt",
+    "raw/tables/2026-03-18__NBL__event_extract.json",
+    "raw/tables/2026-03-18__NBL__api_truth_bundle.json",
+    "raw/tables/2026-03-18__NBL__1W__api_truth_comparison.json",
     "raw/tables/2026-03-18__NBL__1W__decision_qc.json"
-  ],
-  "event_found": false,
-  "notes": "No corporate actions or significant events found during chart review."
+  ]
 }

@@ -3,12 +3,12 @@
   "symbol": "UPPER",
   "timeframe": "1W",
   "data": {
-    "open": 162.1,
-    "high": 165.0,
-    "low": 160.1,
-    "close": 160.9,
-    "change": -1.8,
-    "change_pct": -1.11,
+    "open": 218.0,
+    "high": 221.0,
+    "low": 209.1,
+    "close": 219.1,
+    "change": 1.1,
+    "change_pct": 0.5,
     "series_title": "Upper Tamakoshi Hydropower Ltd",
     "recent_bars": [
       {
@@ -613,6 +613,7 @@
       }
     ],
     "recent_bar_count": 60,
-    "total_bar_count": 360
+    "total_bar_count": 360,
+    "inferred_timeframe": "1W"
   }
 }

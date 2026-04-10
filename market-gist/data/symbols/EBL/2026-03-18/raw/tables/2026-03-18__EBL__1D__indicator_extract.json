@@ -3,11 +3,11 @@
   "symbol": "EBL",
   "timeframe": "1D",
   "data": {
-    "macd_line": 1.56,
-    "signal_line": -10.79,
-    "histogram": -12.35,
-    "rsi": 42.48,
-    "ema_20": 631.16,
-    "ma_50": 629.46
+    "macd_line": 3.06,
+    "signal_line": 11.36,
+    "histogram": 8.3,
+    "rsi": 69.79,
+    "ema_20": 699.24,
+    "ma_50": 699.83
   }
 }

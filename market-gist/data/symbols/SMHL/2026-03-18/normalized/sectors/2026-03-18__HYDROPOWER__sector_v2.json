@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0",
-  "session_id": "2026-03-18__SMHL__v2",
+  "session_id": "2026-03-18__SMHL__1W__v2",
   "run_date": "2026-03-18",
-  "captured_at": "2026-03-18T16:46:15.228050",
+  "captured_at": "2026-03-18T23:01:50.558247",
   "source": "nepsealpha",
   "sector_name": "HYDROPOWER",
   "timeframe": "1W",
-  "trend_label": "sideways",
+  "trend_label": "up",
   "relative_strength_vs_market": "",
   "notes": null,
   "confidence_source": "",
@@ -30,8 +30,10 @@
     "raw/screenshots/2026-03-18__SMHL__HYDROPOWER__sector.png",
     "raw/snapshots/2026-03-18__SMHL__HYDROPOWER__sector_snapshot.txt",
     "raw/tables/2026-03-18__SMHL__event_extract.json",
+    "raw/tables/2026-03-18__SMHL__api_truth_bundle.json",
+    "raw/tables/2026-03-18__SMHL__1W__api_truth_comparison.json",
     "raw/tables/2026-03-18__SMHL__1W__decision_qc.json"
   ],
-  "close": 3811.02,
-  "change_pct": -0.0
+  "close": 3818.47,
+  "change_pct": 1.37
 }

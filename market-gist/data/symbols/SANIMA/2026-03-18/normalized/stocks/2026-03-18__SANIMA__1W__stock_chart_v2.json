@@ -1,71 +1,64 @@
 {
   "schema_version": "1.0",
-  "session_id": "2026-03-18__SANIMA__v2",
+  "session_id": "2026-03-18__SANIMA__1W__v2",
   "run_date": "2026-03-18",
-  "captured_at": "2026-03-18T14:16:34.834957",
+  "captured_at": "2026-03-18T23:14:55.409022",
   "source": "nepsealpha_chart",
   "symbol": "SANIMA",
   "timeframe": "1W",
-  "close": 252.0,
-  "open": 256.2,
-  "high": 260.0,
-  "low": 248.5,
+  "close": 349.5,
+  "open": 358.5,
+  "high": 358.5,
+  "low": 343.0,
   "volume": null,
   "trend_label": "uptrend",
   "structure_label": "trend_continuation",
   "swing_highs": [
-    256.2,
-    260.0,
-    353.0,
+    358.5,
     368.0
   ],
   "swing_lows": [
-    247.61,
-    244.24
+    343.0,
+    339.23,
+    338.52,
+    323.4
   ],
   "support_zones": [
     [
-      245.13,
-      250.09
+      339.57,
+      346.43
     ],
     [
-      241.8,
-      246.68
+      335.84,
+      342.62
+    ],
+    [
+      335.13,
+      341.91
     ]
   ],
   "resistance_zones": [
     [
-      253.64,
-      258.76
+      354.92,
+      362.08
     ],
     [
-      257.4,
-      262.6
-    ],
-    [
-      349.47,
-      356.53
+      364.32,
+      371.68
     ]
   ],
-  "breakout_level": 256.2,
-  "breakdown_level": 247.61,
-  "invalidation_level": 244.24,
-  "location_label": "near_resistance",
+  "breakout_level": 358.5,
+  "breakdown_level": 343.0,
+  "invalidation_level": 323.4,
+  "location_label": "near_support",
   "confidence_source": "extracted_plus_derived",
   "evidence_refs": [
-    "raw/screenshots/2026-03-18__SANIMA__NEPSE__1D__market_context.png",
-    "raw/snapshots/2026-03-18__SANIMA__NEPSE__1D__snapshot.txt",
-    "raw/tables/2026-03-18__SANIMA__NEPSE__1D__market_extract.json",
     "raw/snapshots/2026-03-18__SANIMA__1W__pre_indicators_snapshot.txt",
     "raw/tables/2026-03-18__SANIMA__1W__stock_extract.json",
     "raw/tables/2026-03-18__SANIMA__1W__bar_extract.json",
     "raw/tables/2026-03-18__SANIMA__1W__indicator_extract.json",
     "raw/screenshots/2026-03-18__SANIMA__1W__clean_v2.png",
-    "raw/screenshots/2026-03-18__SANIMA__1W__annotated_v2.png",
-    "raw/tables/2026-03-18__SANIMA__BANKING__sector_extract.json",
-    "raw/screenshots/2026-03-18__SANIMA__BANKING__sector.png",
-    "raw/snapshots/2026-03-18__SANIMA__BANKING__sector_snapshot.txt",
-    "raw/tables/2026-03-18__SANIMA__1W__decision_qc.json"
+    "raw/screenshots/2026-03-18__SANIMA__1W__annotated_v2.png"
   ],
   "local_range_high": 368.0,
   "local_range_low": 323.4,

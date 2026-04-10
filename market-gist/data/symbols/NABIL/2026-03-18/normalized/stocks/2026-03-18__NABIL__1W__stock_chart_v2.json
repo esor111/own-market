@@ -1,76 +1,64 @@
 {
   "schema_version": "1.0",
-  "session_id": "2026-03-18__NABIL__v2",
+  "session_id": "2026-03-18__NABIL__1W__v2",
   "run_date": "2026-03-18",
-  "captured_at": "2026-03-18T14:07:47.604159",
+  "captured_at": "2026-03-18T23:05:35.623998",
   "source": "nepsealpha_chart",
   "symbol": "NABIL",
   "timeframe": "1W",
-  "close": 479.1,
-  "open": 486.5,
-  "high": 490.0,
-  "low": 462.6,
+  "close": 525.8,
+  "open": 531.0,
+  "high": 539.0,
+  "low": 523.0,
   "volume": null,
   "trend_label": "uptrend",
   "structure_label": "range",
   "swing_highs": [
-    486.5,
-    490.0,
-    508.45,
+    539.0,
     555.0
   ],
   "swing_lows": [
-    464.44,
-    462.6,
-    454.31
+    508.7,
+    504.23,
+    488.2,
+    488.0
   ],
   "support_zones": [
     [
-      459.8,
-      469.08
+      503.61,
+      513.79
     ],
     [
-      457.97,
-      467.23
+      499.19,
+      509.27
     ],
     [
-      449.77,
-      458.85
+      483.32,
+      493.08
     ]
   ],
   "resistance_zones": [
     [
-      481.63,
-      491.37
+      533.61,
+      544.39
     ],
     [
-      485.1,
-      494.9
-    ],
-    [
-      503.37,
-      513.53
+      549.45,
+      560.55
     ]
   ],
-  "breakout_level": 486.5,
-  "breakdown_level": 464.44,
-  "invalidation_level": 462.6,
+  "breakout_level": 539.0,
+  "breakdown_level": 508.7,
+  "invalidation_level": 490.0,
   "location_label": "near_resistance",
   "confidence_source": "extracted_plus_derived",
   "evidence_refs": [
-    "raw/screenshots/2026-03-18__NABIL__NEPSE__1D__market_context.png",
-    "raw/snapshots/2026-03-18__NABIL__NEPSE__1D__snapshot.txt",
-    "raw/tables/2026-03-18__NABIL__NEPSE__1D__market_extract.json",
     "raw/snapshots/2026-03-18__NABIL__1W__pre_indicators_snapshot.txt",
     "raw/tables/2026-03-18__NABIL__1W__stock_extract.json",
     "raw/tables/2026-03-18__NABIL__1W__bar_extract.json",
     "raw/tables/2026-03-18__NABIL__1W__indicator_extract.json",
     "raw/screenshots/2026-03-18__NABIL__1W__clean_v2.png",
-    "raw/screenshots/2026-03-18__NABIL__1W__annotated_v2.png",
-    "raw/tables/2026-03-18__NABIL__BANKING__sector_extract.json",
-    "raw/screenshots/2026-03-18__NABIL__BANKING__sector.png",
-    "raw/snapshots/2026-03-18__NABIL__BANKING__sector_snapshot.txt",
-    "raw/tables/2026-03-18__NABIL__1W__decision_qc.json"
+    "raw/screenshots/2026-03-18__NABIL__1W__annotated_v2.png"
   ],
   "local_range_high": 555.0,
   "local_range_low": 488.2,

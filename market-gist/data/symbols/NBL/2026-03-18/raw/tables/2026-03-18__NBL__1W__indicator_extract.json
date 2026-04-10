@@ -3,11 +3,11 @@
   "symbol": "NBL",
   "timeframe": "1W",
   "data": {
-    "macd_line": 1.26,
-    "signal_line": -7.12,
-    "histogram": -8.37,
-    "rsi": 46.64,
-    "ema_20": 212.53,
-    "ma_50": 209.08
+    "macd_line": 3.15,
+    "signal_line": 1.14,
+    "histogram": -2.01,
+    "rsi": 61.25,
+    "ema_20": 251.57,
+    "ma_50": 249.17
   }
 }

@@ -3,12 +3,12 @@
   "symbol": "SMHL",
   "timeframe": "1W",
   "data": {
-    "open": 1003.8,
-    "high": 1034.8,
-    "low": 952.5,
-    "close": 979.7,
-    "change": -23.9,
-    "change_pct": -2.38,
+    "open": 530.0,
+    "high": 535.0,
+    "low": 511.0,
+    "close": 527.0,
+    "change": -3.0,
+    "change_pct": -0.57,
     "series_title": "Super Madi Hydropower Limited",
     "recent_bars": [
       {
@@ -613,6 +613,7 @@
       }
     ],
     "recent_bar_count": 60,
-    "total_bar_count": 156
+    "total_bar_count": 156,
+    "inferred_timeframe": "1W"
   }
 }

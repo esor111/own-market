@@ -3,12 +3,12 @@
   "symbol": "EBL",
   "timeframe": "1D",
   "data": {
-    "open": 638.0,
-    "high": 639.0,
-    "low": 631.0,
-    "close": 633.3,
-    "change": -4.7,
-    "change_pct": -0.74,
+    "open": 706.0,
+    "high": 709.9,
+    "low": 702.0,
+    "close": 706.0,
+    "change": -1.8,
+    "change_pct": -0.25,
     "series_title": "Everest Bank Limited",
     "recent_bars": [
       {

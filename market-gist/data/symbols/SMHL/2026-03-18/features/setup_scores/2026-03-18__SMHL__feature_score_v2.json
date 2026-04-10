@@ -1,21 +1,21 @@
 {
   "schema_version": "1.0",
-  "session_id": "2026-03-18__SMHL__v2",
+  "session_id": "2026-03-18__SMHL__1W__v2",
   "run_date": "2026-03-18",
   "symbol": "SMHL",
   "scores": {
-    "market_alignment": 3,
+    "market_alignment": 5,
     "sector_alignment": 7,
-    "trend_filter_quality": 2,
-    "momentum_confirmation": 7,
+    "trend_filter_quality": 10,
+    "momentum_confirmation": 6,
     "relative_strength": 2,
-    "structure_quality": 4,
+    "structure_quality": 9,
     "location_quality": 5,
     "volume_confirmation": 2,
     "event_quality": 5,
-    "risk_reward_quality": 0
+    "risk_reward_quality": 4
   },
-  "score_total": 37,
+  "score_total": 55,
   "score_max": 100,
   "confidence_source": "derived",
   "evidence_refs": [
@@ -38,8 +38,10 @@
     "raw/screenshots/2026-03-18__SMHL__HYDROPOWER__sector.png",
     "raw/snapshots/2026-03-18__SMHL__HYDROPOWER__sector_snapshot.txt",
     "raw/tables/2026-03-18__SMHL__event_extract.json",
+    "raw/tables/2026-03-18__SMHL__api_truth_bundle.json",
+    "raw/tables/2026-03-18__SMHL__1W__api_truth_comparison.json",
     "raw/tables/2026-03-18__SMHL__1W__decision_qc.json"
   ],
-  "score_percent": 37,
-  "notes": "qc_gate:structure_not_actionable:trend_breakdown"
+  "score_percent": 55,
+  "notes": "watchlist_gate:risk_reward_marginal_for_watchlist"
 }

@@ -232,6 +232,9 @@ class FileGenerator:
             "invalidation_level": decision_data.get("invalidation_level"),
             "targets": decision_data.get("targets", []),
             "risk_reward_ratio": decision_data.get("risk_reward_ratio"),
+            "watchlist_tier": decision_data.get("watchlist_tier"),
+            "watchlist_priority": decision_data.get("watchlist_priority"),
+            "watchlist_score": decision_data.get("watchlist_score"),
             "why": decision_data.get("why", []),
             "evidence_refs": evidence_refs
         })

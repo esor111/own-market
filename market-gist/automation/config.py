@@ -10,10 +10,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 SYMBOLS_DIR = os.path.join(DATA_DIR, "symbols")
 VALIDATION_DIR = os.path.join(DATA_DIR, "validation")
+REPLAYS_DIR = os.path.join(DATA_DIR, "replays")
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 AUTOMATION_DIR = os.path.dirname(os.path.abspath(__file__))
 SECTOR_MAP_FILE = os.path.join(AUTOMATION_DIR, "sector_map.json")
+REPLAY_SECTOR_GROUPS_FILE = os.path.join(AUTOMATION_DIR, "replay_sector_groups.json")
 SYMBOL_LISTS_FILE = os.path.join(AUTOMATION_DIR, "symbol_lists.json")
+DEFAULT_TRUTH_SOURCE = "nepse_scraper"
 
 # Data subdirectories
 RAW_DIR = os.path.join(DATA_DIR, "raw")
@@ -81,6 +84,19 @@ DECISION_THRESHOLDS = {
 def normalize_timeframe_token(timeframe):
     """Return a filesystem-safe timeframe token."""
     return str(timeframe).upper().replace("/", "_")
+
+
+def normalize_filename_token(value):
+    """Return a filesystem-safe token for validation/report filenames."""
+    token = str(value).strip()
+    safe = []
+    for char in token:
+        if char.isalnum() or char in {"_", "-"}:
+            safe.append(char)
+        elif char in {"@", " "}:
+            safe.append("_")
+    normalized = "".join(safe).strip("_")
+    return normalized or "default"
 
 
 def get_session_id(symbol, timeframe=None, date=None):
@@ -155,6 +171,7 @@ def get_run_directories(symbol, date=None):
         "features": os.path.join(base, "features"),
         "features_setup_scores": os.path.join(base, "features", "setup_scores"),
         "features_model_inputs": os.path.join(base, "features", "model_inputs"),
+        "features_case_critiques": os.path.join(base, "features", "case_critiques"),
         "outcomes": os.path.join(base, "outcomes"),
         "outcomes_realized_results": os.path.join(base, "outcomes", "realized_results")
     }
@@ -210,3 +227,50 @@ def resolve_symbols(args):
             seen.add(symbol)
             unique_symbols.append(symbol)
     return unique_symbols
+
+
+def build_run_label(args, resolved_symbols):
+    """
+    Build a stable short label for validation artifacts from CLI symbol/list args.
+    """
+    raw_tokens = []
+    for arg in args:
+        token = str(arg).strip()
+        if not token:
+            continue
+        raw_tokens.append(token[1:] if token.startswith("@") else token.upper())
+
+    if not raw_tokens:
+        return "default"
+
+    label = "__".join(normalize_filename_token(token) for token in raw_tokens if token)
+    if len(label) > 80:
+        if len(raw_tokens) == 1 and raw_tokens[0]:
+            label = normalize_filename_token(raw_tokens[0])
+        else:
+            label = f"symbols_{len(resolved_symbols)}"
+    return label or "default"
+
+
+def get_validation_filename(report_name, timeframe, date=None, run_label=None):
+    """Return a validation/report filename, optionally scoped by run label."""
+    if date is None:
+        date = datetime.now().strftime("%Y-%m-%d")
+    timeframe = normalize_timeframe_token(timeframe)
+    report_name = normalize_filename_token(report_name)
+    if run_label:
+        run_label = normalize_filename_token(run_label)
+        return f"{date}__{timeframe}__{run_label}__{report_name}.json"
+    return f"{date}__{timeframe}__{report_name}.json"
+
+
+def get_latest_validation_filename(report_name, timeframe=None, run_label=None):
+    """Return a stable 'latest' validation filename for dashboards and quick reads."""
+    report_name = normalize_filename_token(report_name)
+    parts = ["latest"]
+    if timeframe:
+        parts.append(normalize_timeframe_token(timeframe))
+    if run_label:
+        parts.append(normalize_filename_token(run_label))
+    parts.append(report_name)
+    return "__".join(parts) + ".json"

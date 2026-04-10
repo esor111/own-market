@@ -3,12 +3,12 @@
   "symbol": "SANIMA",
   "timeframe": "1W",
   "data": {
-    "open": 256.2,
-    "high": 260.0,
-    "low": 248.5,
-    "close": 252.0,
-    "change": -4.2,
-    "change_pct": -1.64,
+    "open": 358.5,
+    "high": 358.5,
+    "low": 343.0,
+    "close": 349.5,
+    "change": -2.0,
+    "change_pct": -0.57,
     "series_title": "Sanima Bank Limited",
     "recent_bars": [
       {
@@ -613,6 +613,7 @@
       }
     ],
     "recent_bar_count": 60,
-    "total_bar_count": 466
+    "total_bar_count": 466,
+    "inferred_timeframe": "1W"
   }
 }

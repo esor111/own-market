@@ -13,8 +13,11 @@ from calibration_report import build_calibration_summary
 from config import (
     VALIDATION_DIR,
     SYMBOLS_DIR,
+    build_run_label,
     get_decision_filename,
+    get_latest_validation_filename,
     get_run_directories,
+    get_validation_filename,
     resolve_symbols,
 )
 from evaluate_outcome import evaluate_outcome_for_run
@@ -115,6 +118,7 @@ def build_cycle_summary(run_date, timeframe, symbols, calibration_path, calibrat
     return {
         "run_date": run_date,
         "timeframe": timeframe,
+        "run_label": None,
         "symbols": symbols,
         "results": results,
         "calibration_summary_path": calibration_path,
@@ -131,13 +135,16 @@ async def main():
     timeframe = sys.argv[2] if len(sys.argv) >= 3 else "1W"
 
     if len(sys.argv) >= 4:
+        raw_symbol_args = sys.argv[3:]
         try:
-            symbols = resolve_symbols(sys.argv[3:])
+            symbols = resolve_symbols(raw_symbol_args)
         except ValueError as exc:
             print(str(exc))
             sys.exit(1)
+        run_label = build_run_label(raw_symbol_args, symbols)
     else:
         symbols = discover_symbols_for_run(run_date, timeframe)
+        run_label = build_run_label(symbols, symbols)
 
     if not symbols:
         print(f"No symbols found for run_date={run_date} timeframe={timeframe}")
@@ -156,20 +163,33 @@ async def main():
 
     calibration_path, calibration_summary = build_calibration_summary()
     cycle_summary = build_cycle_summary(run_date, timeframe, symbols, calibration_path, calibration_summary)
+    cycle_summary["run_label"] = run_label
 
     os.makedirs(VALIDATION_DIR, exist_ok=True)
-    cycle_path = os.path.join(VALIDATION_DIR, f"{run_date}__{timeframe}__reliability_cycle.json")
+    cycle_path = os.path.join(
+        VALIDATION_DIR,
+        get_validation_filename("reliability_cycle", timeframe, run_date, run_label)
+    )
     with open(cycle_path, "w", encoding="utf-8") as f:
+        json.dump(cycle_summary, f, indent=2)
+
+    latest_cycle_path = os.path.join(
+        VALIDATION_DIR,
+        get_latest_validation_filename("reliability_cycle", timeframe, run_label)
+    )
+    with open(latest_cycle_path, "w", encoding="utf-8") as f:
         json.dump(cycle_summary, f, indent=2)
 
     print(json.dumps({
         "run_date": run_date,
         "timeframe": timeframe,
+        "run_label": run_label,
         "symbols_checked": symbols,
         "pending_symbols_found": pending_symbols,
         "reevaluated": reevaluated,
         "calibration_summary_path": calibration_path,
         "reliability_cycle_path": cycle_path,
+        "latest_reliability_cycle_path": latest_cycle_path,
         "usable_calibration_samples": cycle_summary["usable_calibration_samples"]
     }, indent=2))
 

@@ -6,7 +6,7 @@ import json
 import os
 import sys
 
-from config import VALIDATION_DIR
+from config import VALIDATION_DIR, get_latest_validation_filename, get_validation_filename, normalize_filename_token
 
 
 def load_json(path):
@@ -23,8 +23,11 @@ def sort_key(item):
     )
 
 
-def build_queue(run_date, timeframe):
-    cycle_path = os.path.join(VALIDATION_DIR, f"{run_date}__{timeframe}__reliability_cycle.json")
+def build_queue(run_date, timeframe, run_label=None):
+    cycle_path = os.path.join(
+        VALIDATION_DIR,
+        get_validation_filename("reliability_cycle", timeframe, run_date, run_label)
+    )
     if not os.path.exists(cycle_path):
         raise FileNotFoundError(f"Reliability cycle not found: {cycle_path}")
 
@@ -60,6 +63,7 @@ def build_queue(run_date, timeframe):
     return {
         "run_date": run_date,
         "timeframe": timeframe,
+        "run_label": run_label,
         "source_cycle_path": cycle_path,
         "actionable_pending": actionable_pending,
         "pending_non_actionable": pending,
@@ -74,18 +78,30 @@ def build_queue(run_date, timeframe):
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python followup_queue.py RUN_DATE [TIMEFRAME]")
+        print("Usage: python followup_queue.py RUN_DATE [TIMEFRAME] [RUN_LABEL]")
         sys.exit(1)
 
     run_date = sys.argv[1]
     timeframe = sys.argv[2] if len(sys.argv) > 2 else "1W"
+    run_label = normalize_filename_token(sys.argv[3]) if len(sys.argv) > 3 else None
 
-    queue = build_queue(run_date, timeframe)
-    output_path = os.path.join(VALIDATION_DIR, f"{run_date}__{timeframe}__followup_queue.json")
+    queue = build_queue(run_date, timeframe, run_label)
+    output_path = os.path.join(
+        VALIDATION_DIR,
+        get_validation_filename("followup_queue", timeframe, run_date, run_label)
+    )
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(queue, f, indent=2)
 
+    latest_path = os.path.join(
+        VALIDATION_DIR,
+        get_latest_validation_filename("followup_queue", timeframe, run_label)
+    )
+    with open(latest_path, "w", encoding="utf-8") as f:
+        json.dump(queue, f, indent=2)
+
     print(f"Follow-up queue saved: {output_path}")
+    print(f"Latest follow-up pointer saved: {latest_path}")
     print(json.dumps(queue, indent=2))
 
 

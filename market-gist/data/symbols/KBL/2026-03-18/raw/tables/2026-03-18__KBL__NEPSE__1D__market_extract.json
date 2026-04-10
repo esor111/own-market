@@ -1,4 +1,12 @@
 {
   "extraction_type": "market_chart",
-  "data": {}
+  "data": {
+    "open": 2800.75,
+    "high": 2812.34,
+    "low": 2787.37,
+    "close": 2812.34,
+    "change": 11.59,
+    "change_pct": 0.41,
+    "series_title": "NEPAL STOCK EXCHANGE"
+  }
 }

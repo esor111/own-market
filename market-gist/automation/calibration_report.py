@@ -7,7 +7,7 @@ import os
 from glob import glob
 from statistics import mean
 
-from config import SYMBOLS_DIR, VALIDATION_DIR
+from config import SYMBOLS_DIR, VALIDATION_DIR, get_latest_validation_filename
 
 
 def load_json(path):
@@ -127,6 +127,13 @@ def build_calibration_summary():
     os.makedirs(VALIDATION_DIR, exist_ok=True)
     output_path = os.path.join(VALIDATION_DIR, "confidence_calibration_summary.json")
     with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(summary, f, indent=2)
+
+    latest_path = os.path.join(
+        VALIDATION_DIR,
+        get_latest_validation_filename("confidence_calibration_summary")
+    )
+    with open(latest_path, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2)
 
     return output_path, summary
