@@ -20,11 +20,11 @@ from pathlib import Path
 from typing import Dict, List
 
 from config import BASE_DIR
+from nepse_trading_calendar import is_trading_weekday
 
 
 USER_AGENT = "Mozilla/5.0 (compatible; MarketGistBot/1.0)"
 UNVERIFIED_SSL_CONTEXT = ssl._create_unverified_context()
-TRADING_WEEKDAYS = {6, 0, 1, 2, 3}  # Sunday-Thursday
 BROKER_LEDGER_ROOT = Path(BASE_DIR) / "broker_flow_ledger"
 CALENDAR_OVERRIDE_DIR = BROKER_LEDGER_ROOT / "calendar_overrides"
 
@@ -40,7 +40,7 @@ def parse_iso_date(value: str) -> datetime.date:
 
 
 def is_nepal_trading_weekday(value: str) -> bool:
-    return parse_iso_date(value).weekday() in TRADING_WEEKDAYS
+    return is_trading_weekday(parse_iso_date(value))
 
 
 def _override_path(year: int) -> Path:
@@ -107,7 +107,7 @@ def _load_official_rows(year: int) -> Dict[str, object]:
 def get_market_day_context(run_date: str) -> Dict[str, object]:
     normalized_date = str(run_date or "").strip()[:10]
     parsed_date = parse_iso_date(normalized_date)
-    weekday_candidate = parsed_date.weekday() in TRADING_WEEKDAYS
+    weekday_candidate = is_trading_weekday(parsed_date)
     override_payload = _load_override_rows(parsed_date.year)
     official_payload = _load_official_rows(parsed_date.year)
 

@@ -58,7 +58,10 @@ def parse_filename_date(filename):
 
 
 def is_nepal_trading_weekday(day):
-    return day.weekday() not in {4, 5}
+    # Transition-aware; see nepse_trading_calendar. Pre-2026-04-10: Sun-Thu.
+    # From 2026-04-10: Mon-Fri (Nepal switched to two-day weekend schedule).
+    from nepse_trading_calendar import is_trading_weekday as _is_trading_weekday
+    return _is_trading_weekday(day)
 
 
 def daterange(start_day, end_day):

@@ -9,6 +9,7 @@ import sys
 from datetime import datetime
 
 from data_sources import get_truth_source
+from nepse_trading_calendar import is_trading_weekday as _is_trading_weekday
 
 
 def _parse_date(value):
@@ -16,8 +17,12 @@ def _parse_date(value):
 
 
 def is_nepal_trading_weekday(session_date):
-    """Return True for Sunday-Thursday, False for Friday/Saturday."""
-    return session_date.weekday() not in {4, 5}
+    """Return True if the session date is a NEPSE trading weekday under the active schedule.
+
+    Transition-aware: Sun-Thu before 2026-04-10, Mon-Fri from 2026-04-10 onward.
+    See nepse_trading_calendar for details.
+    """
+    return _is_trading_weekday(session_date)
 
 
 def load_replay_sessions(start_date, end_date, truth_source_name="sharesansar_local"):

@@ -9,11 +9,16 @@ import json
 from datetime import datetime, time, timedelta
 from zoneinfo import ZoneInfo
 
+from nepse_trading_calendar import (
+    is_last_trading_day_of_week,
+    is_trading_weekday,
+    session_window_label,
+)
+
 
 NEPAL_TZ = ZoneInfo("Asia/Katmandu")
 SESSION_OPEN = time(11, 0)
 SESSION_CLOSE = time(15, 0)
-TRADING_WEEKDAYS = {6, 0, 1, 2, 3}  # Sunday-Thursday in Python weekday terms
 
 SECTOR_INDEX_SYMBOLS = {
     "HYDROPOWER": "HYDROPOWER",
@@ -240,7 +245,7 @@ def build_broker_edge_summary(floorsheet, broker_holdings, broker_holding_change
 def build_market_session_context(now=None):
     local_now = now.astimezone(NEPAL_TZ) if now else datetime.now(NEPAL_TZ)
     current_time = local_now.time()
-    is_trading_day = local_now.weekday() in TRADING_WEEKDAYS
+    is_trading_day = is_trading_weekday(local_now.date())
     is_open_now = is_trading_day and SESSION_OPEN <= current_time <= SESSION_CLOSE
     is_before_open = is_trading_day and current_time < SESSION_OPEN
     is_after_close = (not is_trading_day) or current_time > SESSION_CLOSE
@@ -253,14 +258,16 @@ def build_market_session_context(now=None):
     else:
         if not is_trading_day or current_time > SESSION_CLOSE:
             next_session_date = next_session_date + timedelta(days=1)
-        while next_session_date.weekday() not in TRADING_WEEKDAYS:
+        while not is_trading_weekday(next_session_date):
             next_session_date = next_session_date + timedelta(days=1)
         next_session_time = datetime.combine(next_session_date, SESSION_OPEN, tzinfo=NEPAL_TZ)
 
     session_risk = []
-    if local_now.weekday() == 3 and current_time >= time(14, 30):
-        session_risk.append("thursday_close_gap_risk")
-    if local_now.weekday() in {4, 5}:
+    # "Weekly close gap risk" fires on the last trading weekday near the close —
+    # Thursday pre-transition, Friday post-transition.
+    if is_last_trading_day_of_week(local_now.date()) and current_time >= time(14, 30):
+        session_risk.append("weekly_close_gap_risk")
+    if not is_trading_day:
         session_risk.append("weekend_market_closed")
     if is_after_close and next_session_time.date() != local_now.date():
         session_risk.append("next_action_delayed_to_future_session")
@@ -273,7 +280,7 @@ def build_market_session_context(now=None):
         "is_trading_day": is_trading_day,
         "is_before_open": is_before_open,
         "is_after_close": is_after_close,
-        "session_window": "Sunday-Thursday 11:00-15:00 NPT",
+        "session_window": session_window_label(local_now.date()),
         "next_trade_session": next_session_time.isoformat(),
         "days_until_next_session": (next_session_time.date() - local_now.date()).days,
         "session_risk_flags": session_risk,

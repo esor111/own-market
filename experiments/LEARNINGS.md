@@ -571,3 +571,117 @@ Web research surfaced 5+ peer-reviewed 2024-2025 papers reaching directionally s
 The substantive direction does not change: trigger should be mechanical, LLMs are valuable for verification and explanation, build forward evidence, don't churn on new experiments.
 
 Full review of the literature is at `market-gist/docs/resources/web-research-2026-04-10/02_llm_vs_mechanical_finance.md`.
+
+---
+
+## L-012: The 88.9% Persistence Hit Rate Is Clustered and Preliminary, Not 9 Independent Cases (2026-04-12)
+
+### What We Did
+Ran Benvolio's 6-class audit checklist (designed by the exploration team, executed by Juliet) against the real `score_persistence_shadow_reports.py` code and the `latest__shadow_batch_cases_v1.csv` case data.
+
+### The Key Finding: Sample Clustering
+
+The 9 resolved `persistence_caution_only` cases come from only **3 report dates**:
+
+| Date | Symbol cases | Wins | Forward window |
+|---|---|---|---|
+| 2025-08-04 | NABIL, EBL, AKPL, UPPER, API (5 cases) | 4 wins, 1 loss (EBL went up) | Aug 4 → Aug 18 |
+| 2025-08-05 | NABIL, AKPL, UPPER (3 cases) | 3 wins | Aug 5 → Aug 19 |
+| 2025-12-07 | UPPER (1 case) | 1 win | Dec 7 → Dec 21 |
+
+**The Aug 4 and Aug 5 forward windows overlap almost entirely** (14 of 15 trading days shared). The 7 wins from those 2 days are not independent — they're measuring the same market decline across multiple symbols simultaneously. The effective independent episodes are closer to **2-3, not 9** (Romeo-verified, 2026-04-12).
+
+### What Else The Audit Found
+
+| Class | Item | Verdict |
+|---|---|---|
+| F.1 | Pre-registration artifact | **PARTIAL PASS** — frozen policy on disk dated Apr 5, names exact (w7, seller, >=1.0) tuple. Never committed to git. |
+| F.2 | Search space enumerated | **FAIL** — not documented what other (window, side) combos were tested before freezing. |
+| A.1 | Dedupe function | **PASS** — scorer's own `collapse_duplicate_sessions` is identical to shared library. L-007 fix present. |
+| A.2 | Trading-day arithmetic | **PASS** — `anchor_idx + offset` on deduplicated DataFrame. Correct. |
+| A.3 | Regime breaks | **PASS** — uses CSV file dates. Immune to Sun-Thu/Mon-Fri change. |
+| C | Baseline adjustment | **FLAG** — raw returns only. Baseline comparison group = 3 no_signal cases. Too thin. |
+| B | Frozen policy drift | **UNVERIFIABLE** — no git history to compare. |
+| E | Decay diagnostic | **PARTIAL** — only 5d and 10d available. Mean 5d=-1.59%, mean 10d=-1.65%. Inconclusive. |
+
+### What This Means
+
+**The code is clean. The sample is not.** The plumbing works correctly (dedupe, trading-day math, regime-immunity). The problem is that the current evidence base is much thinner than the headline "8/9 = 88.9%" suggests.
+
+The 23 pending forward cases from Mar 31 – Apr 10, 2026 are the **real** test. They span multiple weeks, multiple independent market regimes, and will provide genuinely independent observations. They need ~10 more trading days of price data to resolve.
+
+### What This Does NOT Mean
+
+This does not mean the signal is broken. It means the current evidence is insufficient to conclude it works. The distinction matters: "we don't know yet" is different from "it doesn't work." Keep running the daily routine. Do not change the frozen policy. Wait for the pending cases.
+
+### Resources
+- Audit checklist design: `C:\Users\ishwor\Music\own-organize\market-expirement-labs\04_persistence_lookahead_audit.md` (Benvolio)
+- Case data: `market-gist/data/validation/persistence_shadow_reviews/latest__shadow_batch_cases_v1.csv`
+- Scorer code: `market-gist/automation/score_persistence_shadow_reports.py`
+- Romeo review: appended to `market-gist/automation/SCRAPE_EXPANSION_2026-04-12.md`
+
+---
+
+## L-013: Published Broker-Flow Benchmarks Were Misquoted; NEPSE Data Advantage Is Real But Modest (2026-04-12)
+
+### What Happened
+
+Benvolio (exploration team) traced every academic paper the lab has been citing back to the original source via web research. Found **8 errors** in our files across two rounds of verification.
+
+### The Errors That Matter Most
+
+**1. The "52-57% hit rate" benchmark was never in any paper.**
+BJZZ (2021) reports ~10 bps/week return spread between retail-buying and retail-selling stocks. That is a return number, not a directional accuracy number. The lab converted it to an implied hit rate and then wrote it down as if the papers said "52-57%." They didn't. The lab's own back-calculation gives ~50.5-51.5%, and with measurement-error correction (EIV, λ≈0.30) the ceiling with perfect data is ~53%.
+
+**2. Wrong author on BJZZ decay paper.**
+The signal-decay finding is from Ardia, Aymard & Cenesizoglu (2025), NOT Barber et al. (2024). Barber et al. wrote a different paper about BJZZ's algorithm having 28% signing errors. The decay finding (BJZZ predictive power dropped 34%, "completely disappears" for large-cap post-2016) is real — it was just attributed to the wrong people.
+
+**3. Linnainmaa-Saar is not a broker-skill study.**
+Our deep dive framed Linnainmaa & Saar (2012) "Lack of Anonymity and the Inference from Order Flow" as a broker-skill methodology template with "3-5 segmented groups." The paper is actually about how broker identity reveals information about order flow direction — a different question. The classification methodology is reusable, but the framing was wrong.
+
+**4. Units conflated.**
+"5-15 bps/day" lumped BJZZ (~10 bps/week) and Taiwan day-traders (61.3 bps/day) into one range. These are incompatible: weekly institutional-flow return vs daily individual-trader skill.
+
+### The Data Quality Advantage Calculation (Benvolio's `08_data_quality_advantage.md`)
+
+NEPSE has a structural data advantage: 100% trade identification with 100% correct broker names, vs BJZZ's ~65% identification with 28% signing errors. Benvolio calculated what this means:
+
+| Data quality | Implied directional accuracy |
+|---|---|
+| BJZZ observed (noisy US data) | ~50.5% |
+| EIV-corrected (perfect data, US market) | ~53% |
+| + thin market + transparency bonuses | ~55-58% (theoretical ceiling) |
+| Our persistence signal claims | 88.9% |
+
+**The data advantage is real but modest** — it closes ~3pp of a 38pp gap. The remaining 30+ pp is unexplained. This makes the L-012 audit findings more urgent, not less.
+
+### Corrections Applied (Romeo-verified 2026-04-12)
+
+- `BACKLOG.md`: "52-57% from papers" replaced with honest "lab's inference ~50-52%, not a published number"
+- `BACKLOG.md`: Choi → "Choi, Jin & Yan"; BJZZ decay → "Ardia, Aymard & Cenesizoglu (2025)"
+- `EXPLORATION_CHARTER.md`: 65% rule language softened in 2 places
+- `MANIFESTO.md`: Persistence scorecard updated to acknowledge clustering
+
+### What This Means For The Lab
+
+**The directional claims are right.** Broker flow predicts returns, the signal is modest, it decays, nobody has done this on NEPSE. The lab's thesis holds.
+
+**The specific numbers used as benchmarks had errors.** None are catastrophic, but the lab was less rigorous on citations than it thought. Romeo's assessment: "B-minus foundation."
+
+**The data quality advantage is a real structural edge** — NEPSE's broker-identified transparent market gives ~3x stronger signal recovery than noise-corrupted US data. This supports the lab's core thesis that the research frontier is real. But it does not explain the 88.9%.
+
+### Resources
+- Benvolio's deliverables (read-only reference, not canonical):
+  - `C:\Users\ishwor\Music\own-organize\market-expirement-labs\04_persistence_lookahead_audit.md` — audit checklist
+  - `C:\Users\ishwor\Music\own-organize\market-expirement-labs\06_day_of_week_validation.md` — day-of-week papers + 3 errors
+  - `C:\Users\ishwor\Music\own-organize\market-expirement-labs\07_academic_claim_verification.md` — 8 citation errors
+  - `C:\Users\ishwor\Music\own-organize\market-expirement-labs\08_data_quality_advantage.md` — data quality math
+- Romeo review: `market-gist/automation/SCRAPE_EXPANSION_2026-04-12.md` (appended)
+- BJZZ original: Boehmer, Jones, Zhang & Zhang (2021) "When Do Retail Investors Improve Price Discovery?"
+- Decay paper: Ardia, Aymard & Cenesizoglu (2025) — BJZZ signal decay study
+- Linnainmaa & Saar (2012) "Lack of Anonymity and the Inference from Order Flow"
+- Choi, Jin & Yan (journal-published 2025) — Shanghai institutional flow
+
+### Addendum (2026-04-12): Operating Doctrine
+
+Romeo wrote `experiments/PARALLEL_EXPLORATION_SERIAL_PROMOTION.md` — the operating law for how the lab uses AI parallelism without drifting into random experimentation. Core law: **search wide, promote narrow.** Three layers: exploration (parallel, cheap) → verification (adversarial) → validation (forward evidence, serial). The anti-randomness rules codify what L-012 and L-013 discovered: no fake benchmarks, no correlated rows as independent observations, no skipping the funnel from idea to promotion.

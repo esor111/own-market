@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "description": "Symbols scraped daily by run_daily_scrape.py. Sectors group by NEPSE classification. Tiers control what downstream processing applies.",
+  "updated": "2026-04-12",
+  "sectors": {
+    "commercial_banks": ["NABIL", "EBL", "SANIMA", "NBB", "NICA", "PCBL"],
+    "hydropower": ["AKPL", "UPPER", "API", "BHCL", "RADHI", "AHPC"],
+    "development_banks": ["JBBL", "MNBBL", "SAPDBL", "EDBL"],
+    "life_insurance": ["CLI", "NLIC", "HLI"],
+    "non_life_insurance": ["LGIL", "NIL"],
+    "microfinance": ["RMDC", "CBBL"],
+    "finance": ["MFIL", "NFS"]
+  },
+  "tiers": {
+    "active_shadow": {
+      "description": "Persistence shadow signal scored daily (frozen policy v1)",
+      "symbols": ["NABIL", "EBL", "SANIMA"]
+    },
+    "research": {
+      "description": "Logged in shadow report but not scored for verdicts",
+      "symbols": ["AKPL", "UPPER", "API"]
+    },
+    "shadow_excluded": {
+      "description": "In shadow scope but excluded from signals (insufficient data)",
+      "symbols": ["JBBL", "MNBBL"]
+    },
+    "data_collection_only": {
+      "description": "Scrape and ledger only. No shadow report. Raw material for future expansion.",
+      "symbols": [
+        "NBB", "NICA", "PCBL",
+        "BHCL", "RADHI", "AHPC",
+        "SAPDBL", "EDBL",
+        "CLI", "NLIC", "HLI",
+        "LGIL", "NIL",
+        "RMDC", "CBBL",
+        "MFIL", "NFS"
+      ]
+    }
+  }
+}

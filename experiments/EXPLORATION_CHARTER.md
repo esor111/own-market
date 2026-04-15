@@ -53,6 +53,22 @@ You are not blind. You know what we built, what we found, what we parked, what w
 
 **You** are the exploration team. Romeo and Juliet do not know what you are doing in real time. They will find out when you write a completion report and Ishwor brings it back to the main session. **Your discipline is the only thing that prevents you from contradicting them.** Read the canonical files first. Always.
 
+### Important: The Main Team Is Also Doing Research In Parallel
+
+This is critical. The main team (Juliet + Romeo + Ishwor) is **NOT dormant while you work**. We run our own agent research, web searches, documentation updates, code changes, and experiments in parallel with you. You may be working on a side quest while we are simultaneously running a different research thread or debugging the production shadow report.
+
+What this means for you:
+
+1. **Assume the canonical files may have been updated recently.** Read them at the start of your session to get the current state. If LEARNINGS.md has an L-012 entry that wasn't here when you planned your side quest, it may change your hypothesis.
+
+2. **We may be working on the same topic independently.** If you pick the broker reputation feasibility spike and we happen to be doing our own broker analysis in the main session, both of us should produce rigorous work, but we may reach conclusions that need reconciliation. That reconciliation happens through the completion report + Romeo verification, not through real-time coordination.
+
+3. **We also use RESOURCES.md and expect to see you added to it.** When you find a new URL, paper, or tool worth saving, document it in your completion report so the main team can add it to the canonical library during integration.
+
+4. **Do not assume silence means we agree with you.** We don't know what you're doing until you write the completion report. If you propose something that contradicts current canonical state, expect Romeo to push back when Ishwor brings your report back to the main session. That's the verification loop working, not a failure.
+
+5. **We are not your manager.** You are autonomous during your session. You pick the side quest, you do the work, you write the report. The main team integrates after the fact. You don't need permission to explore. You do need discipline about not overclaiming.
+
 ---
 
 ## What This Lab Is
@@ -129,7 +145,7 @@ These are the rules that make exploration valuable instead of noise:
 
 4. **Apply multiple-comparisons correction.** With many hypotheses tested, false positives are expected. Use FDR at 5% or be explicit that you're not correcting and acknowledge the risk.
 
-5. **The 65% rule.** Published broker-flow signals in adjacent markets have hit rates of 52-57%, NOT 65%+. If your finding claims a hit rate above 65%, that is a red flag — check for lookahead bias, survivorship, or methodology error before reporting it.
+5. **The 65% rule.** Published broker-flow papers report modest return spreads (e.g., BJZZ ~10 bps/week), not direct directional hit rates. The lab's implied directional accuracy from these spreads is ~50-52%, but this is our inference, not a published benchmark. If your finding claims a hit rate above 65%, that is a red flag — check for lookahead bias, survivorship, or methodology error before reporting it. *(Tightened 2026-04-12 per Romeo review; original "52-57% from papers" was traced and found to be a lab estimate, not a citation.)*
 
 6. **The cool-down.** If you find something exciting, sit with it for 24 hours before proposing it as a side quest for the main team. Excitement is the enemy of discipline. Re-read your work the next day and look for what you missed.
 
@@ -149,17 +165,19 @@ Bootstrap by reading these files:
 
 3. **`experiments/BACKLOG.md`** — what's done, what's the boring necessary work, what's parked as side projects. Tier A0 is the highest-priority side project. Read the whole thing.
 
-4. **`experiments/INDEX.md`** — quick map of the experiment lab.
+4. **`experiments/RESOURCES.md`** ⭐ — the curated library of every URL, paper, tool, and data source we've already vetted. **USE THIS INSTEAD OF STARTING A FRESH WEB SEARCH.** If it's here, we've already vetted it. If you need to go beyond it, do targeted search rather than re-discovering things we already know.
 
-5. **`market-gist/docs/resources/web-research-2026-04-10/00_synthesis.md`** — top-level synthesis of the conventional research wave (six threads).
+5. **`experiments/INDEX.md`** — quick map of the experiment lab.
 
-6. **`market-gist/docs/resources/web-research-2026-04-10/10_unconventional_synthesis.md`** — top-level synthesis of the unconventional research wave (four threads).
+6. **`market-gist/docs/resources/web-research-2026-04-10/00_synthesis.md`** — top-level synthesis of the conventional research wave (six threads).
 
-7. **`market-gist/docs/resources/web-research-2026-04-10/15_broker_reputation_deep_dive.md`** — the deepest single-question research, the most rigorous backlog candidate. Read this even if you're not working on the broker question, because it contains the methodology template that applies to many other side quests.
+7. **`market-gist/docs/resources/web-research-2026-04-10/10_unconventional_synthesis.md`** — top-level synthesis of the unconventional research wave (four threads).
 
-8. **`market-gist/docs/resources/web-research-2026-04-10/99_romeos_takes.md`** — Romeo's first-pass review of the conventional wave with the wording corrections he caught. This is what good verification looks like.
+8. **`market-gist/docs/resources/web-research-2026-04-10/15_broker_reputation_deep_dive.md`** — the deepest single-question research, the most rigorous backlog candidate. Read this even if you're not working on the broker question, because it contains the methodology template that applies to many other side quests.
 
-You can also browse the individual research thread files (01-06 and 11-14) for depth on specific topics.
+9. **`market-gist/docs/resources/web-research-2026-04-10/99_romeos_takes.md`** — Romeo's first-pass review of the conventional wave with the wording corrections he caught. This is what good verification looks like.
+
+You can also browse the individual research thread files (01-06 and 11-14) for depth on specific topics. Each one has its own master source list at the bottom.
 
 ---
 
@@ -168,9 +186,9 @@ You can also browse the individual research thread files (01-06 and 11-14) for d
 These are the side quests from BACKLOG.md that don't require running code on our private data. You can do most of the design work and most of the literature search yourself. The main team will execute the data part based on your proposal.
 
 ### Side Quest 1: Bikram Sambat Turn-of-Month Effect
-- **Hypothesis:** Published NEPSE research has tested turn-of-month effects using Gregorian dates and found them weak. But Nepal's largest single employer is the government, and government employees get paid on the Nepali month start (Baisakh 1, Jeth 1, etc.) — NOT January 1. Nobody has tested turn-of-month using Bikram Sambat dates.
-- **Why it's interesting:** Genuinely novel because prior researchers used the wrong calendar. Published research blind spot.
-- **What you can do without code access:** Verify the Nepal payday convention (which day of the Nepali month do civil servants actually get paid?). Find published research on payday effects in adjacent markets. Propose the exact methodology for the main team. Define success criteria.
+- **Hypothesis:** Published NEPSE research has tested turn-of-month effects using Gregorian dates and found them weak. A Nepal-specific alternative is that some household or payroll cash cycles may align with **Bikram Sambat month boundaries**, creating a BS-boundary effect that Gregorian studies would miss. The specific civil-service payday mechanism is a candidate explanation, not a verified fact.
+- **Why it's interesting:** Genuinely novel because prior researchers used the Gregorian calendar. But the right framing may be a **BS month-boundary turnover test**, not a proven government-payday effect.
+- **What you can do without code access:** Verify whether any Nepal payday convention is actually BS-linked, especially in the civil service. Find published research on payday or turn-of-month effects in adjacent markets. Propose the exact methodology for the main team, including a design that controls for Gregorian month boundaries. Define success criteria.
 - **Source:** `13_retail_psychology_signals.md` Tier 1 #3.
 
 ### Side Quest 2: Monsoon Flood × Hydro Watershed Event Study
@@ -186,7 +204,7 @@ These are the side quests from BACKLOG.md that don't require running code on our
 - **Source:** `11_festival_cash_cycles.md` Section 8.
 
 ### Side Quest 4: Persistence Signal Lookahead Audit
-- **What it is:** The published broker-flow literature has hit rates of 52-57%, NOT 65%+. If our existing 7-day persistence signal claims a hit rate above 65%, that is outside the published range and warrants a lookahead-bias check.
+- **What it is:** Published broker-flow papers report modest return spreads, not direct hit rates. The lab's implied directional accuracy estimate is ~50-52% (our inference from BJZZ return data, not a published benchmark). If our existing 7-day persistence signal claims a hit rate well above this range, that warrants a lookahead-bias check.
 - **Why it matters:** This is a quality check on something we are already running. If the signal is contaminated, we should know before deploying.
 - **What you can do without code access:** Read the methodology in the persistence shadow policy (find references in LEARNINGS.md L-001 through L-007). Propose the exact lookahead checks: (a) is any future information leaking into the signal computation? (b) is the trading-day calendar correct? (c) are forward returns measured from a date that is actually known at decision time? Write a checklist the main team can run.
 - **Source:** `15_broker_reputation_deep_dive.md` "side warning" section + L-007.

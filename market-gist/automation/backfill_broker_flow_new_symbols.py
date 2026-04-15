@@ -28,7 +28,10 @@ LEDGER_ROOT = ROOT / "broker_flow_ledger"
 BACKFILL_SCRIPT = BASE / "backfill_merolagani_floorsheet.py"
 
 TARGET_SYMBOLS = ["JBBL", "MNBBL", "AKPL", "UPPER", "API"]
-TRADING_WEEKDAYS = {6, 0, 1, 2, 3}  # Sun=6, Mon=0, Tue=1, Wed=2, Thu=3
+
+# Calendar resolution is transition-aware; see nepse_trading_calendar.
+sys.path.insert(0, str(BASE))
+from nepse_trading_calendar import is_trading_weekday  # noqa: E402
 
 
 def collect_outcome_dates():
@@ -63,7 +66,7 @@ def expand_with_lookback(outcome_dates, lookback_calendar_days=25):
             all_dates[sym].add(date_str)
             for offset in range(1, lookback_calendar_days + 1):
                 prior = dt - timedelta(days=offset)
-                if prior.weekday() in TRADING_WEEKDAYS:
+                if is_trading_weekday(prior.date()):
                     all_dates[sym].add(prior.strftime("%Y-%m-%d"))
 
     return all_dates

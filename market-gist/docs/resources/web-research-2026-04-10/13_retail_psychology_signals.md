@@ -8,7 +8,7 @@ WebSearch across NepJOL, Edmans/Garcia/Norli sports paper, Heyes/Neidell/Saberia
 
 ## TL;DR
 
-Mainstream Nepal-specific research on these angles is extremely thin. The strongest finding is the **Sun/Thu day-of-week effect** which is published and replicated. The most novel candidates are: **Bikram Sambat turn-of-month effect** (cheap to test, untested because everyone uses Gregorian dates), **monsoon flood × hydro watershed event study** (cleanest fundamental signal), **CDSC demat account growth as contrarian sentiment**, and **Mero Share / TMS outages as a confound control variable**. The agent flagged severe **confound clustering in Dec-Feb** (air pollution + load shedding + wedding + cricket NPL + dividend credits all overlap).
+Mainstream Nepal-specific research on these angles is extremely thin. The most-studied Nepal-specific anomaly is the **day-of-week effect**, but the literature is mixed rather than cleanly replicated. The most novel candidates are: **Bikram Sambat turn-of-month effect** (cheap to test, untested because everyone uses Gregorian dates), **monsoon flood × hydro watershed event study** (cleanest fundamental signal), **CDSC demat account growth as contrarian sentiment**, and **Mero Share / TMS outages as a confound control variable**. The agent flagged severe **confound clustering in Dec-Feb** (air pollution + load shedding + wedding + cricket NPL + dividend credits all overlap).
 
 ---
 
@@ -51,11 +51,11 @@ Mainstream Nepal-specific research on these angles is extremely thin. The strong
 ### 3. Bikram Sambat Turn-of-Month Effect
 **Documented?** **No.** Published research has tested turn-of-month using Gregorian dates and found it weak.
 
-**Mechanism:** Nepal's largest single employer is the government. Government employees get paid on **Nepali month start** (Baisakh 1, Jeth 1, etc.) — NOT January 1. **Nobody has tested turn-of-month using Bikram Sambat dates.**
+**Mechanism:** A Nepal-specific hypothesis is that some household or payroll cash cycles may align with **Bikram Sambat month boundaries**, creating a BS-boundary effect that Gregorian studies would miss. The often-repeated civil-service payday story is a candidate mechanism, but it is **not yet verified from official public sources**. **Nobody has tested turn-of-month using Bikram Sambat dates.**
 
 **Measurability:** Trivial. Day-of-Nepali-month dummies on existing data. 20 lines of code.
 
-**Plausibility:** Medium-high. Could be a genuinely novel finding because prior researchers used the wrong calendar.
+**Plausibility:** Medium. Genuinely novel and cheap to test, but the mechanism is thinner than it first appears. Best framed as a BS-boundary turnover hypothesis until payroll timing is verified.
 
 ### 4. CDSC Demat Account Growth as Contrarian Sentiment
 **Documented?** No academic study, but CDSC publishes monthly/quarterly data.
@@ -77,19 +77,19 @@ Mainstream Nepal-specific research on these angles is extremely thin. The strong
 
 ## Tier 2 — Already Validated, Replicate and Formalize
 
-### 5. Sun/Thu Day-of-Week Effect — PUBLISHED
-**Most empirically grounded signal in this wave.** Multiple independent sources:
-- KC and Joshi (2005): Thursday significantly *lower*
-- Pant (2010): Friday (pre-change) significantly higher
-- Maharjan (2013): Thursday significantly *higher*
-- Recent NEPJOL studies: Wednesday and Thursday highest; Sunday negative returns and high volatility
-- NRB-published study: day-of-week anomaly persistent
+### 5. Day-of-Week Effect — Most-Studied, Not Yet Settled
+**Best read as a mixed literature cluster, not a validated signal.**
+- KC & Joshi (2005): Thursday negative in the Sun-Thu regime
+- Pant (2010): Friday stronger, but the paper is not locatable online and should be treated as secondary-source evidence
+- Maharjan (2013): Thursday positive and Tuesday weaker, but this is also secondary-source evidence
+- Madai, Sharma & Dangol (2026): Sunday/Monday weak, Wednesday strongest
+- Shrestha & Kayastha (2024): no meaningful weekday effect through VaR/ES risk measures
 
-**Synthesis:** **Sunday behaves like "Monday blues" in US markets** — more negative, more volatile (weekend news accumulates with no trading outlet). Thursday (Friday-equivalent) drifts higher.
+**Synthesis:** The weekday literature points to a real possibility of schedule-linked return asymmetry in NEPSE, but the sign and strongest day are not stable across papers. Thursday is negative in KC & Joshi (2005), positive in Maharjan (2013, secondary-source only), Wednesday is strongest in Madai et al. (2026), and Shrestha & Kayastha (2024) find no meaningful weekday effect through VaR/ES. The right next step is replication on our own data, not stronger prose.
 
-**Schedule complication:** Nepal has switched between Sun-Thu, Sun-Fri, Mon-Fri at different times. **Anyone analyzing day-of-week must adjust for schedule-change regime breaks.**
+**Schedule complication:** Nepal has switched between Sun-Thu, brief Sun-Fri, and Mon-Fri regimes. Any analysis must treat these as separate regimes.
 
-**Status:** Validated. Trivially testable in our data.
+**Status:** Worth replicating as a calibration / regime-characterization exercise. Not validated enough for a canonical learning or trading rule.
 
 ### 6. Dashain/Tihar Pre-Holiday Drift — PRACTITIONER-DOCUMENTED
 - Nepalytix and ShareSansar both report ~+3.5% pre-Dashain rally, ~-2.5% post-Dashain decline

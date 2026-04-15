@@ -39,14 +39,14 @@ After completing the first research bundle (files 01-06), the user asked: "go to
 
 **Status:** Documentation gap to fix. Pending.
 
-### Finding 3: The Bikram Sambat Turn-of-Month Effect
-**A novel angle nobody has tested because everyone uses the wrong calendar.**
+### Finding 3: The Bikram Sambat Month-Boundary Hypothesis
+**A novel angle nobody has tested because everyone uses the Gregorian calendar.**
 
-Published NEPSE research has tested "turn-of-month effect" using Gregorian dates and found it weak/absent. But Nepal's largest single employer is the government, and government employees get paid on the **Nepali month start** (Baisakh 1, Jeth 1, etc.) — NOT January 1.
+Published NEPSE research has tested "turn-of-month effect" using Gregorian dates and found it weak/absent. A Nepal-specific alternative is that some household or payroll cash cycles may align with **Bikram Sambat month boundaries**, which Gregorian month dummies would miss.
 
-**Nobody has tested turn-of-month using Bikram Sambat dates.** This is a published-research blind spot we can exploit cheaply with data we already have. Pure calendar lookup, no scraping required.
+**Nobody has tested turn-of-month using Bikram Sambat dates.** That remains a real research blind spot. But the specific civil-service payday mechanism is still unverified, so the defensible first version is a **cheap exploratory BS-boundary turnover test**, not a confirmed government-payday effect.
 
-**Status:** Bookmark only. Cheapest novel test in the entire backlog.
+**Status:** Bookmark only. Cheap novel candidate, but mechanism still needs local confirmation.
 
 ## The Other Substantial Findings
 
@@ -56,7 +56,7 @@ Published NEPSE research has tested "turn-of-month effect" using Gregorian dates
 - **Nepali New Year (Baisakh 1) rally: rejected.** Pravaha shows April is one of the LOWEST months. There is no Baisakh rally.
 - **August "uncollected dividend" cluster: solved.** Companies Act Section 182 requires unclaimed-dividend notices 5 years after declaration. The August cluster is the **shadow of the AGM cluster from 5 years prior.** Our filtering of these as noise was correct.
 - **FD maturity rotation: not measurable.** Banks don't publish FD issuance by tenor at usable frequency. Skip.
-- **Civil service payday effect: untested but cheap.** Day-of-Nepali-month effect is testable in our data with 20 lines of code.
+- **BS month-boundary turnover effect: untested but cheap.** A Nepal-calendar test is easy to run, but the civil-service payday mechanism is still unverified and should not be stated as fact.
 
 ### From Thread 2 (political shocks catalog)
 A complete catalog of NEPSE shocks since 2015 emerged. The most important patterns:
@@ -69,7 +69,7 @@ A complete catalog of NEPSE shocks since 2015 emerged. The most important patter
 - **Corporate corruption scandals matter ONLY when they touch listed companies.** Bhutanese refugee scam: no NEPSE impact. Lalita Niwas: no NEPSE impact. Deepak Bhatta / Shanker Group: direct crash because Rs 3.73B was diverted from 5 listed companies including Himalayan Reinsurance.
 
 ### From Thread 3 (retail psychology signals)
-- **Sun/Thu day-of-week effect is the most empirically grounded signal in this whole wave.** Multiple independent studies (KC & Joshi, Investopaper, ShareSansar) all confirm Sunday weak (-0.029% to -0.12%), Wednesday-Thursday strong. ANOVA significant. **Already validated in published research.** Schedule changes complicate testing — Nepal has switched between Sun-Thu, Sun-Fri, Mon-Fri at different times.
+- **Day-of-week effect is the most-studied NEPSE calendar anomaly, not the most-validated one.** KC & Joshi (2005) found Thursday negative in the Sun-Thu regime; Madai et al. (2026) found Sunday/Monday weak and Wednesday strongest; Shrestha & Kayastha (2024) found no meaningful weekday difference through VaR/ES risk measures. Practitioner tallies are useful summaries, not independent academic confirmation. Status: inconsistent across papers, worth replicating, not canonically validated.
 - **Mero Share / TMS app outages are real and recurring.** March 2026 TMS-wide login failure documented. Nov 2023 NEPSE power outage delayed open. Multiple IPO concurrency failures. **Treat as a confound control variable, not a signal.**
 - **Kathmandu PM2.5 → trading psychology** has strong global priors (Heyes/Neidell/Saberian on Manhattan; 47-city study) but Nepal-specific test is unpublished. Confound clustering in Dec-Feb is severe.
 - **Cricket attention drain has strong India analog.** Edmans/Garcia/Norli paper documents -49 bps next-day return after World Cup losses. India cricket → 36-48% volume drops on match days. Nepal cricket impact untested but plausible.
@@ -85,7 +85,7 @@ A complete catalog of NEPSE shocks since 2015 emerged. The most important patter
 - **Right share gap deviates from textbook theory.** TU paper: "Findings are not consistent with the theory of rights offering." Rights issues at face value (Rs 100) create asymmetric payoff. Pre-announcement run-up + post-ex-rights underperformance documented anecdotally.
 - **Promoter unlock calendar exists publicly.** `nepsestock.com/upcoming-lock-in-unlock-in-nepal-stock-market` publishes upcoming unlocks. This is the cleanest "supply shock calendar" available — and we know lock-in expiry experiment 02 was inconclusive at N=27. This calendar lets us collect more events going forward.
 - **Reliance Spinning Mills "lost IPO" case is a structural risk template.** SEBON approved a prospectus with undisclosed electricity arrears. NEPSE caught it after allotment. Rs 1.74 billion locked for 30+ days. Listing eventually happened with an opening band of Rs 100-300 vs issue price of Rs 820.80 — a brutal ~60% regulatory haircut. **Pattern: book-building IPO → regulatory delay → opening-band haircut.**
-- **Day-of-week effect is the only published high-quality empirical microstructure finding for NEPSE.** Everything else (intraday, bonus drift, right drift, IPO listing day, dividend-credit reinvestment) is folk knowledge waiting for a data team. **We are positioned to be that data team.**
+- **Day-of-week effect is the most-studied published calendar/microstructure-like finding for NEPSE, but the literature is mixed.** Everything else (intraday, bonus drift, right drift, IPO listing day, dividend-credit reinvestment) is still mostly folk knowledge waiting for a data team. **We are positioned to be that data team.**
 
 ## Cross-Cutting Meta-Observations
 

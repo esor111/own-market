@@ -38,7 +38,7 @@ Be honest. Don't oversell.
 
 | What | Status | Honest assessment |
 |---|---|---|
-| Broker persistence shadow (w7 seller) | Running daily, 14/30 cases resolved | Most validated thing we have. 8 of 9 negative on small sample. Needs more cases. |
+| Broker persistence shadow (w7 seller) | Running daily, 14/37 cases resolved | 8 of 9 CAUTION cases negative, but clustered: 7/8 wins from 2 consecutive Aug 2025 days with overlapping forward windows. Effective independent episodes ~2-3, not 9 (audit 2026-04-12, Romeo-verified). Evidence is preliminary. The 23 pending forward cases from Mar-Apr 2026 are the real test. |
 | Dividend-family bank annotation | Live in shadow report (annotation only) | 71% bank hit rate, p=0.004, validated. Doesn't change verdicts yet. |
 | Hydro Nov→Jan (Strategy C) | Parked, awaiting forward window | 71% historical win rate, +12% mean, has a credible mechanism (Companies Act AGM deadline → dividend cycle), one independent corroboration (Investopaper 79% Jan win rate over 18 years). Still needs forward validation. |
 | Bank Aug→Jan avoid signal | Parked, awaiting forward window | 1 winning trade out of 31 historically. Strongest single pattern in the lab. Untested forward. |

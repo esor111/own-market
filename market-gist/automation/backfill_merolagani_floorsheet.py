@@ -23,10 +23,10 @@ from artifact_io import save_json_atomic
 from broker_flow_market_calendar import classify_empty_day_reason, get_market_day_context
 from broker_flow_ledger_utils import BROKER_LEDGER_ROOT, build_broker_flow_ledger, build_ledger_output_path, write_json
 from browser_edge_features import build_broker_edge_summary
+from nepse_trading_calendar import is_trading_weekday
 
 
 FLOORSHEET_URL = "https://merolagani.com/Floorsheet.aspx"
-TRADING_WEEKDAYS = {6, 0, 1, 2, 3}  # Sunday-Thursday
 TABLE_SELECTOR = "table.table.table-bordered.table-striped.table-hover.sortable"
 PAGER_SELECTOR = "#ctl00_ContentPlaceHolder1_PagerControl1_litRecords"
 SEARCH_BUTTON_SELECTOR = "#ctl00_ContentPlaceHolder1_lbtnSearchFloorsheet"
@@ -58,7 +58,7 @@ def to_merolagani_date(value: date) -> str:
 def iter_trading_dates(start_date: date, end_date: date) -> Iterable[date]:
     current = start_date
     while current <= end_date:
-        if current.weekday() in TRADING_WEEKDAYS:
+        if is_trading_weekday(current):
             yield current
         current += timedelta(days=1)
 

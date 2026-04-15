@@ -60,9 +60,9 @@ After completing experiments 01-04 and the L-011 meta-learning ("mechanical sign
 - **Sept 2025 Gen Z crash is missing from our event tables.** Largest single shock in our entire data window: NEPSE -6.00% (-160.33 pts), Rs 268 billion wiped in minutes, market closed 2 weeks. Should be added to `proposal_experiment_03_patch.md`.
 - **April 2026 events need enrichment.** Our docs say "finance minister speech" generically. Real chain: Balen Shah PM → Wagle FM → Deepak Bhatta arrest → Sulabh Agrawal/Shanker Group → Rs 3.73B from 5 listed companies → Wagle broker meeting recovery → Deuba arrest warrants.
 - **Ashad insurance tax-rush hypothesis** is the highest-novelty new candidate. Mechanism anchored in tax law. Directional-opposite to festival literature. Bookmark.
-- **Bikram Sambat turn-of-month effect** is the cheapest novel test. Published research used Gregorian dates. Cheap to test on existing data. Bookmark.
+- **Bikram Sambat month-boundary effect** is a cheap novel candidate. Published research used Gregorian dates, but the specific civil-service payday mechanism is still unverified. Treat as an exploratory BS-boundary turnover test, not an established salary-timing effect.
 - **Monsoon flood × hydro watershed event study** is the cleanest fundamental signal in either wave. Difference-in-differences design isolates the effect. Bookmark.
-- **Day-of-week effect (Sun weak, Wed-Thu strong)** is the only published high-quality NEPSE microstructure finding. Trivially testable in our data.
+- **Day-of-week effect** is the most-studied NEPSE calendar anomaly, but published findings are inconsistent across papers and all historical work is from older trading-week regimes. Treat as a replication / calibration lane, not a validated signal.
 - **NEPSE turnover collapse paradox** (turnover -69% YoY in FY 2025/26): bookmarked. Building it now violates L-011.
 
 ### From the deep single-question research (file 15)

@@ -16,9 +16,7 @@ from datetime import datetime
 
 from config import VALIDATION_DIR
 from data_sources.sharesansar_csv_source import SharesansarCsvTruthSource
-
-
-NEPAL_TRADING_WEEKDAYS = {6, 0, 1, 2, 3}  # Sunday-Thursday
+from nepse_trading_calendar import is_trading_weekday
 
 
 def save_json(path, payload):
@@ -59,7 +57,7 @@ def _median(values):
 
 
 def _date_in_scope(business_date, year):
-    return business_date.year == year and business_date.weekday() in NEPAL_TRADING_WEEKDAYS
+    return business_date.year == year and is_trading_weekday(business_date)
 
 
 def _market_day_summary(rows):

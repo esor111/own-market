@@ -168,13 +168,13 @@ These are the side projects that would most directly extend what already works.
 
 #### Key citations
 - Linnainmaa & Saar (2012) "Lack of Anonymity and the Inference from Order Flow" — methodology anchor
-- Choi (2013) on Shanghai institutional flow — emerging-market analog
+- Choi, Jin & Yan (journal-published 2025, circulated earlier) on Shanghai institutional flow — emerging-market analog (10.8% is raw return spread, not risk-adjusted alpha)
 - Barber, Lee, Liu, Odean (2014) Taiwan day-trader skill — statistical power template
-- BJZZ (2021) and Barber et al. (2024) revisit — decay precedent
+- BJZZ (2021) and Ardia, Aymard & Cenesizoglu (2025) revisit — decay precedent (BJZZ predictive power dropped 34%; "completely disappears" for large-cap post-2016). *(Attribution corrected 2026-04-12: previously said "Barber et al. 2024" which is a different paper about BJZZ algorithm signing errors.)*
 - Full deep dive: `market-gist/docs/resources/web-research-2026-04-10/15_broker_reputation_deep_dive.md`
 
 #### Side warning that affects existing work
-The published literature has hit rates of **52-57% for broker-flow signals**, NOT 65%+. **If our existing 7-day persistence signal claims a hit rate above 65%, that's outside the published range and warrants a lookahead-bias check.** Add this to the eventual persistence batch-score audit.
+Published broker-flow papers (BJZZ, Barber-Lee-Liu-Odean, Choi-Jin-Yan) report modest return spreads (~10 bps/week for BJZZ), not direct directional hit-rate benchmarks. **The lab's implied directional accuracy estimate from these return spreads is ~50-52%, but this is our inference, not a published number.** If our existing 7-day persistence signal claims a hit rate well above this range, that warrants a lookahead-bias check. Add this to the eventual persistence batch-score audit. *(Wording tightened 2026-04-12 per Romeo review after Benvolio traced the original papers.)*
 
 ### A1. Patch Experiment 03 with 3 new NRB events
 - **What:** Add 3 truly new NRB event dates from `proposal_experiment_03_patch.md` to `policy_events.csv` and re-run experiment 03
@@ -203,6 +203,14 @@ The published literature has hit rates of **52-57% for broker-flow signals**, NO
 - **When:** **October 2026** (one month before Strategy C buy window opens)
 - **Effort:** 4-6 hours
 - **Watch out for:** Premature now. Build it in October, not before.
+
+### A5. Confirmed-Damage Hydropower Event Study
+- **What:** Build a symbol registry and flood-damage event table for listed hydropower names, then test whether specifically damaged hydros underperform undamaged hydro peers after the first credible named damage report.
+- **Why:** The UPPER Sep 2024 sanity check kept this lane alive, but narrowed the claim. The right frame is company-level damage confirmation, not generic monsoon or basin-only exposure.
+- **When:** Research scaffolding is fine now; full event-table scoring should wait until persistence batch-scoring is no longer the only live gate.
+- **Effort:** Half day for structure, 1-2 days for event-table build, half day for first scoring pass.
+- **Watch out for:** Use the **first named public damage report** as the anchor date, not the rainfall date. Test multiple windows (`[0,+5]`, `[0,+10]`, `[0,+20]`, slower drift). Market-wide disaster panic may swamp short-window effects.
+- **Workspace:** `experiments/06-hydro-flood-damage/`
 
 ## Tier B — Infrastructure That Makes Future Work Easier
 
