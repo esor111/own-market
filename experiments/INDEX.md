@@ -16,4 +16,6 @@
 - `MANIFESTO.md` — what the lab is betting on and what discipline it refuses to abandon
 - `ORCHESTRATOR_DOCTRINE.md` — the AI leverage / researcher mindset layer
 - `PARALLEL_EXPLORATION_SERIAL_PROMOTION.md` — the operating law for running many side quests without promoting noise
+- `SANDBOX_PROTOCOL.md` — the three-layer architecture and contract every Layer 3 experiment must follow
+- `_CONTRACT_TEMPLATE.md` — copy this when starting a new experiment folder
 - `SIDE_QUEST_MAP.md` — the current exploration dashboard: now, next, later, and deliberately parked

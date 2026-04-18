@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
   "description": "Symbols scraped daily by run_daily_scrape.py. Sectors group by NEPSE classification. Tiers control what downstream processing applies.",
-  "updated": "2026-04-12",
+  "updated": "2026-04-13",
   "sectors": {
     "commercial_banks": ["NABIL", "EBL", "SANIMA", "NBB", "NICA", "PCBL"],
-    "hydropower": ["AKPL", "UPPER", "API", "BHCL", "RADHI", "AHPC"],
+    "hydropower": ["AKPL", "UPPER", "API", "BHCL", "RADHI", "AHPC", "RHPL"],
     "development_banks": ["JBBL", "MNBBL", "SAPDBL", "EDBL"],
     "life_insurance": ["CLI", "NLIC", "HLI"],
     "non_life_insurance": ["LGIL", "NIL"],
@@ -24,11 +24,16 @@
       "description": "In shadow scope but excluded from signals (insufficient data)",
       "symbols": ["JBBL", "MNBBL"]
     },
+    "hydro_intelligence_pilot": {
+      "description": "Symbols feeding the experiments/hydro-intelligence/ pilot. Scrape only; no shadow report integration.",
+      "symbols": ["UPPER", "RHPL"]
+    },
     "data_collection_only": {
       "description": "Scrape and ledger only. No shadow report. Raw material for future expansion.",
       "symbols": [
         "NBB", "NICA", "PCBL",
         "BHCL", "RADHI", "AHPC",
+        "RHPL",
         "SAPDBL", "EDBL",
         "CLI", "NLIC", "HLI",
         "LGIL", "NIL",

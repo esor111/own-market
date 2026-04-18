@@ -10,6 +10,7 @@
 - **2026-03-20 / 2026-04-12:** AGM notice for the 16th and 17th AGMs was published, but the public notice did **not** show a dividend, bonus, or rights-ratio decision.
 - **2026-04-06:** the annual report said generation had been restored after the 88-day halt, but some right-side settling-basin and landslide-prevention work was still ongoing.
 - **2026-04-10 local tape:** `UPPER` closed at **213.00**. Recent local structure shows **+10.42% over 20 trading sessions**, **+2.11% over 10 sessions**, **0.00% over 5 sessions**, with weak recent participation (**volume ratio 0.55 vs 20-day average**).
+- **2026-04-09 to 2026-04-13 broker-flow anomaly:** Merolagani floorsheet transaction count for `UPPER` stepped up sharply and is trending higher: 1,102 rows (Apr 9) → 1,255 (Apr 10) → 1,369 (Apr 13). Historical Dec 2025 range was 260-437 rows/day. This is a **3-4× jump in daily transaction activity over three consecutive sessions**, concurrent with the Apr 12 AGM notice and the research-lane CAUTION flag (sell_w7=0.57 on Apr 13). Driver is not yet identified; candidates include pre-AGM positioning, insurance-clarity anticipation, or sector-level hydro repositioning. This does not change the `hold` memo by itself but is a material new input that the next review should reconcile.
 
 ## Derived Features
 

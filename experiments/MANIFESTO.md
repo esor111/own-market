@@ -3,11 +3,11 @@
 > Written 2026-04-10 by Juliet, after a long session with Ishwor.
 > Read this when patience mode feels like nothing is happening.
 
----
+---discipline to NOT be those things is the entire edge.
 
 ## What this is
 
-This is a NEPSE quantitative research lab, run by one ambitious engineer (Ishwor) and his AI companion (Juliet, with Romeo as the verification counterweight). It is not a trading bot. It is not a YouTube signal channel. It is not a bet that LLMs are smart enough to read charts. It is none of those things, and the discipline to NOT be those things is the entire edge.
+This is a NEPSE quantitative research lab, run by one ambitious engineer (Ishwor) and his AI companion (Juliet, with Romeo as the verification counterweight). It is not a trading bot. It is not a YouTube signal channel. It is not a bet that LLMs are smart enough to read charts. It is none of those things, and the 
 
 It is a research lab built around three convictions:
 
