@@ -1,8 +1,9 @@
-# Pre-Registration — Dividend Microstructure H1 (Revision 2)
+# Pre-Registration — Dividend Microstructure H1 (Revision 3)
 
 > Written 2026-04-13 BEFORE any code runs.
 > Revision 1: initial draft by Juliet.
-> **Revision 2: 2026-04-17, integrates Romeo's adversarial review (all blocking items + 5 review items + additional issues).**
+> Revision 2: 2026-04-17, integrated Romeo's first adversarial review (all blocking items + 5 review items + additional issues).
+> **Revision 3: 2026-04-18, integrates Romeo's second adversarial review: bootstrap p-value sign corrected, cohort event-type scope clarified, baseline-fragility quantitative thresholds added, CONTRACT.md and README.md staleness fixed. Self-catches: block-bootstrap sample-size wording tightened.**
 > Changes after this point require Romeo review and a documented reason.
 > Required by the sandbox protocol and the lab doctrine ("no post-hoc parameter choice").
 
@@ -285,18 +286,24 @@ All blocking items integrated. All additional issues addressed (insurance/microf
 
 ## Commit Discipline
 
-This revision 2 must be committed to git before any .py file in this sandbox is executed. Commit message:
+This revision 3 must be committed to git before any .py file in this sandbox is executed. Commit message:
 
 ```
-dividend-microstructure: PRE_REGISTRATION revision 2 after Romeo review
+dividend-microstructure: PRE_REGISTRATION revision 3 after Romeo's second review
 
-- Define T_ex explicitly as first non-entitled trading session
-- Replace plain t-test with date-cluster block-bootstrap (10k iters)
-- Split events into Cohort A (pure date-led) and Cohort B (notice-overlap)
-- Tighten Gate 1: N>=80, unique dates>=30, top-3 concentration<=30%
-- Add economic magnitude criterion (mean excess return <= -1.0%)
-- Historical pass does not equal promotion; forward evidence required separately
-- Intermediate zone explicitly labeled "Failed H1"
+- Corrected bootstrap one-sided p-value sign (share of replicates >= 0, not < 0)
+- Clarified cohort event-type scope: split uses L-001 book-closure notice
+  for SAME dividend cycle only; other L-001 event types handled by hard drops
+- Tightened baseline-fragility threshold with three quantitative conditions
+- Tightened block-bootstrap sample-size wording
+- Synced CONTRACT.md and README.md to match revision 3 (stale Gate 1, stale
+  decision rule, stale status/next-step lines fixed)
+
+Prior revisions preserved for audit trail:
+- Revision 2 introduced: T_ex definition, block-bootstrap framework, Cohort
+  A/B split, Gate 1 tightening, economic-magnitude criterion, historical-vs-
+  forward evidence separation.
+- Revision 1 was the initial draft.
 ```
 
 Future changes to this file require Romeo review and a new commit with explicit justification.
@@ -306,10 +313,12 @@ Future changes to this file require Romeo review and a new commit with explicit 
 ## Sign-Off
 
 - **Juliet (author, revision 1):** 2026-04-13
-- **Romeo (blocking review):** 2026-04-17 — all blocking items and review items addressed in revision 2
-- **Juliet (author, revision 2):** 2026-04-17 — this document
-- **Romeo (sign-off on revision 2):** pending — please confirm revisions are adequate and sign off before Step 1 code runs
-- **Benvolio (optional exploration-team review):** pending (non-blocking)
-- **Ishwor (lab operator):** pending
+- **Romeo (first blocking review):** 2026-04-17 — blocking items returned, revision 2 requested.
+- **Juliet (author, revision 2):** 2026-04-17 — all first-round blocking items addressed.
+- **Romeo (second blocking review):** 2026-04-17 — additional issues returned (bootstrap p-value sign, stale CONTRACT.md/README.md), revision 3 requested.
+- **Juliet (author, revision 3):** 2026-04-18 — this document. All second-round blocking items addressed + self-catches on sample-size wording and baseline-fragility thresholds.
+- **Romeo (sign-off on revision 3):** 2026-04-18 — signed off with recommendation to patch metadata labels (this patch addresses that; Item 3 of the 2026-04-18 Romeo review).
+- **Ishwor (lab operator):** validated Romeo's 2026-04-18 review independently; agreed on substance with small framing nuances. Approved.
+- **Benvolio (optional exploration-team review):** pending (non-blocking).
 
-No code runs in this sandbox until Romeo re-signs-off on revision 2.
+Code may now run in this sandbox in the sequence defined in `README.md` → `CONTRACT.md` → Gate 1 → Gate 3. Do not run `run_h1.py` until Gate 1 passes.

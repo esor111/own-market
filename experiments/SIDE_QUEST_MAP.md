@@ -56,6 +56,7 @@ These are real projects, but they either depend on future timing, more evidence,
 | Strategy C forward watchlist | Track AGM/dividend/policy conditions ahead of the Nov 2026 hydro window. | `BACKLOG.md` A4 | validation | Juliet |
 | Personal NEPSE data API | Wrap the data assets in a local interface so future work reads one source of truth. | `BACKLOG.md` B2 | exploration | Juliet |
 | Hydropower symbol intelligence system | Shared sector memory plus per-symbol dossiers and forced decision memos for a small hydro basket. | `HYDRO_SYMBOL_INTELLIGENCE_ARCHITECTURE.md` | exploration | joint |
+| Live market capture concept | Future execution-awareness layer using structured intraday depth/tape capture; Phase 0 source research only until current gates close. | `_parked/LIVE_MARKET_CAPTURE_CONCEPT.md` | exploration | Benvolio |
 
 ---
 

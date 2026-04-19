@@ -7,16 +7,25 @@ disk.
 
 Primary use:
     python score_persistence_shadow_reports.py
+
+Data integrity pre-check (added 2026-04-18 after the git-merge-conflict corruption
+incident): before any price data is loaded, the scorer runs
+price_data_integrity.check_data_dir() and refuses to proceed if any CSV is
+corrupted (merge conflict markers, empty files, bad headers). This prevents
+silent mis-scoring like the 16-file issue discovered on 2026-04-18.
 """
 from __future__ import annotations
 
 import csv
 import json
+import sys
 from datetime import date, datetime
 from pathlib import Path
 from typing import Iterable
 
 import pandas as pd
+
+from price_data_integrity import IntegrityError, check_data_dir
 
 
 BASE = Path(__file__).resolve().parent
@@ -29,6 +38,14 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def main() -> None:
+    # Integrity guard: fail loudly if price CSVs are corrupt rather than
+    # silently producing mis-scored outcomes.
+    try:
+        check_data_dir(raise_on_corrupt=True)
+    except IntegrityError as exc:
+        print(f"FAILED: price data integrity check: {exc}", file=sys.stderr)
+        raise SystemExit(1)
+
     detail_rows = build_scored_rows()
     if not detail_rows:
         raise RuntimeError("No shadow report rows found to score.")

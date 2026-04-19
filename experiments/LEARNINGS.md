@@ -620,6 +620,45 @@ This does not mean the signal is broken. It means the current evidence is insuff
 - Scorer code: `market-gist/automation/score_persistence_shadow_reports.py`
 - Romeo review: appended to `market-gist/automation/SCRAPE_EXPANSION_2026-04-12.md`
 
+### Addendum (2026-04-18): Clean-Data Correction — Hit Rate Dropped From 88.9% To 72.7%
+
+After fixing 16 price CSV files corrupted by unresolved git merge conflict markers (see L-015 for the data integrity incident), the scorer correctly resolved 2 additional `persistence_caution_only` cases:
+
+- **2026-03-31 NABIL:** 10-day forward return = +0.17%, not negative → **success_10d = False** (CAUTION failed to predict a drop)
+- **2026-04-01 NABIL:** 10-day forward return = +1.53%, not negative → **success_10d = False**
+
+**The headline number moved:**
+
+| Metric | Before clean-data fix | After clean-data fix |
+|---|---|---|
+| Resolved `persistence_caution_only` | 9 | **11** |
+| Hit rate (pure persistence CAUTION) | 88.9% | **72.7%** |
+| Hit rate (all CAUTION, including dividend annotation group) | 88.9% | **66.7% (8/12)** |
+| Unique report dates (all cases) | 3 | 5 |
+| Unique WIN dates | 3 | 3 (new cases both losses) |
+| Top-1 date share | 55.6% | 45.5% |
+
+**Honest framing (Romeo-verified 2026-04-18):**
+
+- The signal is **still directionally suggestive but not statistically significant**. One-sided binomial test on 8/11 vs 50% null gives p ≈ 0.11. This is NOT "still above chance" in any decision-grade sense. It is "directionally consistent with a real signal, too thin to conclude."
+- Effective independent episodes remain **3** because the two new cases are losses and the win-dates set did not grow.
+- Mar 31 and Apr 1 cases have heavily overlapping 10-day forward windows (14 of 15 trading days shared) — they are not fully independent either.
+- L-012's core claim (the 88.9% is clustered and preliminary) is **confirmed**, not revised. The new number is simply the clean-data version of the same preliminary result.
+
+**What this does NOT change:**
+
+- The frozen policy remains frozen.
+- The batch-score gate at N≥25 remains the next real decision point.
+- The lab's discipline around forward evidence is unchanged.
+
+**What this changes going forward:**
+
+- Report BOTH the pure-persistence rate (72.7%) and the all-CAUTION rate (66.7%) in any batch-score memo. Do not cherry-pick.
+- No headline claims containing the phrase "88.9%" or "still above chance." These framings are officially retired.
+- If further resolved cases move the hit rate below 60%, this experiment is on track for a `KILL` verdict at the batch-score gate. If above 65% with broad episode independence, it earns a `PROMOTE` review.
+
+**Promotion-to-L-014 deferred per Romeo:** this addendum captures the correction. A full L-014 entry waits for the N=25 batch-score gate to confirm whether the revised number is stable or continues to drift.
+
 ---
 
 ## L-013: Published Broker-Flow Benchmarks Were Misquoted; NEPSE Data Advantage Is Real But Modest (2026-04-12)
@@ -685,3 +724,151 @@ NEPSE has a structural data advantage: 100% trade identification with 100% corre
 ### Addendum (2026-04-12): Operating Doctrine
 
 Romeo wrote `experiments/PARALLEL_EXPLORATION_SERIAL_PROMOTION.md` — the operating law for how the lab uses AI parallelism without drifting into random experimentation. Core law: **search wide, promote narrow.** Three layers: exploration (parallel, cheap) → verification (adversarial) → validation (forward evidence, serial). The anti-randomness rules codify what L-012 and L-013 discovered: no fake benchmarks, no correlated rows as independent observations, no skipping the funnel from idea to promotion.
+
+---
+
+## L-015: Silent Data Corruption (Git Merge Conflict Markers) Can Hide For Months And Break The Evidence Base (2026-04-18)
+
+### What Happened
+
+On 2026-04-18, during a catch-up scrape for Apr 14-17, the scorer returned "insufficient_forward_bars_for_10d" for persistence cases from Mar 31 and Apr 1 NABIL — even though the price data window had closed. Investigation revealed 16 price CSVs in `sharesansar_datascrape/data/` contained unresolved git merge conflict markers (`<<<<<<< HEAD`, `=======`, `>>>>>>>`) on line 1. Affected dates: Mar 20, 22-26, 29-31, Apr 1-2, 5-9, 2026. Total: 16 files across the window where the persistence signal's forward outcomes live.
+
+The scraper had dutifully written clean CSVs months earlier. Some later git merge (branch sync, pull, rebase) introduced conflict markers that were never resolved. The CSVs remained on disk and were picked up by the scorer's glob. The CSV parser either failed or silently produced empty records. Either way, the dedupe logic saw these days as "no valid row change" and collapsed them.
+
+**Observable symptoms (before diagnosis):**
+
+- NABIL trading frequency looked artificially low (7 Apr CSVs with NABIL vs expected 10+)
+- All three active banks (NABIL, EBL, SANIMA) had *identical* trading-date patterns (impossibly uniform)
+- Persistence cases from Mar 31 onward refused to resolve their 10-day forward windows
+- Earlier diagnosis blamed "NABIL has been trading very infrequently" — wrong root cause.
+
+**Real cause:** the price data the scorer needed was on disk but corrupted at the bytes level. Neither the scorer nor the human reviewers noticed because the CSV parser failed gracefully to "no row" rather than erroring out.
+
+### What It Cost
+
+- 16 data points silently missing from the scorer's input for weeks or months.
+- The persistence signal scorecard showed 9 resolved cases when it should have shown 11.
+- The headline hit rate showed 88.9% when the clean-data number is 72.7%.
+- We almost raised a false alarm ("3.5 months of missing price data") because an unrelated check misread `ls | tail` alphabetical-vs-chronological ordering (Pattern 5 in `WORKING_DISCIPLINE.md`).
+- Time spent chasing the wrong diagnosis before identifying the merge-conflict root cause.
+
+### Why It Matters
+
+This is NOT an operational lesson. It directly changed the evidence base: the lab was making claims ("88.9%") about a signal using a corrupted subset of the data. Under the SANDBOX_PROTOCOL's discipline of "no silent changes to production state," this is a serious category of failure — worse than an overclaim in a review, because there was no visible signal that anything was wrong.
+
+### The Fix (Landed)
+
+Built `market-gist/automation/price_data_integrity.py`. Functionality:
+
+1. Scans all CSVs in the sharesansar data directory.
+2. Detects: git merge conflict markers, empty files, missing/wrong headers, header-only files.
+3. Exit 0 if clean, exit 1 if corrupt. CLI form works standalone.
+4. Library function `check_data_dir(raise_on_corrupt=True)` raises `IntegrityError`.
+
+**Wired into production:** `score_persistence_shadow_reports.py:main()` now calls `check_data_dir(raise_on_corrupt=True)` at the top. If corruption is present, the scorer fails loudly with a clear error message instead of silently producing mis-scored outputs.
+
+**Architectural note (Romeo 2026-04-18):** the utility lives in Layer 1 (`market-gist/automation/`) rather than `experiments/shared/` so Layer 1 code doesn't long-term depend on `experiments/shared/`. Scorer is the must-have location because people can run the scorer directly. The daily runner (`run_persistence_shadow_daily.py`) can optionally mirror the check for UX; not yet wired there as of 2026-04-18.
+
+### Prevention Rules
+
+1. **Any CSV-parsed data source needs an integrity pre-check before consumption.** Silent parse failures are the dangerous kind.
+2. **Git merge operations on data directories require human review before the merge commits.** Even on branches that touch code, incidentally modified data files can pick up conflict markers.
+3. **Periodic `grep -r "<<<<<<<" data_dir/` is a cheap prophylactic.** Should run as a sanity check before any batch-score decision fires.
+4. **Signals that look "too clean" (identical trading patterns across supposedly independent symbols) deserve investigation, not acceptance.** Pattern 6 of WORKING_DISCIPLINE is now updated.
+
+### Resources
+
+- Integrity utility: `market-gist/automation/price_data_integrity.py`
+- Wired into: `market-gist/automation/score_persistence_shadow_reports.py` (top of `main()`)
+- Incident reconstruction: `experiments/SESSION_LOG_2026-04-18.md` (once written)
+- Related learning: L-012 (the clustering finding that partially masked this — now corrected in L-012 addendum)
+- Self-discipline follow-through: `experiments/WORKING_DISCIPLINE.md` Pattern 5 (ls misread) and Pattern 6 (coverage questions)
+
+---
+
+## L-016: Reversal Specialist Closed At Gate 1 — Clean Sharp-Down Sample On 26-Symbol 2021-2026 Universe Was Too Small For H1 (2026-04-19)
+
+### What We Tested
+Whether NEPSE symbols mean-revert after sharp single-day price moves (≤ -5% for the primary direction). Pre-registration revision 4 locked: primary H1 sharp-down ≤ -5% daily return, window [T+1, T+5], success criteria mean excess return ≥ +1.0% AND hit rate ≥ 60% AND block-bootstrap CI excluding zero. Gate 1 required N ≥ 80 h1-eligible events, unique dates ≥ 30, top-3 date concentration ≤ 30%, ≥ 5 contributing symbols.
+
+### Data Used
+- 26 symbols across banks + hydros + allied sectors, 2021-2026 daily price archive
+- L-001 events.csv for corporate-action contamination filtering (read-only cross-experiment input)
+- Per-symbol trailing 120 prior trading observations for baseline adjustment (L-003 convention)
+
+### Result: Gate 1 FAIL On Primary Direction
+
+```
+Raw sharp-down symbol-day candidates:   333
+Filter flags (non-exclusive — one candidate can trip multiple):
+  Volume-threshold flag:                134  (thin-market artifact)
+  Near-price-limit / circuit flag:       64  (mechanical cap adjacent)
+  Layer B market-wide-shock flag:       178  (53.5% of raw candidates)
+  Layer A documented regime-date flag:    2
+  Corporate-action overlap flag:         16
+Passed all filters (include_in_primary): 68
+Forward-window + baseline gap drift:     2 + 50
+H1-eligible:                             66  ← below the 80 threshold
+```
+
+Note: filter flag counts sum to more than 333 because filters are not mutually exclusive. Layer B is the data-driven market-wide-shock detector (≥30% of active symbols sharp-moving the same direction that date). Layer A is the pre-registered list of hand-picked documented regime dates. The two layers answer different questions; they are not interchangeable.
+
+| Direction | N | Gate | Verdict |
+|---|---:|---:|---|
+| Sharp-down (primary H1) | **66** | ≥ 80 | **FAIL** |
+| Sharp-up (secondary H1b) | 258 | ≥ 80 | PASS (non-promotion per pre-reg) |
+
+Every other Gate 1 criterion passed comfortably for the primary direction: 62 unique dates (gate ≥ 30), top-3 concentration 9.1% (gate ≤ 30%), 17 contributing symbols (gate ≥ 5). The failure is purely sample size.
+
+### What This Tells Us About The Tested Slice Of NEPSE
+
+**The dominant filter is Layer B: 178 of 333 raw sharp-down symbol-day candidates (53.5%) were Layer-B market-wide-shock flagged**, not confirmed regime events. Layer B is a data-driven co-movement detector, not a hand-picked regime-date list. After applying all pre-registered filters, the pre-registered clean / idiosyncratic sharp-down rate in this 26-symbol 2021-2026 universe is roughly 13 events per year. That is not enough for a properly-powered reversion test with N ≥ 80.
+
+What this does and does not say:
+- **Says:** within ≤ -5% sharp-down candidates, market-wide-shock flags were common — roughly half of raw candidates co-moved with the broader tape that day
+- **Says:** circuit-breaker caps and thin-market artifacts remove another slice of raw candidates, leaving a small residual
+- **Does not say:** NEPSE daily volatility as a whole is dominated by regime-wide moves (we did not test all daily moves, only the ≤ -5% slice)
+- **Does not say:** NEPSE lacks reversion signal (we measured sample availability under our filters, not the underlying hypothesis)
+
+### What The Pre-Registration Discipline Caught
+
+Without the pre-registered N ≥ 80 gate, the raw "333 sharp-down days" number would have invited post-hoc rescues: soften the threshold to -4%, expand the symbol universe, merge directions, skip Layer B. All were explicitly forbidden by revision 4. The lane closed cleanly after one Gate 1 decision, in one session of code.
+
+This is the **second Tier 1 lane closed at Gate 1** (after dividend-microstructure on 2026-04-18, closed at 24/80 Cohort A events + 71% L-001 overlap). Both closures were informative: they characterized what NEPSE data can and cannot power.
+
+### What Is Preserved
+
+- Full `PRE_REGISTRATION.md` revision 4 (Romeo-approved) as methodology record
+- `data/trigger_events.csv` (1,098 rows across 26 symbols) — the detected event table with all filter flags
+- `data/gate1_decision.md` — verdict memo with full funnel
+- Gate-drift diagnostic (2.7% drift — small, confirms include_in_primary and h1_eligible align)
+- All code (`build_trigger_events.py`, `check_gate1.py`) at revision-4 fidelity
+
+If in the future (a) the symbol universe expands materially, (b) a NEW pre-registration revises the trigger definition via the same Romeo cycle (NOT a post-hoc relax), or (c) an alternative reversion horizon is tested, the infrastructure is here. A new Gate 1 would require a fresh pre-registration.
+
+### What Is Explicitly Not Done
+
+- H1 historical test did not run and will not run from revision 4
+- H1b sharp-up secondary is not run — pre-reg made it non-promotion-grade from the start, and Romeo authorized only Gate 1, not H1b
+- No threshold softening, no symbol expansion, no window-shopping
+
+### Cross-Experiment Implication
+
+Two successive Tier 1 candidates failed at Gate 1, for different reasons:
+- **dividend-microstructure** failed because independence collapsed into L-001 overlap (71% of Cohort B events had an L-001 book_closure_notice within ±10 trading days — the proposed T_ex signal and L-001 were structurally measuring the same corp-action cycle)
+- **reversal-specialist** failed because the pre-registered clean sharp-down sample on the 26-symbol 2021-2026 universe was too small (66 h1-eligible vs required 80)
+
+Honest lab state, combined with L-011 (mechanical signals beat LLM judgment) and L-012 addendum (persistence hit rate 72.7% preliminary):
+- **One forward-evidence lane still live** (persistence shadow, N=20, expected N=25 gate around Apr 27 - May 5)
+- **No additional historical-test lanes promoted**
+- **Gate 1 has now prevented two under-powered H1 runs before inference**
+
+Meta-observation (to be validated forward, not canonical yet): both failures were caught at the sample-power / independence gate, not at H1. This suggests future lanes should run sample-power and independence diagnostics earlier in scaffold — ideally before the full pre-registration round. It does NOT mean NEPSE lacks signals. It means attractive hypotheses on this universe often become under-powered after honest filters, and that fact is worth learning as early and cheaply as possible.
+
+### Resources
+- Experiment folder: `experiments/reversal-specialist/`
+- Pre-registration: `experiments/reversal-specialist/PRE_REGISTRATION.md` (revision 4, Romeo-approved 2026-04-19)
+- Event table: `experiments/reversal-specialist/data/trigger_events.csv`
+- Gate 1 decision memo: `experiments/reversal-specialist/data/gate1_decision.md`
+- Related closures: dividend-microstructure (closed 2026-04-18, see `experiments/dividend-microstructure/README.md`)
+- Working discipline: `experiments/WORKING_DISCIPLINE.md` Pattern 9 was added during this experiment's revision cycle

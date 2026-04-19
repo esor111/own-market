@@ -9,7 +9,9 @@
 - **2026-01-05 to 2026-03-19:** RHPL's own site continued publishing restoration and procurement notices, implying the rebuild was still active rather than completed.
 - **2026-01-14 / 2026-02-02:** RHPL completed its AGM cycle and later announced auditor appointment for FY 2082/83.
 - **FY 2081/82 annual report (posted 2026-01-05):** revenue from electricity was **Rs 1.148 billion**, but net loss was **Rs 429.5 million**, with heavy finance cost and depreciation.
-- **2026-04-10 local tape:** `RHPL` closed at **293.00**. Recent local structure shows **-4.93% over 20 trading sessions**, **-7.28% over 10**, **-3.93% over 5**, with very weak recent participation (**volume ratio 0.29 vs 20-day average**).
+- **2026-04-10 local tape (entered 2026-04-13):** `RHPL` closed at **293.00**. Recent local structure shows **-4.93% over 20 trading sessions**, **-7.28% over 10**, **-3.93% over 5**, with very weak recent participation (**volume ratio 0.29 vs 20-day average**).
+
+- **2026-04-13 to 2026-04-17 tape (entered 2026-04-18):** Close prices: Apr 13 = 295.00, Apr 15 = 298.00, Apr 16 = 292.70, Apr 17 = 292.50. Daily volumes: 49K → 27K → 29K → 27K. Net price change Apr 13 → Apr 17 = **-0.85%**. Volume over the period remained in the 27-49K range — approximately the same weak-participation level flagged on Apr 10. **The "incomplete recovery, weak tape" characterization from the Apr 13 memo is still the right read.** No new catalyst, no sign of capitulation, no sign of re-acceleration. Pattern is consistent with a stock quietly drifting sideways-to-down while the rest of the sector debates a direction. First broker-flow scrape ever on Apr 13 (227 rows); Apr 15-17 readings: 241, 204, 147 — low relative to UPPER/API/AHPC.
 
 ## Derived Features
 

@@ -7,9 +7,28 @@
 
 ## Status
 
-**Pre-code.** Research foundation documented (`RESEARCH_BRIEFING.md`). Pre-registration at **revision 3** (2026-04-17) after two Romeo adversarial passes. Awaiting final Romeo sign-off on revision 3. No code has been written. No returns computed. This state is deliberate.
+**Lane CLOSED (2026-04-18) — Gate 1 failed as the pre-registration designed it to.**
 
-Per the sandbox protocol: research before code, pre-registration before code, code before gate-check, gate-check before H1 test, H1 before promotion discussion. Historical pass before forward evidence. Forward evidence before canon integration.
+Timeline:
+1. 2026-04-13: sandbox scaffolded, pre-registration drafted.
+2. 2026-04-17: Romeo's first and second adversarial reviews → revision 2, revision 3.
+3. 2026-04-18: Romeo signed off revision 3. Ishwor validated Romeo independently.
+4. 2026-04-18: `build_event_table.py` produced 83 in-scope events (banks + hydros, cash_dividend + bonus_and_cash_dividend, after same-symbol overlap drops).
+5. 2026-04-18: `check_gate1.py` verdict = **FAIL**.
+
+Gate 1 failure details (see `data/gate1_decision.md`):
+- Cohort A (pure date-led) N = 24, required ≥ 80 → FAIL
+- Cohort A unique T_ex dates = 23, required ≥ 30 → FAIL
+- Cohort A top-3 date concentration = 16.7%, required ≤ 30% → PASS (date dispersion is good)
+- Overlap rate = **71.1%** (Cohort B events) — well above the 50% independence disclosure threshold
+
+**Research finding:** on NEPSE banks + hydros, 71% of cash-dividend book-close-dates have an L-001 `book_closure_notice` within ±10 trading days. The proposed T_ex signal and the existing L-001 notice signal are structurally measuring the same corporate-action cycle. The "independent" sample (Cohort A) has too few events (24) and too few unique dates (23) to run a properly-powered test.
+
+**What the pre-registration forbids:** relaxing Gate 1 thresholds, merging Cohort A + Cohort B, expanding the symbol universe, re-slicing by sector, or re-windowing to "rescue" the test. All are off the table.
+
+**What's preserved:** the research briefing, pre-registration, methodology, and data artifacts stay in the folder as a historical record. If in the future (a) more symbols are added to the scope or (b) a new data source provides book-close-dates for events not currently tagged, Gate 1 can be re-run at that time.
+
+The experiment did its job — it failed cheaply, with a clean verdict, after one session of code.
 
 ---
 
@@ -134,11 +153,8 @@ Delete this folder. Nothing else breaks. See `CONTRACT.md`.
 
 ## Next Step
 
-PRE_REGISTRATION revision 3 is written. Awaiting Romeo final sign-off. After sign-off:
+**None — lane closed.** See Status section above.
 
-1. Write `build_event_table.py` (Step 1, pulls L-001 corp action data + computes T_ex per event + applies hard drops).
-2. Write `check_gate1.py` (Gate 1 sample-adequacy decision).
-3. If Gate 1 passes: write `run_h1.py` (block-bootstrap H1 test on Cohort A + diagnostic windows).
-4. H1 decision point: pass / intermediate / fail per pre-registered criteria.
+The recommended pivot is to the **Reversal Specialist** Tier 1 signal, which is structurally guaranteed to be independent of L-001 and persistence (uses price variance ratios only — no corporate-action anchoring, no broker flow, no event calendar). That's the cheapest next Tier 1 candidate.
 
-Until Romeo signs off on revision 3, no code in this folder runs.
+`run_h1.py` and `run_diagnostic.py` were NOT written and will not be written.
