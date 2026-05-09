@@ -1,0 +1,10 @@
+[    4499ms] [LOG] 41 custom indicators loaded. @ https://nepsealpha.com/trading_view_stuff_v1/charting_library/bundles/library.ed30e653462ab0610aff.js:113735
+[    4799ms] [WARNING] SymbolInfo validation: field has_no_volume is deprecated, use visible_plots_set instead @ https://nepsealpha.com/trading_view_stuff_v1/charting_library/bundles/library.ed30e653462ab0610aff.js:23781
+[    4975ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://nepsealpha.com/trading_view_stuff_v1/charting_library/undefined/undefined/study_templates?client=undefined&user=undefined:0
+[    4976ms] [WARNING] 2026-04-21T16:13:35.424Z:Chart.SaveloadAdapter.Library:Study templates list response was not OK. Status: 404. Error: Study templates list response was not OK. Status: 404.
+    at Module.M (https://nepsealpha.com/trading_view_stuff_v1/charting_library/bundles/library.ed30e653462ab0610aff.js:4112:27) @ https://nepsealpha.com/trading_view_stuff_v1/charting_library/bundles/library.ed30e653462ab0610aff.js:26018
+[    4989ms] Error: Study templates list response was not OK. Status: 404.
+    at Module.M (https://nepsealpha.com/trading_view_stuff_v1/charting_library/bundles/library.ed30e653462ab0610aff.js:4112:27)
+[    4996ms] undefined
+[    8215ms] [LOG] Unable to get permission to notify. @ https://nepsealpha.com/js/39505.f1dc91413.js:1
+[  209435ms] [WARNING] SymbolInfo validation: field has_no_volume is deprecated, use visible_plots_set instead @ https://nepsealpha.com/trading_view_stuff_v1/charting_library/bundles/library.ed30e653462ab0610aff.js:23781

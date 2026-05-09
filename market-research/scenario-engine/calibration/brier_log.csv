@@ -1,0 +1,7 @@
+pred_id,question_slug,created_date,resolution_date,forecast_prob,outcome,brier_score,category,source_dossier,notes
+PRED-001,nepse-retest-2511-zone,2026-05-08,2026-12-31,0.65,null,null,market_structure,seventh-dossier,65% NEPSE closes ≤2620 before closes ≥2900
+PRED-002,second-arrest-fires-6m,2026-05-08,2026-11-08,0.70,null,null,enforcement,seventh-dossier,70% any of Chachan/Shah/Shubhi arrested by Nov 8
+PRED-003,nabil-595-610-90d,2026-05-08,2026-08-05,0.60,null,null,price_target,fifth-dossier,60% NABIL daily close ≥595 before Aug 5
+PRED-004,chachan-arrest-jun4,2026-05-08,2026-06-04,0.80,null,null,enforcement,third-verification,80% Chachan arrested or absconder declared by Jun 4
+PRED-005,nepse-recovery-gt24m,2026-05-08,2028-03-24,0.70,null,null,market_structure,seventh-dossier,70% NEPSE does NOT close ≥2960 before Mar 24 2028
+PRED-006,nepse-analog-trough-1720,2026-05-08,2028-12-31,0.40,null,null,market_structure,seventh-dossier,40% NEPSE daily close ≤1800 at any point by Dec 2028

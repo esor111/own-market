@@ -28,18 +28,20 @@ This is still the strongest live lane in the project.
 Current forward scorecard:
 
 - source: `market-gist/data/validation/persistence_shadow_reviews/latest__shadow_batch_scorecard_v1.json`
-- resolved rows: `14`
+- resolved rows: `20` (across all groups)
 - persistence caution only:
-  - resolved cases: `9`
-  - 10-day negative hit rate: `88.9%` (`8/9`)
-  - mean 10-day return: `-1.65%`
+  - resolved cases: `11`
+  - 10-day success rate: `72.7%` (`8/11`)
+  - 5-day negative hit rate: `90.9%` (`10/11`)
+  - mean 10-day return: `-1.20%`
+  - binomial test vs 50% null: `p ≈ 0.11` (NOT statistically significant at current N per L-012 addendum 2026-04-18)
 
 Interpretation:
 
-- the sample is still small
-- the resolved cases are clustered across only a few report dates, so they are not fully independent observations
-- but this is the cleanest forward evidence we have
-- persistence remains the best mechanical avoid lane
+- the sample is still small and clustered across a few report dates (per L-012, not fully independent observations)
+- the 72.7% figure supersedes the earlier retired 88.9%-on-9 headline (see L-012 addendum)
+- directionally suggestive of a real signal but NOT statistically significant at current N
+- this is the cleanest forward evidence we have; gate is N≥25 in `persistence_caution_only` per `batch-score-playbook/INTERPRETATION_GATE.md` v3
 
 Status:
 

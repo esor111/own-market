@@ -1,9 +1,10 @@
 # Backlog — What's Done, What's Work, What's Side-Project
 
-> Status as of 2026-04-10. This is the canonical "what next?" document.
+> Status as of 2026-04-19. This is the canonical "what next?" document.
 > The structure deliberately puts WORK first and SIDE PROJECTS last.
 > Under L-011 patience mode, side projects should not start until persistence
 > forward batch-scoring is done.
+> Gate interpretation at N≥25 follows `experiments/batch-score-playbook/INTERPRETATION_GATE.md` v3 (Gate 1 forecast + Gate 2 actionability; `TRADE_READY` requires post-cost EV > baseline by ≥1σ promotion margin).
 
 ## How to read this document
 
@@ -21,18 +22,18 @@ If you only read one line: **the next thing to do is keep running `run_persisten
 
 | # | Experiment | Status | Headline Finding |
 |---|---|---|---|
-| 01 | Corporate Action Timing | **Validated, partially deployed** | Dividend-family bank notice → 10-day drift, 71% hit, p=0.004. Deployed as annotation in shadow report. Book closure → drift_2_10 also strong but hydro-only. |
+| 01 | Corporate Action Timing | **In-sample validated (14-symbol seed); annotation deployed** | Dividend-family bank notice → 10-day drift, 71% hit, p=0.004 in-sample. Annotation deployed in shadow report (not a trade rule). Book closure → drift_2_10 also strong but hydro-only. |
 | 02 | Lock-In Expiry | **Parked** | N=27, p=0.25. Directionally correct, statistically inconclusive. Re-test when more unlocks happen. |
 | 03 | NRB Rate Events | **Parked** | Anticipation-then-reversal pattern. Easing events show pre-window rally + post-window drift. Use as context, not signal. |
-| 04 | Hydro Seasonality | **Validated, with credible mechanism** | Strategy C (Nov→Jan hydro buy): 71% win rate, +12% mean over 28 trades. Candidate mechanism: Companies Act AGM deadline → dividend cycle. Independent corroboration: Investopaper 79% Jan win rate over 2007-2025. **Status: parked, needs forward validation.** |
+| 04 | Hydro Seasonality | **Parked, needs forward validation** | Strategy C (Nov→Jan hydro buy): 71% historical win rate, +12% mean over 28 historical trades in 2021-2026 window. Candidate mechanism: Companies Act AGM deadline → dividend cycle. Independent corroboration: Investopaper 79% Jan win rate over 2007-2025. Historical pattern only; forward validation required before any trade use. |
 
 ## Production Systems Running
 
 | System | Status | Maturity |
 |---|---|---|
-| Persistence shadow report (daily) | Running, frozen v1 policy | 14 of ~30 needed cases resolved |
+| Persistence shadow report (daily) | Running, frozen v1 policy | 20 of 61 cases resolved across all groups; 11 of 11 in `persistence_caution_only` (N≥25 gate in that group per `INTERPRETATION_GATE.md` v3) |
 | Dividend-family bank annotation | Live in shadow report (annotation only) | Patched 2026-04-09 |
-| Forward shadow scorer | Running, calendar fixed (L-007) | Same 14/30 |
+| Forward shadow scorer | Running, calendar fixed (L-007) | Same 20/61 across groups |
 | One-command daily runner | Built 2026-04-10 | New |
 | Defensive tweaks (L-007 fix, exception fix, sanity checks) | Applied 2026-04-10 | New |
 
@@ -42,7 +43,7 @@ If you only read one line: **the next thing to do is keep running `run_persisten
 
 | ID | Topic | Status |
 |---|---|---|
-| L-001 | Corporate action timing creates measurable drift | Validated, dividend signal deployed |
+| L-001 | Corporate action timing creates measurable drift | In-sample validated on 14-symbol seed; dividend annotation deployed |
 | L-002 | Lock-in expiry directionally correct but inconclusive | Parked |
 | L-003 | Baseline adjustment is non-negotiable on NEPSE 2021-2024 data | Operational rule |
 | L-004 | Nepal AGM season is a predictable calendar window | Context for Strategy C |
@@ -50,7 +51,7 @@ If you only read one line: **the next thing to do is keep running `run_persisten
 | L-006 | Sharesansar CSV archive contains non-trading-day clones | Technical gotcha, fixed |
 | L-007 | Forward scorers must use the same trading calendar as the experiment framework | Fixed both in scorer and live shadow report (2026-04-10) |
 | L-008 | NRB rate events show anticipation-then-reversal | Context only |
-| L-009 | Hydropower has a strong, stock-level seasonal calendar | Validated |
+| L-009 | Hydropower has a stock-level seasonal calendar | Historical pattern in 2021-2026 window; needs forward evidence |
 | L-010 | The hydro seasonal-fight hypothesis was wrong; the real finding is the Nov→Jan calendar trade | Strategy C parked + candidate mechanism added 2026-04-10 |
 | L-011 | Mechanical signals beat LLM judgment on NEPSE | Strongly externally supported by adjacent-market literature |
 
@@ -345,7 +346,7 @@ After all this documentation, here is what's actually true:
 # Cross-references
 
 - Experiment lab: `experiments/`
-- Documented learnings: `experiments/LEARNINGS.md` (L-001 through L-011)
+- Documented learnings: `experiments/LEARNINGS.md` (L-001 through L-016)
 - Web research bundle: `market-gist/docs/resources/web-research-2026-04-10/`
 - Experiment 03 patch proposal: `market-gist/docs/resources/web-research-2026-04-10/proposal_experiment_03_patch.md`
 - Daily runner: `market-gist/automation/run_persistence_shadow_daily.py`

@@ -1,0 +1,15 @@
+[    5140ms] [LOG] 41 custom indicators loaded. @ https://nepsealpha.com/trading_view_stuff_v1/charting_library/bundles/library.ed30e653462ab0610aff.js:113735
+[    5454ms] [WARNING] SymbolInfo validation: field has_no_volume is deprecated, use visible_plots_set instead @ https://nepsealpha.com/trading_view_stuff_v1/charting_library/bundles/library.ed30e653462ab0610aff.js:23781
+[    5505ms] [LOG] Unable to get permission to notify. @ https://nepsealpha.com/js/39505.f1dc91413.js:1
+[    5507ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://nepsealpha.com/trading_view_stuff_v1/charting_library/undefined/undefined/study_templates?client=undefined&user=undefined:0
+[    5507ms] [WARNING] 2026-04-24T07:03:18.983Z:Chart.SaveloadAdapter.Library:Study templates list response was not OK. Status: 404. Error: Study templates list response was not OK. Status: 404.
+    at Module.M (https://nepsealpha.com/trading_view_stuff_v1/charting_library/bundles/library.ed30e653462ab0610aff.js:4112:27) @ https://nepsealpha.com/trading_view_stuff_v1/charting_library/bundles/library.ed30e653462ab0610aff.js:26018
+[    5564ms] Error: Study templates list response was not OK. Status: 404.
+    at Module.M (https://nepsealpha.com/trading_view_stuff_v1/charting_library/bundles/library.ed30e653462ab0610aff.js:4112:27)
+[    5581ms] undefined
+[   58957ms] [ERROR] Failed to load resource: the server responded with a status of 422 () @ https://nepsealpha.com/trading/1/history?fsk=YAb8JmCi&symbol=UPPER&resolution=5&frame=1000:0
+[   59107ms] [ERROR] Failed to load resource: the server responded with a status of 422 () @ https://nepsealpha.com/trading/1/history?fsk=YAb8JmCi&symbol=UPPER&resolution=30&frame=1000:0
+[   59253ms] [ERROR] Failed to load resource: the server responded with a status of 422 () @ https://nepsealpha.com/trading/1/history?fsk=YAb8JmCi&symbol=UPPER&resolution=60&frame=1000:0
+[   98799ms] [ERROR] Failed to load resource: the server responded with a status of 422 () @ https://nepsealpha.com/trading/1/history?fsk=YAb8JmCi&symbol=UPPER&resolution=5&frame=1000:0
+[   98803ms] [ERROR] Failed to load resource: the server responded with a status of 422 () @ https://nepsealpha.com/trading/1/history?fsk=YAb8JmCi&symbol=UPPER&resolution=30&frame=1000:0
+[   98805ms] [ERROR] Failed to load resource: the server responded with a status of 422 () @ https://nepsealpha.com/trading/1/history?fsk=YAb8JmCi&symbol=UPPER&resolution=60&frame=1000:0

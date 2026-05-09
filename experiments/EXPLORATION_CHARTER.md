@@ -76,9 +76,9 @@ What this means for you:
 This is a NEPSE (Nepal Stock Exchange) quantitative research lab. It is not a trading bot. It is not a YouTube signal channel. It is not a bet that LLMs are smart enough to read charts. It is a research lab that:
 
 - Runs a daily mechanical signal (broker persistence) in shadow mode, collecting forward evidence
-- Annotates a validated dividend-family signal on bank stocks (live in shadow report, does not change verdicts)
+- Annotates an in-sample-validated dividend-family signal on bank stocks (14-symbol seed; live in shadow report; does not change verdicts)
 - Has parked two more signals with credible mechanisms but insufficient forward evidence (hydro Nov→Jan calendar buy, bank Aug→Jan avoid)
-- Documents every learning in `experiments/LEARNINGS.md` (currently L-001 through L-011)
+- Documents every learning in `experiments/LEARNINGS.md` (currently L-001 through L-016)
 - Maintains strict discipline at the deployment gate: nothing gets promoted to live trading without forward evidence
 
 The lab is small enough that one engineer can actually run it reliably. That smallness is the point. The discipline is to not let it grow faster than it can be validated.
@@ -91,8 +91,8 @@ Be honest about what works and what doesn't. Don't oversell. This is the actual 
 
 | What | Status | Honest assessment |
 |---|---|---|
-| Broker persistence shadow (w7 seller) | Running daily, ~14 of ~30 needed cases resolved | Most validated thing we have. 8 of 9 negative on small sample. Needs more cases. |
-| Dividend-family bank annotation | Live in shadow report (annotation only) | 71% bank hit rate, p=0.004, validated. Doesn't change verdicts yet. |
+| Broker persistence shadow (w7 seller) | Running daily, 20 of 61 cases resolved across all groups, 11 of 11 in `persistence_caution_only` | 72.7% hit rate on 11 resolved CAUTION cases, binomial p ≈ 0.11 (directionally suggestive, NOT statistically significant at current N per L-012 addendum). Gate is N≥25 in `persistence_caution_only` per `batch-score-playbook/INTERPRETATION_GATE.md` v3. |
+| Dividend-family bank annotation | Live in shadow report (annotation only) | 71% bank hit rate, p=0.004 in-sample on 14-symbol seed. Does not change verdicts. |
 | Hydro Nov→Jan (Strategy C) | Parked, awaiting forward window | 71% historical win rate, +12% mean over 28 trades, has a credible mechanism (Companies Act AGM deadline → dividend cycle), one independent corroboration (Investopaper 79% Jan win rate over 18 years). Still needs forward validation. |
 | Bank Aug→Jan avoid signal | Parked, awaiting forward window | 1 winning trade out of 31 historically. Strongest single pattern in the lab. Untested forward. |
 | LLM direction prediction | Running | 55-57% accuracy. Same as a calendar lookup on hydro. Wrong layer to optimize. |
@@ -129,7 +129,7 @@ This is non-negotiable. If you do any of these, you have broken the lab's discip
 5. **Do not skip baseline adjustment.** L-003 says any event study on NEPSE 2021-2024 data without baseline adjustment is unreliable due to bear-market bias. This rule applies to every hypothesis you test.
 6. **Do not run multiple comparisons without correction.** If you test 10 hypotheses, expect ~5 to be significant at p<0.05 by chance alone. Use Benjamini-Hochberg FDR or be honest that "1 of 10 worked" is consistent with all 10 being noise.
 7. **Do not act on insider-pipeline findings without flagging the legal risk.** If your research surfaces brokers who are likely facilitating insider trades, that is a regulatory-risk warning, not alpha. Trading on it may itself be MNPI dealing in many jurisdictions. Document the finding; do not propose acting on it.
-8. **Do not duplicate work that has already been done.** Read LEARNINGS.md L-001 through L-011 first. Read the web-research bundle. If your idea is already documented, build on it, don't restart it.
+8. **Do not duplicate work that has already been done.** Read LEARNINGS.md L-001 through L-016 first. Read the web-research bundle. If your idea is already documented, build on it, don't restart it.
 
 ---
 
@@ -161,7 +161,7 @@ Bootstrap by reading these files:
 
 1. **`experiments/MANIFESTO.md`** — the lab's intent and discipline, written by Juliet for future-Ishwor. Read this first. It tells you what kind of work is valued and what kind is dangerous.
 
-2. **`experiments/LEARNINGS.md`** — eleven documented findings (L-001 through L-011). This is the canonical list of what we know. Don't propose anything that contradicts these without explicit justification. Don't propose anything that duplicates these without checking first.
+2. **`experiments/LEARNINGS.md`** — eleven documented findings (L-001 through L-016). This is the canonical list of what we know. Don't propose anything that contradicts these without explicit justification. Don't propose anything that duplicates these without checking first.
 
 3. **`experiments/BACKLOG.md`** — what's done, what's the boring necessary work, what's parked as side projects. Tier A0 is the highest-priority side project. Read the whole thing.
 
@@ -212,7 +212,7 @@ These are the side quests from BACKLOG.md that don't require running code on our
 ### Side Quest 5: Lab Self-Audit
 - **What it is:** Romeo caught Juliet's Phase 1 hydro overclaim, the wording on L-011, and several other errors during this lab's history. There may be more overclaims sitting in LEARNINGS.md that nobody has caught yet.
 - **Why it matters:** Documentation discipline. If we are sitting on an overclaim, deploying based on it is dangerous.
-- **What you can do without code access:** Read LEARNINGS.md L-001 through L-011. For each learning, ask: (a) is the headline number plausible compared to published literature? (b) is the sample size reported correctly? (c) is the baseline-adjustment mention real? (d) does the "what we did NOT test" section adequately cover the limitations? (e) does it overclaim certainty? Write a critique document.
+- **What you can do without code access:** Read LEARNINGS.md L-001 through L-016. For each learning, ask: (a) is the headline number plausible compared to published literature? (b) is the sample size reported correctly? (c) is the baseline-adjustment mention real? (d) does the "what we did NOT test" section adequately cover the limitations? (e) does it overclaim certainty? Write a critique document.
 - **Source:** `BACKLOG.md` Tier C #5.
 
 ### Side Quest 6: Day-of-Week Validation

@@ -7,7 +7,7 @@
 
 ## Why This Exists
 
-The persistence signal currently shows 88.9% hit rate on 9 resolved CAUTION cases. The published broker-flow literature ceiling is ~53%. Nepal's data-quality advantage gets us maybe to ~58% theoretical. Our 88.9% is 30+ pp above the most generous ceiling — which means either (a) the signal is genuinely novel, (b) it's clustered/overfit (L-012 suggests this), or (c) it will decay as more forward cases arrive.
+The persistence signal currently shows a hit rate of 72.7% on 11 resolved CAUTION cases (binomial p ≈ 0.11 — directionally suggestive, not statistically significant at this N; per `LEARNINGS.md` L-012 addendum 2026-04-18). The earlier 88.9%-on-9 headline is retired. The published broker-flow literature ceiling is ~53%; Nepal's data-quality advantage raises the plausible ceiling to ~55–58%. The current 72.7% is still above that range, but with the sample still clustered across a few report dates (L-012), the preliminary rate is expected to drift downward as more forward cases resolve. This tracker watches for that decay. Weekly. Without touching the production lane.
 
 This tracker watches for (c). Weekly. Without touching the production lane.
 

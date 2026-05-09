@@ -64,7 +64,7 @@ NOT invoked by the production daily routine. Run weekly or after each batch-scor
 
 Decay detection becomes statistically meaningful at N ≥ 20 resolved cases. Below that, the tracker reports descriptive statistics only and flags "insufficient sample for decay inference."
 
-Current resolved case count: 14 (as of 2026-04-13). Below the gate.
+Current resolved case count: 20 total across all groups, 11 in `persistence_caution_only` (as of 2026-04-19, per `latest__shadow_batch_scorecard_v1.json`). Below the gate (N≥25 in `persistence_caution_only` per `batch-score-playbook/INTERPRETATION_GATE.md` v3).
 
 ---
 
