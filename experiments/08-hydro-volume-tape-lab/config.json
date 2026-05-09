@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "symbols": ["UPPER", "API", "AKPL", "AHPC", "BHCL", "RADHI", "RHPL"],
+  "default_days": 31,
+  "notes": [
+    "Clean experiment lane for volume/tape microstructure. Separate from experiment 07 (broker-flow) and from the live prediction + persistence shadow lanes.",
+    "Refresh script wraps the existing Nepse Alpha volume scraper at scripts/refresh_nepse_symbol.js. Do not reinvent the scraper here.",
+    "Raw outputs are organized per symbol under raw/<SYMBOL>/; builders read those and write into data/ and results/."
+  ]
+}

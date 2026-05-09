@@ -1,0 +1,214 @@
+{
+  "scraped_at_np": "2026-04-27, 13:50:05",
+  "symbol": "API",
+  "source": "https://nepsealpha.com/nepse-chart",
+  "endpoint": "/trading/1/history",
+  "timezone": "Asia/Kathmandu",
+  "live_fsk": "1777215235319",
+  "latest_datetime_np": "2026-04-24 14:59",
+  "cutoff_datetime_np": "2025-04-24 14:59",
+  "endpoint_statuses": {
+    "minute_1": 200,
+    "daily_1D": 200,
+    "resolution_5": 422,
+    "resolution_30": 422,
+    "resolution_60": 422
+  },
+  "endpoint_ranges": {
+    "minute_first": "2023-10-29 11:08",
+    "minute_last": "2026-04-24 14:59",
+    "minute_bar_count": 88486,
+    "daily_first": "2015-11-18 05:45",
+    "daily_last": "2026-04-24 05:45",
+    "daily_bar_count": 2381
+  },
+  "minute_bar_count": 34135,
+  "total_volume": 68738342,
+  "trading_days": 223,
+  "first_trading_day": "2025-04-24",
+  "last_trading_day": "2026-04-24",
+  "top_10_days_by_volume": [
+    {
+      "date_np": "2026-03-10",
+      "bars": 231,
+      "volume": 1842222,
+      "open": 345,
+      "high": 346.8,
+      "low": 323,
+      "close": 341
+    },
+    {
+      "date_np": "2026-03-24",
+      "bars": 234,
+      "volume": 1601369,
+      "open": 354,
+      "high": 367.9,
+      "low": 351,
+      "close": 361.4
+    },
+    {
+      "date_np": "2026-03-19",
+      "bars": 234,
+      "volume": 1528471,
+      "open": 347.8,
+      "high": 353.7,
+      "low": 342.3,
+      "close": 344.4
+    },
+    {
+      "date_np": "2026-03-25",
+      "bars": 233,
+      "volume": 1429057,
+      "open": 360,
+      "high": 368.9,
+      "low": 358.8,
+      "close": 359
+    },
+    {
+      "date_np": "2026-04-01",
+      "bars": 233,
+      "volume": 1304796,
+      "open": 356.1,
+      "high": 358.5,
+      "low": 343.1,
+      "close": 350
+    },
+    {
+      "date_np": "2026-03-11",
+      "bars": 234,
+      "volume": 1303521,
+      "open": 341,
+      "high": 354,
+      "low": 336.2,
+      "close": 340
+    },
+    {
+      "date_np": "2025-05-04",
+      "bars": 240,
+      "volume": 1256581,
+      "open": 288.57,
+      "high": 297.14,
+      "low": 283.81,
+      "close": 291.26
+    },
+    {
+      "date_np": "2025-05-08",
+      "bars": 230,
+      "volume": 1207156,
+      "open": 300,
+      "high": 311.43,
+      "low": 290.48,
+      "close": 303.3
+    },
+    {
+      "date_np": "2026-03-31",
+      "bars": 237,
+      "volume": 1143683,
+      "open": 364.7,
+      "high": 364.7,
+      "low": 346,
+      "close": 358.1
+    },
+    {
+      "date_np": "2026-03-30",
+      "bars": 224,
+      "volume": 1092401,
+      "open": 355,
+      "high": 359.2,
+      "low": 350,
+      "close": 357.6
+    }
+  ],
+  "top_10_hours_by_volume": [
+    {
+      "hour_np": "2026-03-24 11:00",
+      "bars": 56,
+      "volume": 854811,
+      "open": 354,
+      "high": 366,
+      "low": 351,
+      "close": 366
+    },
+    {
+      "hour_np": "2026-03-10 11:00",
+      "bars": 53,
+      "volume": 741652,
+      "open": 345,
+      "high": 345,
+      "low": 323,
+      "close": 327.1
+    },
+    {
+      "hour_np": "2026-02-26 14:00",
+      "bars": 60,
+      "volume": 673718,
+      "open": 308.9,
+      "high": 315,
+      "low": 308.1,
+      "close": 312.4
+    },
+    {
+      "hour_np": "2026-03-11 11:00",
+      "bars": 60,
+      "volume": 663955,
+      "open": 341,
+      "high": 354,
+      "low": 337,
+      "close": 348
+    },
+    {
+      "hour_np": "2026-04-01 14:00",
+      "bars": 60,
+      "volume": 625677,
+      "open": 350,
+      "high": 351.9,
+      "low": 343.1,
+      "close": 350
+    },
+    {
+      "hour_np": "2026-03-25 14:00",
+      "bars": 58,
+      "volume": 616198,
+      "open": 366,
+      "high": 367.5,
+      "low": 358.8,
+      "close": 359
+    },
+    {
+      "hour_np": "2025-05-04 11:00",
+      "bars": 60,
+      "volume": 607716,
+      "open": 288.57,
+      "high": 297.14,
+      "low": 283.81,
+      "close": 295.24
+    },
+    {
+      "hour_np": "2026-03-30 14:00",
+      "bars": 60,
+      "volume": 596886,
+      "open": 353.7,
+      "high": 357.6,
+      "low": 350,
+      "close": 357.6
+    },
+    {
+      "hour_np": "2025-05-08 13:00",
+      "bars": 60,
+      "volume": 587439,
+      "open": 299.9,
+      "high": 311.43,
+      "low": 299.05,
+      "close": 310.48
+    },
+    {
+      "hour_np": "2026-03-10 14:00",
+      "bars": 60,
+      "volume": 584581,
+      "open": 339,
+      "high": 346.8,
+      "low": 336.2,
+      "close": 341
+    }
+  ]
+}

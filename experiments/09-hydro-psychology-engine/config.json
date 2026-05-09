@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "symbols": ["UPPER", "API", "AKPL", "AHPC", "BHCL", "RADHI", "RHPL"],
+  "event_windows": {
+    "corporate_action_days": 5,
+    "lockin_days": 20,
+    "nrb_event_days": 3,
+    "flood_damage_days": 30
+  },
+  "notes": [
+    "Experiment 09 is a read-only psychology engine over existing experiment outputs.",
+    "It must not modify experiment 07, experiment 08, live prediction prompts, or persistence shadow policy.",
+    "Start transparent and testable before adding complex scoring."
+  ]
+}
