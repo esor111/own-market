@@ -1,5 +1,18 @@
 # UPPER Dossier — Self-Validation Pass · 2026-05-21
 
+> **⚠️ READING ORDER (post Romeo Review #6, same day):** the canonical
+> Rule-11 fingerprint state as of end of 2026-05-21 is in the **Romeo
+> Review #6 section near the bottom of this document** and in
+> `METHODOLOGY.md` v0.6. **Earlier sections of this document describe the
+> pre-#6 state and may contain wording explicitly superseded** (the
+> "~50% same-day, ~50% following-days" framing was rejected; the
+> "+0.70% AGM" wording was corrected to "−0.70%"; the "INFORMED/FORCED"
+> tags are retired in favour of soft bands). Read top-to-bottom for the
+> audit trail, but **only the Review #6 section is operative**.
+
+---
+
+
 After the deep findings of 2026-05-20 (broker fingerprints + Aug 2024 catalyst + named brokers), I asked: **which of my own most-confident claims have NOT been challenged with falsifiable tests?** That produced four specific tests, all of which I could run alone against the existing data. This document records what survived and what didn't.
 
 Discipline note: this self-validation is the same shape Romeo's external reviews take — apply "what would prove this wrong?" to my own outputs. The intent is to catch overclaims before they harden into the dossier's load-bearing assumptions. Same anti-self-deception spine as METHODOLOGY Rule 10 ("grep before declaring impossible") — applied recursively to my own confident outputs.
@@ -261,3 +274,49 @@ correctness issues:
 Single biggest output of this session: **the sector-beta-contamination methodology gap is now explicitly named in METHODOLOGY Rule 13** as "the single biggest methodology hole in the current dossier; it has not been tested, and its existence should temper confidence in all current broker fingerprints until tested." That's the honest landing.
 
 This document is the canonical record. See git log for the minimal-patch commit.
+
+---
+
+## ⭐ ROMEO REVIEW #6 SECTION (2026-05-21, later same day) — CANONICAL
+
+After the minimal-patch section above, I ran `sector_residual_test.py` to actually close the sector-beta-contamination gap that Rule 13 had flagged. Romeo Review #6 caught three correctness issues in the first version, plus a P2 cleanup. **All four are applied here. This section supersedes everything above for broker-fingerprint tags.**
+
+### What Romeo #6 caught and was applied
+
+1. **Compounding inconsistency (P1)** — absolute return was compounded across +5 trading days, but residual was summed. Now both compounded.
+2. **Threshold fragility (P1)** — hard "STOCK-SPECIFIC ≥70%" vs "NOISE ≤1%" categories were too rigid. Replaced with soft bands per Romeo's scheme: ≥+1.5% residual-positive, +1.0% to +1.5% near-threshold-pos, |x|<1.0% noise, mirrors negative.
+3. **Hydro-index self-inclusion (P1)** — UPPER is a constituent of the NEPSE hydropower sub-index, so the hydro-residual is not fully independent. Added explicit caveat AND a sensitivity check against the broader NEPSE-index.
+4. **Stale wording (P2)** — flagged at the top of this doc; Reading-Order banner added.
+
+### The residual numbers (final, dual-benchmark)
+
+Regression: UPPER vs hydro sub-index (n=666, 2023-06-11 → 2026-05-18), **β = 1.002, α = −0.099%/day**. UPPER vs NEPSE-index, **β = 1.279, α = −0.096%/day**. UPPER moves essentially 1:1 with hydro and 1.28:1 with NEPSE.
+
+| # | Firm | n | Absolute | Hydro-adj | NEPSE-adj | Combined verdict |
+|---|---|---:|---:|---:|---:|---|
+| **49** | **Online Securities** | 16 | +1.30% | +1.05% (near-thr-pos) | **+1.90% (residual-pos)** | **Most robust signal; strengthens under NEPSE** |
+| **58** | **Naasa Securities** | 21 | +2.86% | +1.23% (near-thr-pos) | +1.12% (near-thr-pos) | **Most stable; consistent near-threshold-pos in both** |
+| 44 | Dynamic Money Managers | 20 | −6.02% | −1.35% (near-thr-neg) | −0.60% (noise) | Weak negative; ~80% of absolute was hydro beta |
+| 26 | Asian Securities | 7 | −1.17% | +0.07% (noise) | **−1.55% (residual-neg)** | Surprise NEPSE emergence; benchmark-sensitive; n thin |
+| 34 | (unresolved) | 15 | −1.04% | +1.06% (sign-flip) | +0.62% (noise) | Sign-flip + noise = low-confidence (Romeo: probably noise) |
+| 38 | Dipshikha Dhitopatra | 9 | +2.79% | −0.11% (noise) | −0.09% (noise) | **RETIRED from positive context** (Romeo #6 direct call) |
+| 88 | Blue Chip Securities | 8 | +1.61% | +0.86% (noise) | +1.04% (near-thr-pos) | Borderline; benchmark-sensitive |
+| 42, 48, 45, 17, 35, 81, 22, 56, 28 | various | various | various | noise/near-noise | noise/near-noise | Not currently classifiable |
+
+### Net broker watchlist as of 2026-05-21 evening (Romeo #6 final)
+
+- **Online Securities (#49)** — single most robust positive context on UPPER. Survives both benchmarks; strengthens to residual-positive (+1.90%) under NEPSE adjustment. Caveat: n=16, "stability not proven across subperiods."
+- **Naasa Securities (#58)** — most stable positive context. Near-threshold-pos in both benchmarks. Caveat: half of the absolute +2.86% was hydro beta.
+- **Dynamic Money Managers (#44)** — weak negative context, weakening to noise under broader benchmark. The "FORCED −6%" label is retired; reality is much milder.
+- **Asian Securities (#26)** — benchmark-dependent; under NEPSE-adjustment, surprise residual-negative. n=7 thin.
+- **Dipshikha (#38)** — RETIRED. Was hydro beta.
+
+### What Romeo #6 ultimately said
+
+Final: ACCEPT-WITH-MOD. The residual test is directionally right; broker fingerprints are real but milder after sector adjustment. Keep broker fingerprinting (option b), but with soft framing: hydro-adjusted mild positive/negative context, absolute-only context, noise. Drop INFORMED/FORCED from the daily surface. All four patches applied.
+
+### The next external check
+
+If we want a sixth+ pass: have someone document UPPER's actual weight in the NEPSE hydropower sub-index (NEPSE publishes index methodology). That single fact would either confirm or refute the "hydro residual is partially circular" caveat. Until then, NEPSE-adjusted is the cleaner column.
+
+This document is now canonical through Romeo Review #6.

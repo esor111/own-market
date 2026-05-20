@@ -88,20 +88,27 @@ located in a verifiable open source as of 2026-05-20.
 
 Computed across 343 days of UPPER broker history (2023-06 → 2026-05); broker numbers resolved via [merolagani BrokerList](https://www.merolagani.com/BrokerList.aspx) and confirmed by ShareSansar weekly summaries:
 
-**Numbers recomputed 2026-05-20 with exact-5-trading-day forward math** (the prior version used a calendar-day approximation; per Romeo review the methodology now uses an exact-trading-day index). Tag scheme adds SPARSE_POSITIVE / SPARSE_NEGATIVE for cases where n ≤ 10.
+**Tags updated 2026-05-21 (Romeo Review #6).** The bare absolute-return follow-through used in earlier versions was hydro-sector-contaminated (UPPER β≈1.00 with the hydropower sub-index over the broker-history window). Tags below show BOTH:
+- **Absolute follow-through** (the original Rule-11 measure on UPPER's raw 5-trading-day price moves)
+- **Hydro-adjusted residual** (after removing β×hydro_return; *not* fully independent — UPPER is a constituent of the hydropower sub-index)
+- **NEPSE-adjusted residual** (sensitivity check against the broader NEPSE index, where UPPER is a much smaller constituent)
 
-| # | Firm | Rule-11 signature | Use as descriptive context |
-|---|---|---|---|
-| **58** | **Naasa Securities Co. Ltd.** | **INFORMED +2.86% (n=21)** *(stability not proven across subperiods; see SELF_VALIDATION)* | Cleanest positive follow-through context on UPPER in this sample. One of NEPSE's largest brokers; wholesale-flow channel for institutional/HNW. **Two-measure note (Romeo Review #5 correction, 2026-05-21):** the +2.86% is the post-event move (event-day close → +5 trading days later). A separate measure — the same-day move (yesterday's close → event-day close on Naasa's lead days) — averaged +1.43%. **These are independent measurements, not a 50/50 decomposition of the +2.86%.** Both are positive: same-day price action moves in Naasa's direction AND post-event continuation continues in Naasa's direction. The same-day +1.43% has potential reflexivity (their flow moving the market); the post-event +2.86% is the continuation that persists after their flow. *Interpretation framing per Rule 11 v0.5:* "absolute UPPER follow-through context in this sample," NOT "stock-specific informed broker skill" — until sector-residual follow-through is computed (the methodology gap flagged in Rule 13). |
-| 44 | **Dynamic Money Managers Securities** | **FORCED −6.02% (n=20)** *(stability not proven across subperiods)* | Took the **largest single position of any broker** on UPPER (−260k on Jul 18 '24). Sold the entire 2024 rally and missed the top. Pattern *consistent with* mechanical execution (portfolio/redemption/VWAP-target); the data does not prove that — it's a candidate interpretation. **NOT a fade signal** — descriptive only. |
-| 49 | Online Securities Pvt. Ltd. | INFORMED (+1.30%, n=16) *(stability not proven across subperiods)* | Mild positive follow-through context. |
-| 34 | (unresolved name) | FORCED (mild) −1.04% (n=15) *(stability not proven)* | Marginal negative follow-through context. |
-| 48 | (unresolved name) | FORCED (mild) −1.05% (n=11) *(stability not proven)* | Marginal negative follow-through context. |
-| 38 | Dipshikha Dhitopatra Karobar Pvt. Ltd. | **SPARSE_POSITIVE** +2.79% (n=9) | Directionally positive but sample below the n=11 threshold — *not* confidently classified. Top-buyer on multiple Aug 2024 rally days. |
-| 88 | Blue Chip Securities Ltd | SPARSE_POSITIVE +1.61% (n=8) | n thin; the Mar 19 '26 rally distributor (sold 81k); episodic. |
-| 26 | Asian Securities Pvt. Limited | SPARSE_NEGATIVE −1.17% (n=7) | Directionally negative but n=7 thin. Currently on a 7-day net-buy streak. |
-| 42 | Sani Securities Co. Ltd. | NOISE −0.19% (n=22) | Most-frequent leader; high turnover; no reliable follow-through context. |
-| 28 | Shree Krishna Securities Limited | too sparse (3 leads) | The Mar 10 '26 rally-launch buyer (+119k). |
+Tag bands (per Romeo #6): residual ≥ +1.5% = residual-positive · +1.0% to +1.5% = near-threshold-pos · |residual| < 1.0% = residual-noise · −1.5% to −1.0% = near-threshold-neg · ≤ −1.5% = residual-negative. **Emotionally loaded "INFORMED" and "FORCED" labels dropped per Romeo #6 — these are descriptive context bands, not signals.**
+
+| # | Firm | n | Absolute | Hydro-adj | NEPSE-adj | Combined verdict |
+|---|---|---:|---:|---:|---:|---|
+| **58** | **Naasa Securities Co. Ltd.** | 21 | +2.86% | **+1.23%** | **+1.12%** | **Near-threshold-pos in both benchmarks — the most stable positive context on UPPER**. Same-day move on lead days averaged +1.43% (independent measure, may be partly reflexive). Wholesale-flow broker for institutional/HNW. *Descriptive only.* |
+| **49** | **Online Securities Pvt. Ltd.** | 16 | +1.30% | **+1.05%** | **+1.90%** | **Most robust positive context.** Survives hydro-adjustment (near-threshold-pos) AND strengthens to residual-positive under NEPSE-index adjustment. The clearest stock-specific-direction signal in the dossier, with the caveat that hydro index includes UPPER. *Descriptive only.* |
+| **44** | **Dynamic Money Managers Securities** | 20 | −6.02% | **−1.35%** | **−0.60%** | **Negative context but weaker than absolute number implied.** Hydro-adjusted: near-threshold-neg. NEPSE-adjusted: collapses to noise. The −6% absolute headline was ~80% hydro beta. Took the largest single position of any broker (−260k on Jul 18 '24). Pattern *consistent with* mechanical execution; data does not prove that. |
+| 34 | (unresolved name) | 15 | −1.04% | +1.06% | +0.62% | **Sign-flip vs absolute under hydro-adjustment; noise under NEPSE.** Likely noise + threshold fragility (per Romeo #6), not a real positive signal. |
+| 48 | (unresolved name) | 11 | −1.05% | −0.53% | −0.67% | Residual-noise under both benchmarks. |
+| 38 | Dipshikha Dhitopatra Karobar | 9 | +2.79% | −0.11% | −0.09% | **Retired from positive context** (Romeo #6 direct call): n=9 + residual collapse to ~zero under both benchmarks = the absolute +2.79% was hydro beta. Was top-buyer on multiple Aug 2024 rally days (but those were sector rally days). |
+| 88 | Blue Chip Securities Ltd | 8 | +1.61% | +0.86% | +1.04% | Hovers between noise and near-threshold-pos depending on benchmark. n thin. The Mar 19 '26 rally distributor (sold 81k); episodic. |
+| **26** | **Asian Securities Pvt. Limited** | 7 | −1.17% | +0.07% | **−1.55%** | **Surprise emergence under NEPSE-adjustment.** Noise under hydro-adjustment but residual-negative under NEPSE. Could be real or sample noise (n=7); benchmark-dependent. Currently on a 7-day net-buy streak. |
+| 42 | Sani Securities Co. Ltd. | 22 | −0.19% | +0.13% | −0.77% | Residual-noise under both benchmarks. Most-frequent leader; high turnover; no reliable follow-through context. |
+| 28 | Shree Krishna Securities Limited | 3 | — | — | — | Too sparse (3 leads). The Mar 10 '26 rally-launch buyer (+119k). |
+
+**Hydro-index self-inclusion caveat (Romeo Review #6):** UPPER is itself a constituent of the NEPSE hydropower sub-index, so the hydro-adjusted residual is *not* fully independent of UPPER. The NEPSE-index adjustment is the cleaner sanity check; where the two benchmarks disagree (e.g. Asian Securities #26, Online Securities #49), the NEPSE column should be weighted more. Until UPPER's exact weight in the hydro sub-index is documented and corrected for, neither column should be treated as final.
 
 **Discipline (binding):** these are *named context* for the daily read, NOT signals to follow. Per DOSSIER_CONTRACT §7 and METHODOLOGY Rule 11: a historical fingerprint is a pattern in past data, never a prediction about the next event. Broker identities are not stable cross-symbol.
 

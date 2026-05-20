@@ -29,16 +29,19 @@ OUT_DIR = os.path.join(HERE, "daily_reads")
 # for n<=10 (per Romeo review). Numbers are DESCRIPTIVE CONTEXT only — not
 # signals to follow. See METHODOLOGY.md Rule 11.
 BROKER_INFO = {
-    "26": ("Asian Securities", "sparse-neg (−1.17%, n=7)"),
-    "28": ("Shree Krishna Securities", "sparse (3 leads)"),
-    "34": ("(unresolved)", "forced-mild (−1.04%, n=15)"),
-    "38": ("Dipshikha Dhitopatra", "sparse-pos (+2.79%, n=9)"),
-    "42": ("Sani Securities", "noise (−0.19%, n=22)"),
-    "44": ("Dynamic Money Managers", "forced (−6.02%, n=20)"),
-    "48": ("(unresolved)", "forced-mild (−1.05%, n=11)"),
-    "49": ("Online Securities", "informed (+1.30%, n=16)"),
-    "58": ("Naasa Securities", "informed (+2.86%, n=21)"),
-    "88": ("Blue Chip Securities", "sparse-pos (+1.61%, n=8)"),
+    # Soft-band tags 2026-05-21 (Romeo Review #6). Show NEPSE-residual /
+    # hydro-residual where they agree or differ. INFORMED/FORCED labels
+    # retired per Romeo #6. Descriptive context, NOT signals.
+    "26": ("Asian Securities", "NEPSE-resid-neg / hydro-noise (n=7, benchmark-sensitive)"),
+    "28": ("Shree Krishna Securities", "too sparse (3 leads)"),
+    "34": ("(unresolved)", "noise both benchmarks (sign-flips vs absolute, n=15)"),
+    "38": ("Dipshikha Dhitopatra", "RETIRED — residual noise both benchmarks (n=9; was hydro beta)"),
+    "42": ("Sani Securities", "noise both benchmarks (n=22)"),
+    "44": ("Dynamic Money Managers", "hydro-near-neg / NEPSE-noise (n=20; weakened from -6% absolute)"),
+    "48": ("(unresolved)", "noise both benchmarks (n=11)"),
+    "49": ("Online Securities", "NEPSE-residual-pos / hydro-near-pos (n=16; most robust)"),
+    "58": ("Naasa Securities", "near-threshold-pos both benchmarks (n=21; most stable)"),
+    "88": ("Blue Chip Securities", "borderline noise / near-thr-pos (n=8)"),
 }
 
 

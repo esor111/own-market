@@ -304,15 +304,24 @@ compute per-broker:
    change exactly **5 trading days forward** (not calendar days) *in that
    broker's net direction*. Sum / count = the broker's signature value.
 
-**Classification (revised 2026-05-20 post Romeo-review for sample-size honesty):**
+**Classification — revised 2026-05-21 post Romeo Review #6.** Drop emotionally loaded INFORMED/FORCED in favour of soft, banded, dual-benchmark tags. Each broker carries:
 
-| Signature value | Lead-day count n | Tag | Interpretation |
-|---|---|---|---|
-| > +1.0% | n ≥ 11 | INFORMED | Historically positive follow-through context in this sample |
-| < −1.0% | n ≥ 11 | FORCED | Historically negative follow-through context in this sample |
-| > +1.0% | n ≤ 10 | SPARSE_POSITIVE | Directionally positive but sample too thin to classify confidently |
-| < −1.0% | n ≤ 10 | SPARSE_NEGATIVE | Directionally negative but sample too thin to classify confidently |
-| ±1.0% | any | NOISE | No reliable follow-through in this sample |
+1. **Absolute follow-through** (the original measure on UPPER's raw price moves) — **useful context but contaminated by sector beta**.
+2. **Hydro-adjusted residual** (after subtracting β × hydro-sub-index return) — the stricter version; *not fully independent because UPPER is a hydropower-sub-index constituent*.
+3. **NEPSE-adjusted residual** (against the broader NEPSE index) — sensitivity check; UPPER is a smaller weight here, so less self-inclusion.
+
+Band scheme applied to whichever residual is being discussed:
+
+| Residual value | Band tag |
+|---|---|
+| ≥ +1.5% | residual-positive |
+| +1.0% to +1.5% | near-threshold-pos *(soft)* |
+| |x| < 1.0% | residual-noise |
+| −1.5% to −1.0% | near-threshold-neg *(soft)* |
+| ≤ −1.5% | residual-negative |
+| sign-flip vs absolute on small n | low-confidence; treat as noise |
+
+The Rule 14 candidate's n ≥ 11 / n ≤ 10 split (SPARSE_POSITIVE / SPARSE_NEGATIVE) still applies but is now layered under these residual bands — i.e. a broker with residual-positive AND n ≥ 11 is the strongest tier; near-threshold-pos with n ≤ 10 is the weakest.
 
 **Use — strictly descriptive context.** Interpretive framing (Romeo Review #5
 correction, 2026-05-21): describe Rule 11 outputs as
@@ -331,21 +340,18 @@ is computed (the gap flagged in Rule 13).
   ownership/management of brokerages can change; not safe cross-symbol or
   cross-era.
 
-**Concrete on UPPER (recomputed 2026-05-20 with exact-trading-day math; supersedes prior):**
+**Concrete on UPPER (recomputed 2026-05-21 with Romeo #6 fixes: compounded both sides + dual-benchmark + soft bands):**
 
-| # | n | Avg | Tag |
-|---|---:|---:|---|
-| 58 (Naasa Securities) | 21 | +2.86% | INFORMED |
-| 44 (Dynamic Money Managers) | 20 | −6.02% | FORCED |
-| 49 (Online Securities) | 16 | +1.30% | INFORMED |
-| 34 | 15 | −1.04% | FORCED (mild) |
-| 48 | 11 | −1.05% | FORCED (mild) |
-| 38 (Dipshikha Dhitopatra) | 9 | +2.79% | SPARSE_POSITIVE |
-| 81 | 9 | +1.05% | SPARSE_POSITIVE |
-| 88 (Blue Chip) | 8 | +1.61% | SPARSE_POSITIVE |
-| 22 | 7 | +1.01% | SPARSE_POSITIVE |
-| 26 (Asian Securities) | 7 | −1.17% | SPARSE_NEGATIVE |
-| 42, 56, 45, 17, 35 | ≥7 | ±1.0% | NOISE |
+| # | Firm | n | Absolute | Hydro-adj | NEPSE-adj | Combined verdict |
+|---|---|---:|---:|---:|---:|---|
+| 58 | Naasa Securities | 21 | +2.86% | +1.23% (near-thr-pos) | +1.12% (near-thr-pos) | **Stable near-threshold-positive in both benchmarks** |
+| 49 | Online Securities | 16 | +1.30% | +1.05% (near-thr-pos) | **+1.90% (residual-positive)** | **Most robust signal; strengthens under NEPSE-adjustment** |
+| 44 | Dynamic Money Managers | 20 | −6.02% | −1.35% (near-thr-neg) | −0.60% (noise) | Absolute headline ~80% hydro beta; weak negative survives only under hydro |
+| 34 | (unresolved) | 15 | −1.04% | +1.06% (sign-flip) | +0.62% (noise) | Sign-flip + noise: low-confidence |
+| 26 | Asian Securities | 7 | −1.17% | +0.07% (noise) | **−1.55% (residual-negative)** | **Surprise NEPSE emergence; benchmark-sensitive** |
+| 38 | Dipshikha Dhitopatra | 9 | +2.79% | −0.11% (noise) | −0.09% (noise) | **Retired from positive context** (Romeo #6); was 100% sector beta |
+| 88 | Blue Chip Securities | 8 | +1.61% | +0.86% (noise) | +1.04% (near-thr-pos) | Borderline; benchmark-sensitive |
+| 42, 48, 45, 56, 35, 81, 17, 22, 28 | various | various | various | noise/near-noise | noise/near-noise | Not currently classifiable |
 
 **Caveats (binding):**
 - N is small. Even at n=21, the signature is "context for this sample,"
@@ -354,11 +360,21 @@ is computed (the gap flagged in Rule 13).
   not yet check dispersion — that's a known gap.
 - Survivorship: only brokers active in the broker-history window appear.
 - Anonymous broker IDs may not be stable cross-symbol.
+- **Hydro-index self-inclusion (Romeo Review #6):** UPPER is a constituent of
+  the NEPSE hydropower sub-index, so the hydro-adjusted residual is not
+  fully independent of UPPER. NEPSE-index adjustment is the cleaner check;
+  where the two benchmarks disagree, the NEPSE column should be weighted
+  more. Until UPPER's exact weight in the hydro sub-index is documented
+  and corrected for, neither residual column is final.
+- **No emotionally loaded labels.** "INFORMED" / "FORCED" / "smart money" /
+  "reliable" are banned from the daily surface. Use the soft bands above.
 
 **Anti-pattern this avoids.** Treating every appearance of a "big broker" as
 informed flow. Without the historical follow-through check, there is no
 basis to distinguish informed from forced from noise. Equally avoided:
-treating the historical signature as if it predicts the next event.
+treating any of the historical signatures as if they predict the next
+event, OR treating the absolute fingerprint as stock-specific when much
+of it is hydro beta.
 
 ## Rule 10 — Grep the codebase before declaring a probe impossible
 
@@ -462,6 +478,21 @@ the former gets *used*, and the inaccuracy compounds.
   forced signatures on UPPER (broker 58 +3.58% INFORMED; broker 44 −7.05%
   FORCED). Rule 12 (cross-source corp-action awareness) earned its place
   from the local-vs-nepsealpha level divergence (Rs 766 unadj vs Rs 504 adj).
+- 2026-05-21 — v0.6 (Romeo Review #6 patches). MAJOR rewrite of Rule 11:
+  - Compounding consistency fix in `sector_residual_test.py` (residual was
+    additive, absolute was compounded — Romeo P1).
+  - Threshold scheme replaced: drop INFORMED/FORCED in favour of soft
+    bands (residual-positive ≥+1.5%, near-threshold-pos +1.0–1.5%,
+    residual-noise <1.0%, mirrors negative).
+  - Hydro-index self-inclusion caveat added — UPPER is a hydropower
+    sub-index constituent so hydro-residual is NOT pure stock-specific.
+  - Dual-benchmark sensitivity check added: hydro + NEPSE-index columns.
+    Reveals: Naasa stable in both (near-thr-pos); Online STRENGTHENS to
+    residual-positive under NEPSE; DMM collapses to noise under NEPSE
+    (its -6% absolute was 80%+ hydro beta); Asian Securities #26 emerges
+    as residual-negative under NEPSE (surprise). Where benchmarks
+    disagree, NEPSE column weighted more.
+  - Dipshikha #38 RETIRED from positive context (Romeo direct call).
 - 2026-05-21 — v0.5 (self-validation pass; minimal patch after user caught
   over-correction risk). Promoted Rule 13 (sector-context check) — earned
   from the r=0.796 UPPER-vs-hydro-sub-index finding (`sector_correlation_test.py`).
