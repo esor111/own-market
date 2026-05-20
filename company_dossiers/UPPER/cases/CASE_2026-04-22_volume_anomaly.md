@@ -85,6 +85,53 @@ A net-seller-leader appears on Apr 16, 20, 21, 22, 27, 29, 30 — a multi-day se
 - The "broker 100 loss-making round-trip" observation **does not mean "follow broker 100."** A single episodic actor's behaviour, even when interpretable, is not a signal.
 - **No buy/sell, no target, no stop emerges from this case.** Its value is *pattern memory + better questions to ask of the next anomaly*.
 
+## Addendum (2026-05-20): intraday timing confirms forced-flow interpretation
+
+Source: fresh `upper_volume_last_month_full.json` scraped 2026-05-20 via the
+existing `refresh_upper_data.ps1` + `scripts/refresh_nepse_symbol.js` pipeline
+(see METHODOLOGY Rule 10 and `README.md`).
+
+The minute-bar data gives Apr 22 a clean intraday signature:
+
+| Hour (NPT) | Volume | Share of day |
+|---|---:|---:|
+| **14:00–15:00 (closing)** | **196,034** | **48%** |
+| 12:00–13:00 | 114,215 | 28% |
+| 11:00–12:00 (opening) | ~modest | small |
+
+**48% of the day's volume traded in the final trading hour before close.**
+That is the textbook signature of forced closing-hour flow — a stop-loss,
+margin liquidation, VWAP-targeted execution, or end-of-day book rebalance.
+A *real* informed distributor spaces selling out across the session to
+minimize impact; *forced* sellers hit the close because they have no choice.
+
+This is a **second independent piece of evidence** pointing at the same
+"forced flow, not smart distribution" conclusion we reached from Rule 1
+(round-trip price-check: broker 100 bought higher than they sold = loss).
+Two unrelated signals converging is what raises confidence:
+
+| Evidence | What it suggests |
+|---|---|
+| Loss-making round-trip (Rule 1) | Forced exit, not informed |
+| Closing-hour timing concentration | Forced exit, not informed |
+| Persistent layer net-buy-leaning (Rule 2) | Underlying flow was opposite |
+
+→ Confidence in the "forced flow" reading of Apr 22 is materially higher
+than from any single piece of evidence alone.
+
+**Contrast with Case #2 (March rally) intraday timing:** Mar 10/19 had >50%
+of daily volume in the **opening hour** (11:00 NPT). That is the opposite
+signature — opening-print positioning, consistent with informed accumulation
+or coordinated app-flow. The two cases sit on opposite ends of a clean
+intraday-timing spectrum.
+
+**Candidate methodology rule (not yet promoted to METHODOLOGY.md, N=1 on the
+closing-hour side):** for any flagged event day, compute
+`(opening_hour_volume / day_volume)` and `(closing_hour_volume / day_volume)`.
+Opening-hour ≥40% = positioning / planned-flow event. Closing-hour ≥40% =
+forced-flow / mandatory-execution event. Mid-day distribution = ambiguous.
+Wait for a second closing-hour case before formalising.
+
 ## Sources
 
 - ShareSansar UPPER Price History (today's snapshot): https://www.sharesansar.com/company/upper
