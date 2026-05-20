@@ -22,6 +22,28 @@ import cockpit_lib as ck  # noqa: E402 (frozen thresholds + loader)
 
 OUT_DIR = os.path.join(HERE, "daily_reads")
 
+# Broker number -> firm name + Rule-11 fingerprint tag, for the daily read.
+# Sources: merolagani.com/BrokerList.aspx + ShareSansar weekly broker summaries.
+# Fingerprints from deep_analysis.py over 343 days of UPPER broker history.
+BROKER_INFO = {
+    "26": ("Asian Securities", "mildly forced (−1.10%, n=7)"),
+    "28": ("Shree Krishna Securities", "sparse (3 leads)"),
+    "38": ("Dipshikha Dhitopatra", "INFORMED (+2.13%, n=9)"),
+    "42": ("Sani Securities", "mildly forced (−1.14%, n=23)"),
+    "44": ("Dynamic Money Managers", "FORCED (−7.05%, n=20)"),
+    "48": ("(unresolved)", "mildly forced (−1.31%, n=11)"),
+    "49": ("Online Securities", "INFORMED (+1.92%, n=16)"),
+    "58": ("Naasa Securities", "INFORMED (+3.58%, n=21)"),
+    "88": ("Blue Chip Securities", "noise (+0.46%, n=8)"),
+}
+
+
+def _broker_tag(num: str) -> str:
+    name, tag = BROKER_INFO.get(num, (None, None))
+    if name:
+        return f"**{num}** ({name}; {tag})"
+    return f"**{num}**"
+
 HEADER = (
     "_Descriptive single-company record. **No buy/sell advice, no return "
     "prediction, no edge claim.** Human notes are Ishwor's own opinion "
@@ -169,24 +191,26 @@ def assemble(symbol: str, target_date: str | None = None) -> str:
                  f"**{_fmt((bd.get('top5_buy_share') or 0)*100,1)}%**")
         L.append(f"- Top-5 SELL concentration: "
                  f"**{_fmt((bd.get('top5_sell_share') or 0)*100,1)}%**")
-        L.append(f"- Net leader today: **broker {nlb}** ({side}, "
-                 f"net {nlq:+,.0f})")
+        L.append(f"- Net leader today: broker {_broker_tag(str(nlb))} "
+                 f"({side}, net {nlq:+,.0f})")
         # top 3 buyers / sellers from the day's record
         if bd.get("top_buyers"):
-            buys = ", ".join(f"{b}({q:,.0f})" for b, q in bd["top_buyers"][:3])
+            buys = " · ".join(f"{_broker_tag(str(b))} buy {q:,.0f}"
+                              for b, q in bd["top_buyers"][:3])
             L.append(f"- Top 3 buyers: {buys}")
         if bd.get("top_sellers"):
-            sells = ", ".join(f"{b}({q:,.0f})" for b, q in
-                              bd["top_sellers"][:3])
+            sells = " · ".join(f"{_broker_tag(str(s))} sell {q:,.0f}"
+                               for s, q in bd["top_sellers"][:3])
             L.append(f"- Top 3 sellers: {sells}")
 
-    L.append("\n## 5. Persistent brokers (descriptive — METHODOLOGY Rule 2)\n")
+    L.append("\n## 5. Persistent brokers (descriptive — METHODOLOGY Rule 2 + 11)\n")
     if pb:
         L.append("Brokers currently on the same net side for ≥3 days "
-                 "(sign = side, |n| = days):\n")
+                 "(named where Rule-11 history known):\n")
         for br, n_signed in list(pb.items())[:8]:
             side = "BUYER" if n_signed > 0 else "SELLER"
-            L.append(f"- broker **{br}** — {abs(n_signed)} days {side}")
+            L.append(f"- broker {_broker_tag(str(br))} — "
+                     f"{abs(n_signed)} days {side}")
     else:
         L.append("_No broker on a ≥3-day persistent same-side streak._")
 

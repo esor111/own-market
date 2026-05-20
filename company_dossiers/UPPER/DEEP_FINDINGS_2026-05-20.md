@@ -160,3 +160,55 @@ These should be added to `METHODOLOGY.md` after a review pass.
 - `company_dossiers/UPPER/deep_analysis.py` (the script).
 - ShareSansar UPPER company page (https://www.sharesansar.com/company/upper).
 - Web search for July-Aug 2024 UPPER catalyst — no specific result; sector-wide hypothesis only.
+
+---
+
+## Addendum (2026-05-20 second pass): answered two of the three open questions
+
+### Open question #1 — RESOLVED: The July-August 2024 catalyst
+
+The catalyst was hiding in our own events file the whole time (we missed it before because our broker analysis didn't extend back into 2024). The local events list contains:
+
+> **2024-08-13 announcement:** "Upper Tamakoshi Hydropower Limited has posted a net LOSS of Rs 2.68 billion and published its 4th quarter [annual] analysis of the fiscal year 2080/81."
+
+**The market rallied UPPER from 153 (Jun 30) → 256 (Aug 13, the day of the result) — a +67% rally INTO a Rs 2.68 BILLION annual loss print.** Then rallied another +12% to 286 over Aug 14-15. A loss-announcing day was the rally's *acceleration* point, not its end. The peak (286) came two trading days *after* the bad-news print.
+
+**Interpretation (descriptive):** this is the textbook NEPSE *fiscal-year-end → August result* positioning rally documented in `..\market-research\research_nepse_local_practitioner_2026.md` §9.1 (which cites 93% July-banking and similar patterns). The rally is *positioning-based, not fundamentals-driven*. Buyers were betting on:
+- The next fiscal year's monsoon Q1 (UPPER's only profitable quarter, mechanically — the wet-season tail).
+- The bad news being already priced in (no further negative surprise possible after the print).
+- Pure seasonal retail-flow pattern (the §9.1 pattern works across BFI sectors and apparently spilled into hydro).
+
+The empirical evidence on UPPER 2024 is striking — and aligns with the calendar probe's "suggestive but unconfirmable at honest N" verdict from our `nepse-volume-psychology-lab` work. The pattern *exists*; statistical N just isn't enough to be sure it'll repeat.
+
+### Open question #2 — RESOLVED: Broker identity mapping
+
+Used ShareSansar's weekly top-broker summaries + merolagani's official broker list page. Confirmed identities for every broker we'd been analyzing:
+
+| # | Firm name | Our Rule-11 fingerprint | Notes |
+|---|---|---|---|
+| **26** | Asian Securities Pvt. Limited | mildly forced (−1.10%, n=7) | Currently on a 7-day net-buy streak on UPPER |
+| **28** | Shree Krishna Securities Limited | too sparse (3 leads) | The Mar 10 2026 rally-launch buyer (+119k) |
+| **38** | Dipshikha Dhitopatra Karobar Co. Pvt. Ltd. | **INFORMED (+2.13%, n=9)** | Top-buyer on multiple Aug 2024 rally days |
+| **42** | Sani Securities Co. Ltd. | mildly forced (−1.14%, n=23) | The most-frequent leader; high turnover |
+| **44** | **Dynamic Money Managers Securities Pvt. Ltd.** | **FORCED (−7.05%, n=20)** | **Took largest single position of any broker (−260k on Jul 18 '24); sold the entire 2024 rally and missed the top by ~30 NPR. Name 'Money Managers' suggests portfolio/redemption-driven mechanical execution.** |
+| **49** | Online Securities Pvt. Ltd. | **INFORMED (+1.92%, n=16)** | Retail-app broker; informed signature plausibly via aggregated app flow timing |
+| **58** | **Naasa Securities Co. Ltd.** | **INFORMED (+3.58%, n=21)** | **One of NEPSE's largest brokers, repeatedly cited as 'top buyer / top seller broker' in ShareSansar weekly summaries. Likely wholesale-flow channel for institutional / high-net-worth clients. Their lead positions are followed by avg +3.58% over 5 days. Currently on a 4-day net-buy streak on UPPER.** |
+| **88** | Blue Chip Securities Ltd | noise (+0.46%, n=8) | The Mar 19 2026 rally distributor (sold 81k); appears episodically |
+
+### What this means concretely for the dossier
+
+1. **Naming changes the read.** Saying "broker 58 is on a 4-day buy streak" is descriptive. Saying "**Naasa Securities, NEPSE's most prolific wholesale-flow broker, is on a 4-day buy streak with a historically-informed signature**" is *meaningfully more useful* discretionary context — without crossing into "therefore buy."
+2. **The 2024 rally now has both a documented catalyst (FY annual result anticipation) AND named protagonists** (Naasa accumulated; Dynamic Money Managers sold all the way up). Future August result periods on UPPER carry this expectation as descriptive context.
+3. **Dynamic Money Managers (broker 44) is now a clear FORCED-side watch-broker.** When they take a big position, the historical pattern is a 7% move *against* them over 5 days. Descriptive only — not a "fade them" signal, because (a) the average can be dominated by 2-3 outsized losses, (b) broker identities aren't stable cross-symbol, (c) past 20-event behaviour does not predict the next event.
+4. **All this should be reflected in the daily-read template.** When today's leaders / persistent brokers are identifiable, they should be named, not just numbered.
+
+### Open question #3 — DEFERRED per contract
+
+"Does broker 44's forced pattern generalize across symbols?" Cross-symbol work is explicitly gated by DOSSIER_CONTRACT §7 ("no expansion until one dossier useful for 2 weeks"). Recorded for later.
+
+### Sources for the addendum
+
+- **Naasa Securities = broker 58**: cited in ShareSansar's weekly summaries (e.g. https://www.sharesansar.com/newsdetail/nepse-decreased-by-474-naasa-securities-remains-top-buyer-and-seller-broker-weekly-summary-of-nepse-with-technical-analysis-sector-comparison-and-major-highlights-2023-06-02).
+- **Full broker number-to-name mapping**: https://www.merolagani.com/BrokerList.aspx.
+- **August 13 2024 result**: local `events` file in `dossier_data.assemble("UPPER")`, mirroring the [ShareSansar disclosure URL pattern](https://www.sharesansar.com/announcementdetail/upper-tamakoshi-hydropower-limited-has-posted-a-net-loss-of-rs-268-billion-and-published-its-4th-quarter-company-analysis-of-the-fiscal-year-208081-2024-08-13).
+- **Source §9.1 (fiscal-year-end → August result pattern)**: `..\market-research\research_nepse_local_practitioner_2026.md`.

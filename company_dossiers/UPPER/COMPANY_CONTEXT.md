@@ -84,6 +84,24 @@ located in a verifiable open source as of 2026-05-20.
 - **Growth/dry-season offset (Rolwaling)** is procedurally stalled and unresumed in our sources.
 - **Earnings are seasonal**: front-loaded into Q1 (wet-season tail), with losses in dry quarters typical (see §6).
 
+## 8d. Broker-flow watchlist (named, descriptive — Rule 11 fingerprints)
+
+Computed across 343 days of UPPER broker history (2023-06 → 2026-05); broker numbers resolved via [merolagani BrokerList](https://www.merolagani.com/BrokerList.aspx) and confirmed by ShareSansar weekly summaries:
+
+| # | Firm | Rule-11 signature | Use as descriptive context |
+|---|---|---|---|
+| **58** | **Naasa Securities Co. Ltd.** | **INFORMED +3.58% over 5d (n=21)** | When Naasa is leading or persistently active on a side, that's the most informed-fingerprint signal we have on UPPER. Likely wholesale flow for institutions/HNW. |
+| 49 | Online Securities Pvt. Ltd. | INFORMED +1.92% (n=16) | Retail-app broker; mild informed signature. |
+| 38 | Dipshikha Dhitopatra Karobar Pvt. Ltd. | INFORMED +2.13% (n=9) | Top-buyer on multiple Aug 2024 rally days. |
+| **44** | **Dynamic Money Managers Securities** | **FORCED −7.05% (n=20)** | Took the **largest single position** (−260k on Jul 18 '24). Sold the entire 2024 rally and missed the top. Pattern is consistent with portfolio/redemption-driven mechanical execution. NOT a fade signal — descriptive only. |
+| 42 | Sani Securities Co. Ltd. | mildly forced −1.14% (n=23) | Most-frequent day-leader; high turnover. |
+| 48 | (resolve later) | mildly forced −1.31% (n=11) | |
+| 26 | Asian Securities Pvt. Limited | mildly forced −1.10% (n=7) | Currently on a 7-day net-buy streak. |
+| 88 | Blue Chip Securities Ltd | noise +0.46% (n=8) | Episodic; the Mar 19 '26 rally distributor. |
+| 28 | Shree Krishna Securities Limited | sparse (3 leads) | The Mar 10 '26 rally-launch buyer (+119k). |
+
+**Discipline (binding):** these are *named context* for the daily read, NOT signals to follow. Per DOSSIER_CONTRACT §7 and METHODOLOGY Rule 11: a historical fingerprint is a pattern in past data, never a prediction about the next event. Broker identities are not stable cross-symbol.
+
 ## 9. Items deliberately left `[unverified]` (the discipline)
 
 - Promoter lock-in % / free float / current shareholding pattern (§5).
