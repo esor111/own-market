@@ -24,21 +24,18 @@ Discipline note: this self-validation is the same shape Romeo's external reviews
 | 42 Sani Securities | −0.19% (n=22) | −2.14% | +2.17% | +0.69% | UNSTABLE (was NOISE anyway) |
 | Others | — | thin per third | thin | thin | INSUFFICIENT_DATA |
 
-**Reflexivity finding (Naasa specifically):**
+**Two-measure finding (Naasa specifically) — CORRECTED per Romeo Review #5:**
 
-| Measure | Value |
-|---|---:|
-| Same-day mean move (in Naasa's direction) | +1.43% |
-| Day-0 → Day+5 cumulative move | +2.86% |
-| Difference (following-days share) | +1.43% |
-| → ~50% of follow-through is same-day, ~50% over the next 5 days |
+The original wording said "half of the +2.86% accrues same-day, half over the next 5 days." **That was mathematically misstated.** The two measures are *independent*, not a decomposition of a shared total:
 
-**What this means:** Naasa's flow is *associated with* same-day price movement to a meaningful degree. Two non-exclusive interpretations:
+| Measure | What it computes | Value |
+|---|---|---:|
+| Same-day move | `(event_day_close − prior_day_close) / prior_day_close × 100`, in Naasa's direction | **+1.43%** |
+| Post-event +5td move | `(close_at_+5td − event_day_close) / event_day_close × 100`, in Naasa's direction | **+2.86%** |
 
-- **Reflexive (price-moving):** they are large enough that their own flow accounts for a chunk of the day's net move. Price "going their way" because they ARE the day's move.
-- **Coincident-information:** they react to the same intraday signal the market reacts to, simultaneously.
+**Correct framing:** on Naasa's lead days, the same-day moved +1.43% in their direction **AND** the next 5 trading days moved +2.86% in their direction. **Both signals exist independently, both are positive.** The "+1.43% same-day" might be partly reflexive (their flow moving the market) or coincident-information; the "+2.86% post-event" is the continuation that persists after their flow. The same-day data cannot distinguish reflexive from coincident-info; the post-event data cannot distinguish predictive from sector-correlated.
 
-The 343-day daily data cannot distinguish these. **The remaining ~+1.43% over days 1–5 IS the "predictive-leaning" component** — smaller than the headline +2.86% implies.
+This is the new METHODOLOGY Rule 15 in action: separate same-day from post-event when measuring follow-through, don't conflate.
 
 **Patches earned from Test #1:**
 - Online Securities (#49): **DOWNGRADE from INFORMED to UNSTABLE**.
@@ -84,7 +81,42 @@ The 343-day daily data cannot distinguish these. **The remaining ~+1.43% over da
 - **New METHODOLOGY Rule 13 candidate:** sector-context check — any stock-level finding deserves a sector-index correlation check before being treated as idiosyncratic.
 - **Broker fingerprints partially capture sector beta, not pure stock-picking.** A refined Rule 11 would use UPPER's residual-after-sector-beta. Recorded as a future improvement, not patched today.
 
-## Test #3 — AGM-announcement reaction pattern
+## Test #3 — AGM-announcement reaction pattern ✅ FIXED & RERUN (Romeo Review #5)
+
+**Bugs found and fixed:**
+1. **Pre-data event contamination** — original code mapped events pre-2019-01-13 to the first available trading day, producing 4 bogus identical rows. **FIXED:** pre-data events now filtered out.
+2. **Same-date duplicates** — e.g. multiple announcements on the same day double-counted. **FIXED:** events on the same date now deduped.
+3. **Sign error in my first writeup** — I'd typed +0.70% for 2026-04-06 +1d; script output is **−0.70%**. **CORRECTED.**
+
+**Rerun result (12 valid deduped events):**
+
+| Horizon | n | mean | % positive |
+|---|---:|---:|---:|
+| +1 trading day | 12 | −0.22% | 33% (4/12) |
+| +5 trading days | 12 | −2.11% | 25% (3/12) |
+| **+10 trading days** | **12** | **−4.39%** | **8% (1/12)** |
+
+After the bug fix, **the pattern is actually STRONGER than my first reporting**: 11 of 12 AGM-post-events are negative at +10 days. Mean is −4.39%; range is wide (−14.8% to +2.5%) and dominated by some outliers, but the directional pattern (11/12 negative) is real and consistent. The 2026-04-06 AGM (Case #1's anchor) fits: +1d −0.70%, +5d +1.88%, +10d −1.41%.
+
+**On Case #1's "Apr 7 sharp drop" wording:** the close-to-close was a small −0.70%, not the "sharp drop" framing the case used. But Case #1 may describe the **intraday low**, which this test doesn't measure. Without intraday verification the Case #1 sub-claim is left as-is — that's an intraday-data follow-up, not a wording rewrite from close-to-close numbers.
+
+### Historical (superseded) content of Test #3 below
+
+The earlier "INVALID — pending script fix" framing has been resolved by the bug-fix rerun above. Original problem statement retained for audit.
+
+---
+
+**Original status before fix:** Aggregate results unreliable. Romeo correctly identified the two bugs above.
+
+**Status: aggregate results unreliable.** Romeo correctly identified two bugs in `agm_rhythm_test.py`:
+
+1. **Pre-data event contamination:** `agm_rhythm_test.py:48` maps any event before the price data start (2019-01-13) to the first available trading day. So the 2015, 2016, 2017, 2018 AGM events all get measured starting from 2019-01-13 — producing 4 bogus identical rows that contaminate the aggregate stats.
+2. **No deduplication of related notices.** Events like "AGM announced" + "AGM date set" + "minutes published" can all be tagged AGM-related for the same actual AGM; they get triple-counted.
+3. **Sign mismatch:** the script output for 2026-04-06 shows −0.70% at +1d but I originally wrote +0.70% in the first version of this doc (now corrected above).
+
+**Until the script is fixed** (filter pre-data events, dedupe related notices, verify sign handling) and rerun, the aggregate statistics below should be treated as **unreliable** and the "weak negative drift at +10d" conclusion is **not earned**.
+
+The Case #1 "Apr 7 sharp drop" wording is NOT corrected on the basis of this test — the test's close-to-close measure says −0.70%, but Case #1 may describe an intraday low; only intraday data can confirm or deny that.
 
 **Question:** Case #1 implicitly hypothesised an "AGM rhythm" (post-announcement drop). Does every AGM announcement on UPPER produce that pattern?
 
@@ -101,7 +133,7 @@ The 343-day daily data cannot distinguish these. **The remaining ~+1.43% over da
 | +10 trading days | 13 | **clearly negative** | **23% (3/13 positive)** | −14.8% to +2.5% |
 | +20 trading days | 13 | negative | low | −19.98% to +2.47% |
 
-**The 2026-04-06 AGM (Case #1's anchor) specifically:** +1d was +0.70% (NOT the "sharp drop" I described in Case #1), +5d was +1.88%, +10d was −1.41%. The drift-down only became material at the longer horizon.
+**The 2026-04-06 AGM (Case #1's anchor) specifically — SIGN CORRECTED per Romeo Review #5:** +1d was actually **−0.70%** (I had written +0.70% in error — the test output shows minus), +3d +1.64%, +5d +1.88%, +10d −1.41%. So there *was* a small close-to-close drop on Apr 7 (not "sharp" but not the "+0.70% bounce" I had reported). Case #1's "sharp drop to 199" framing still cannot be verified at intraday resolution from this test (close-to-close was −0.70%, but Case #1 may be describing intraday low). **The Case #1 wording correction should wait for an intraday verification pass.**
 
 **Patches earned from Test #3:**
 - **Case #1 wording correction:** "Apr 7 sharp drop to 199" was overstated. Close-to-close on Apr 7 (the +1 trading day) was +0.70%, not a sharp drop. There was an intraday dip but it closed up. The +10d picture is weakly negative (consistent with the overall AGM-history pattern).
@@ -184,7 +216,34 @@ If sector-beta contamination is large, Naasa's "INFORMED" tag is overstated — 
 - Rules 14 and 15 — candidates pending external review.
 - Cases #1, #2, #3 — sector addenda added to #2 and #3; #1 left as-is until intraday wording check.
 
-## What got patched (minimal set committed 2026-05-21)
+## Romeo Review #5 — three additional correctness fixes applied 2026-05-21 (later same day)
+
+After the minimal-patch commit, Romeo Review #5 caught three specific
+correctness issues:
+
+1. **Naasa reflexivity wording was mathematically misstated.** The +2.86% is the
+   post-event move (event close → +5td); the +1.43% is the same-day move
+   (prior close → event close). They are independent measurements over
+   different windows, NOT a 50/50 decomposition. **PATCHED in COMPANY_CONTEXT
+   broker watchlist; this is the actual finding promoted to Rule 15.**
+2. **AGM test had script bugs** (pre-data event contamination + same-date
+   duplicates + sign error in my writeup). **PATCHED `agm_rhythm_test.py`;
+   rerun shows the AGM pattern is actually stronger than my first reporting
+   (11/12 negative at +10d).**
+3. **"Idiosyncratic spread" overstates what the arithmetic computes.** It's
+   a raw cumulative-return difference, not a beta-adjusted residual. **PATCHED
+   case files to use "spread versus hydro" with explicit math caveat.**
+
+**Other Romeo #5 decisions:**
+- Rule 11 interpretation **RENAMED** to "absolute UPPER follow-through context"
+  (not "stock-specific informed broker skill") until residual follow-through
+  is computed.
+- Rule 15 **PROMOTED** (with corrected math language).
+- Rule 14 stays CANDIDATE with explicit min-per-period n≥5 requirement.
+- Lighter caveat **ADDED** to all broker tags: "stability not proven across subperiods."
+- Did NOT downgrade Online #49 or era-bound DMM #44 (sub-sample n too thin).
+
+## What got patched in the original 2026-05-21 minimal set
 
 | Originally planned | Actually applied | Why minimal |
 |---|---|---|

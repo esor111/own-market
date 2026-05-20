@@ -181,6 +181,61 @@ before the data has spoken.
 **Anti-pattern this avoids.** Confirming the chart's first impression with
 the data, instead of letting the data correct the chart.
 
+## Rule 15 — Two-measure decomposition (same-day move and post-event follow-through)
+
+**The technique.** When measuring "follow-through" of a broker's lead-day
+position, compute TWO INDEPENDENT measures, not one:
+
+- **Same-day move:** `(event_day_close − prior_day_close) / prior_day_close × 100`,
+  signed by the broker's net direction. This captures the price action
+  *during* the broker's flow day. A large value here may reflect
+  *reflexivity* (their flow moving the market) OR coincident-information
+  (they and the market both react to the same intraday catalyst).
+- **Post-event follow-through:** `(close_at_+5td − event_day_close) / event_day_close × 100`,
+  signed by the broker's net direction. This captures what happens AFTER
+  the broker's flow day. Continuation here is more consistent with
+  predictive timing.
+
+**These are independent measurements.** Do NOT describe them as
+"X% of the total move happened same-day" — they don't share a
+denominator. The right framing is: "On Naasa's lead days, same-day moved
++1.43% in their direction AND the next 5 trading days moved +2.86% in
+their direction." Both signals exist; both are positive.
+
+**Interpretation:**
+- Same-day large, post-event small → likely reflexive / coincident-info.
+- Same-day small, post-event large → likely predictive timing.
+- Both large → both reflexive AND predictive (or coincident with persistent flow).
+
+**Concrete on UPPER (2026-05-21, `stability_test.py`):**
+- Naasa Securities (58): same-day +1.43%, post-event +2.86%. Both positive.
+- Dynamic Money Managers (44): same-day −2.42%, post-event −6.02%. Both negative; post-event is larger ⇒ market continues to move against them after their flow day.
+- Online Securities (49): same-day −0.35%, post-event +1.30%. Mixed (same-day weakly negative, post-event positive); supports the "unstable signature" classification.
+
+**Anti-pattern this avoids.** Calling a single number "half same-day, half
+following" when those are two separate measurements over different windows.
+That conflates timing of price impact with size of price impact.
+
+## Rule 14 (CANDIDATE, pending Romeo Review #6) — Stability across sub-periods
+
+**The technique (proposed, not yet promoted).** Before promoting a broker
+fingerprint from sparse to confirmed, check sign-consistency across
+sub-periods of the broker-history window. **Minimum per-period n must be
+≥ 5 lead days** before any per-period verdict is meaningful; smaller
+samples are noise, not signal.
+
+**Why this is still a candidate, not a rule:** the test I ran on 2026-05-21
+(`stability_test.py`) had several per-third samples below n=5
+(Naasa P3 n=2, DMM P3 n=3, Online P3 n=2). Verdicts driven by such thin
+samples are noise-driven, not signal-driven, and I almost over-corrected
+based on them. A rewritten version of this rule using leave-one-out or
+rolling-window diagnostics with explicit minimum-n thresholds is the
+right approach but has not been built and tested yet.
+
+**Until promoted:** broker fingerprints carry the caveat *"stability not
+proven across subperiods"* but are NOT downgraded on the basis of
+sub-sample noise.
+
 ## Rule 13 — Sector-context check before claiming idiosyncrasy
 
 **The technique.** Before treating any stock-level move or pattern as
@@ -259,14 +314,19 @@ compute per-broker:
 | < −1.0% | n ≤ 10 | SPARSE_NEGATIVE | Directionally negative but sample too thin to classify confidently |
 | ±1.0% | any | NOISE | No reliable follow-through in this sample |
 
-**Use — strictly descriptive context:**
+**Use — strictly descriptive context.** Interpretive framing (Romeo Review #5
+correction, 2026-05-21): describe Rule 11 outputs as
+**"absolute UPPER follow-through context in this sample,"** NOT as
+"stock-specific informed broker skill," until sector-residual follow-through
+is computed (the gap flagged in Rule 13).
+
 - In the daily read: "today's top buyer is Naasa Securities, which has
   historically positive follow-through context on UPPER in this sample
   (+2.86% avg over 21 lead days)."
 - **Never as a signal to follow.** A historical fingerprint is a pattern in
   past data, not a prediction about the next event. Use of words like
-  "reliable" or "smart money" or "follow them" is forbidden — the data does
-  not support that strength of claim.
+  "reliable," "smart money," "stock-specific insight," or "follow them" is
+  forbidden — the data does not support that strength of claim.
 - Broker identities are stable on NEPSE in the medium term but corporate
   ownership/management of brokerages can change; not safe cross-symbol or
   cross-era.

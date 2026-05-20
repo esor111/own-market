@@ -42,9 +42,34 @@ def main():
     sorted_trading_dates = sorted(close_by_date)
     idx = {d: i for i, d in enumerate(sorted_trading_dates)}
 
+    # Filter out events that fall BEFORE our price data starts — per Romeo
+    # Review #5 catch. The original code mapped all pre-data events to
+    # the first available trading day, producing bogus duplicate rows.
+    first_data_date = sorted_trading_dates[0] if sorted_trading_dates else None
+    valid_events = [e for e in agm_events
+                    if e.get("date") and first_data_date
+                    and e["date"] >= first_data_date]
+    pre_data_skipped = len(agm_events) - len(valid_events)
+    # Dedupe events that fall on the same date (e.g. "AGM announced" plus
+    # "AGM notice published" same day = one event for our purposes).
+    seen_dates = set()
+    deduped = []
+    for e in valid_events:
+        d = e.get("date")
+        if d in seen_dates:
+            continue
+        seen_dates.add(d)
+        deduped.append(e)
+    dup_skipped = len(valid_events) - len(deduped)
+    print(f"\nValid events after pre-data filter + same-date dedup "
+          f"(first data date {first_data_date}): "
+          f"{len(deduped)} (skipped {pre_data_skipped} pre-data, "
+          f"{dup_skipped} same-date duplicates)")
+    agm_events = deduped
+
     def move(d_event, k):
         """% move from event-day close to event+k trading days."""
-        # find the trading day on or after d_event
+        # the event date must already be ≥ first data date (filtered above)
         evt_i = next((i for i, d in enumerate(sorted_trading_dates)
                       if d >= d_event), None)
         if evt_i is None:

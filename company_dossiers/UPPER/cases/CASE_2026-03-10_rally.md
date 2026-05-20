@@ -136,11 +136,13 @@ Combined with §4's finding that broker 88 was a *persistent multi-week seller a
 
 ## Sector-context addendum (2026-05-21, per Rule 13)
 
-Per `sector_correlation_test.py`: during the Mar 1 → Mar 22 2026 rally window, **UPPER was +28.7%, hydropower sub-index was +12.4%, correlation r=0.80, idiosyncratic spread +16.3%.**
+Per `sector_correlation_test.py`: during the Mar 1 → Mar 22 2026 rally window, **UPPER was +28.7%, hydropower sub-index was +12.4%, correlation r=0.80, spread versus hydro +16.3%.**
 
-**Implication:** the headline +29% UPPER move was *mostly hydro-sector flow* (~+12%) with **about +16% of UPPER-specific outperformance**. The broker fingerprint analysis above (Naasa accumulated, Dynamic Money Managers persistently sold) captures the *idiosyncratic spread*, NOT the whole rally. The launch on Mar 10 (broker 28 +119k) and the Mar 19 absorption battle were real UPPER-specific events but they happened *during* a sector-wide rally and amplified it; they did not by themselves drive it.
+**Important caveat on the math (Romeo Review #5):** the +16.3% is the *arithmetic spread* between UPPER's cumulative return and the hydro sub-index's cumulative return — NOT a true beta-adjusted residual. A proper residual requires fitting β and computing UPPER_ret − β × hydro_ret. The spread is suggestive of UPPER-specific outperformance over the window but should not be precisely interpreted as "the idiosyncratic portion" until residual-adjustment is computed.
 
-Reader-weight: this case's evidence weight should be moderate, not high — about 57% of the headline move was sector beta. See SELF_VALIDATION_2026-05-21.md for context.
+**Directional implication (descriptive, not precise):** the headline +29% UPPER move occurred during a sector-wide hydro rally (+12% sector). UPPER outperformed the sector by ~16% (raw spread). The broker fingerprint analysis above (Naasa accumulated, Dynamic Money Managers persistently sold) describes the price action on UPPER itself; how much of that is sector beta vs UPPER-specific is *not precisely decomposable from this data*.
+
+Reader-weight: this case's evidence weight should be moderate — the rally happened during a sector wave, so attributing all of the broker behavior to a UPPER-specific catalyst overstates the case. See SELF_VALIDATION_2026-05-21.md.
 
 ## Sources & references
 
