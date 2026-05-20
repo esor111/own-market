@@ -108,7 +108,20 @@ Tag bands (per Romeo #6): residual ≥ +1.5% = residual-positive · +1.0% to +1.
 | 42 | Sani Securities Co. Ltd. | 22 | −0.19% | +0.13% | −0.77% | Residual-noise under both benchmarks. Most-frequent leader; high turnover; no reliable follow-through context. |
 | 28 | Shree Krishna Securities Limited | 3 | — | — | — | Too sparse (3 leads). The Mar 10 '26 rally-launch buyer (+119k). |
 
-**Hydro-index self-inclusion caveat (Romeo Review #6):** UPPER is itself a constituent of the NEPSE hydropower sub-index, so the hydro-adjusted residual is *not* fully independent of UPPER. The NEPSE-index adjustment is the cleaner sanity check; where the two benchmarks disagree (e.g. Asian Securities #26, Online Securities #49), the NEPSE column should be weighted more. Until UPPER's exact weight in the hydro sub-index is documented and corrected for, neither column should be treated as final.
+**Hydro-index self-inclusion caveat — TESTED 2026-05-21:** UPPER vs hydropower sub-index correlation is **r = 0.757** (moderate, not extreme); variance ratio is 1.75 (UPPER more volatile than the basket); lag-1 shows hydro **leads** UPPER (sector moves first, UPPER follows). Conclusion: **UPPER is one of many hydro constituents, not the dominant weight**. The hydro-adjusted residual is a meaningful comparison to "other hydros," not subtracting UPPER from itself. Romeo Review #6's biggest open caveat is *less severe* than feared. NEPSE-adjustment still provides a useful sensitivity check.
+
+**Bootstrap 95% CI on the broker fingerprints — TESTED 2026-05-21:** Under bootstrap (n=2000 resamples), most of the soft-band tags above sit **within bootstrap noise**:
+
+| # | Firm | Hydro 95% CI | NEPSE 95% CI | CI verdict |
+|---|---|---|---|---|
+| 49 Online Securities | Online Securities | [−0.70, +3.02] | **[+0.13, +4.15]** | **NEPSE CI excludes zero on positive side — statistically significant** |
+| 26 Asian Securities | Asian Securities | [−1.70, +1.20] | **[−3.21, −0.26]** | **NEPSE CI excludes zero on negative side — statistically significant** |
+| 34 (unresolved) | (unresolved) | **[+0.40, +1.78]** | [−0.47, +1.67] | **Hydro CI excludes zero on positive side — significant** |
+| 58 Naasa Securities | Naasa Securities | [−0.70, +3.46] | [−0.88, +3.63] | CI straddles zero in BOTH benchmarks — NOT statistically significant |
+| 44 Dynamic Money Managers | Dynamic Money Managers | [−3.72, +0.86] | [−2.64, +1.39] | CI straddles zero in both — NOT statistically significant |
+| 38, 42, 48, 88 | various | wide | wide | All CI straddle zero — not significant |
+
+**Honest reading:** Only **3 of the 9 named broker tags survive the bootstrap CI check** — Online (NEPSE-pos), Asian Securities (NEPSE-neg), Broker 34 (hydro-pos). Naasa and Dynamic Money Managers — the "most stable" and "weak negative" tags from Review #6 — have wide CIs that include zero. **The point estimates are still real numbers from real data, but under bootstrap they are not distinguishable from noise.** Treat every tag as suggestive context only; the CI-significant three are the most defensible.
 
 **Discipline (binding):** these are *named context* for the daily read, NOT signals to follow. Per DOSSIER_CONTRACT §7 and METHODOLOGY Rule 11: a historical fingerprint is a pattern in past data, never a prediction about the next event. Broker identities are not stable cross-symbol.
 

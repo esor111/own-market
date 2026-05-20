@@ -478,6 +478,29 @@ the former gets *used*, and the inaccuracy compounds.
   forced signatures on UPPER (broker 58 +3.58% INFORMED; broker 44 −7.05%
   FORCED). Rule 12 (cross-source corp-action awareness) earned its place
   from the local-vs-nepsealpha level divergence (Rs 766 unadj vs Rs 504 adj).
+- 2026-05-21 — v0.7 (dispersion + self-inclusion follow-up tests, same day).
+  Two self-tests run after Review #6 closed, no new external review yet:
+  (A) Bootstrap 95% CI on each broker's residual mean (n=2000 resamples).
+      Result: **only 3 of 9 named broker tags have CIs that exclude zero**
+      under at least one benchmark — Online Securities (#49 NEPSE-pos
+      [+0.13, +4.15]), Asian Securities (#26 NEPSE-neg [-3.21, -0.26]),
+      and Broker 34 (hydro-pos [+0.40, +1.78]). **Naasa Securities (#58)
+      and Dynamic Money Managers (#44) — the 'most stable' and 'weak
+      negative' tags from Review #6 — have wide CIs that INCLUDE zero**.
+      Tags still appear in the dossier as descriptive context; CI verdicts
+      annotated. Rule 11 now carries the implicit caveat: only CI-
+      significant tags should be weighted in any future analysis.
+  (B) Hydro-index self-inclusion check (Romeo #6's biggest open caveat):
+      UPPER vs hydro r=0.757 (moderate, not 0.95+); variance ratio 1.75
+      (UPPER more volatile, consistent with single stock vs basket);
+      lag analysis shows hydro LEADS UPPER. Conclusion: **UPPER is one
+      of many hydro constituents, not the dominant weight**. The hydro-
+      adjusted column stays meaningfully comparing UPPER to other hydros.
+      Romeo's biggest open caveat is LESS SEVERE than feared.
+  No new Rules promoted; the bootstrap CI requirement is an implicit
+  tightening of Rule 11. Awaiting Romeo Review #7 to decide whether
+  this should become an explicit Rule 16 ("bootstrap CI must exclude
+  zero before any tag is published with confidence").
 - 2026-05-21 — v0.6 (Romeo Review #6 patches). MAJOR rewrite of Rule 11:
   - Compounding consistency fix in `sector_residual_test.py` (residual was
     additive, absolute was compounded — Romeo P1).

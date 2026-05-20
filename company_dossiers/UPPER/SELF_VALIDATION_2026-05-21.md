@@ -320,3 +320,51 @@ Final: ACCEPT-WITH-MOD. The residual test is directionally right; broker fingerp
 If we want a sixth+ pass: have someone document UPPER's actual weight in the NEPSE hydropower sub-index (NEPSE publishes index methodology). That single fact would either confirm or refute the "hydro residual is partially circular" caveat. Until then, NEPSE-adjusted is the cleaner column.
 
 This document is now canonical through Romeo Review #6.
+
+---
+
+## ⭐⭐ POST-#6 SELF-TESTS (2026-05-21, late) — CANONICAL UPDATE
+
+After Review #6 closed, ran two additional self-tests (no new external review yet — flagged for Romeo #7):
+
+### Test A — Bootstrap 95% CI on broker residual fingerprints
+
+For each named broker, drew 2000 resamples-with-replacement from their per-lead-day residual returns; took 2.5%-97.5% quantiles. **Result is materially conservative:**
+
+- **CI excludes zero (statistically significant) for ONLY 3 of 9 broker tags:**
+  - Online Securities #49 under NEPSE: [+0.13, +4.15]
+  - Asian Securities #26 under NEPSE: [−3.21, −0.26]
+  - Broker 34 under hydro: [+0.40, +1.78]
+- **CI straddles zero (NOT significant) for the other 6**, including the Review #6 headlines:
+  - Naasa Securities #58 hydro [−0.70, +3.46], NEPSE [−0.88, +3.63]
+  - Dynamic Money Managers #44 hydro [−3.72, +0.86], NEPSE [−2.64, +1.39]
+  - All sparse-sample brokers (n ≤ 11) — CI very wide
+
+**Implication:** Even the Review #6 "soft band" labels were overconfident for most brokers. Only 3 broker tags survive the bootstrap CI test. Naasa's "most stable near-threshold-pos" is — under bootstrap — within noise. **The point estimates are real numbers from real data, but they are not statistically distinguishable from zero at n=7-21.** The CI annotation is now in COMPANY_CONTEXT broker watchlist. Tags retained as descriptive context, but the CI-significant trio (Online, Asian Securities, Broker 34) is what should be weighted by any future analysis.
+
+### Test B — Hydro-index self-inclusion check
+
+Romeo #6's biggest open caveat: "UPPER may be a heavy constituent of the hydro sub-index, making the residual circular." Tested:
+
+- UPPER vs hydro **r = 0.757** (moderate, not 0.95+)
+- Variance ratio: UPPER is **1.75× more volatile** than hydro (consistent with single stock vs diversified basket — exactly what you'd expect if UPPER is one of many)
+- **Lag-1: hydro LEADS UPPER** (hydro_today→upper_tomorrow r = +0.108; upper_today→hydro_tomorrow r = −0.032). If UPPER drove the index, you'd see UPPER lead. The reverse is true.
+
+**Conclusion:** UPPER is one of many hydropower constituents, not the dominant weight. The hydro-adjusted residual is meaningfully comparing UPPER to "other hydros," not subtracting UPPER from itself. **Romeo's biggest open concern is less severe than feared.** Hydro-adjusted column stays trustworthy alongside NEPSE-adjusted.
+
+### Net broker watchlist after Test A (final, 2026-05-21 late)
+
+Three CI-significant tags, six descriptive-but-not-significant:
+
+| # | Firm | n | Tag (CI-aware) |
+|---|---|---:|---|
+| **49** | **Online Securities** | 16 | **Significant positive under NEPSE-adjustment** (95% CI [+0.13, +4.15]). Most defensible positive tag. |
+| **26** | **Asian Securities** | 7 | **Significant negative under NEPSE-adjustment** (95% CI [−3.21, −0.26]). n thin but CI excludes zero. |
+| **34** | **(unresolved)** | 15 | **Significant positive under hydro-adjustment** (95% CI [+0.40, +1.78]). Sign-flips vs absolute; treat with caution. |
+| 58 | Naasa Securities | 21 | Point estimate +1.23%/+1.12%, but CI [−0.70, +3.46]/[−0.88, +3.63] — not significant. Most popular broker tag but bootstrap doesn't distinguish from zero. |
+| 44 | Dynamic Money Managers | 20 | Point estimate −1.35%/−0.61%, CIs straddle zero. Not significant. |
+| 38, 42, 48, 88 | various | various | All CI-not-significant. |
+
+### What still needs Romeo #7
+
+Whether to formalize a new METHODOLOGY rule: **"only publish broker tags with bootstrap CI excluding zero with confidence."** Currently this is an implicit tightening; making it explicit would force every future broker tag to clear a statistical bar before being labeled.
