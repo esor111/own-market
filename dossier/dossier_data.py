@@ -200,6 +200,29 @@ def corporate_actions(symbol: str) -> list[dict]:
     return events
 
 
+# --------------------------------------------------------------- intraday ----
+def intraday(symbol: str) -> dict:
+    """If nepsealpha minute/hourly/daily JSON exists (from
+    refresh_upper_data.ps1 / scripts/refresh_nepse_symbol.js), load and
+    return it. Otherwise return {}. Read-only."""
+    sym = symbol.lower()
+    candidates = [
+        os.path.join(OWN, f"{sym}_volume_last_month_full.json"),
+        os.path.join(OWN, "experiments", "08-hydro-volume-tape-lab",
+                     "raw", symbol, f"{sym}_volume_last_month_full.json"),
+    ]
+    for p in candidates:
+        if os.path.exists(p):
+            try:
+                d = json.load(open(p, encoding="utf-8"))
+                d["_source_path"] = p
+                return d
+            except Exception as e:  # noqa: BLE001
+                return {"_error": f"{type(e).__name__}: {e}",
+                        "_source_path": p}
+    return {}
+
+
 # ------------------------------------------------------------- assemble ----
 @dataclass
 class DossierData:
@@ -207,6 +230,7 @@ class DossierData:
     price: list = field(default_factory=list)
     broker: dict = field(default_factory=dict)
     events: list = field(default_factory=list)
+    intraday: dict = field(default_factory=dict)
     coverage_note: str = ""
 
 
@@ -214,15 +238,25 @@ def assemble(symbol: str) -> DossierData:
     p = price_history(symbol)
     b = broker_flow(symbol)
     e = corporate_actions(symbol)
+    intra = intraday(symbol)
     cov = b.get("coverage") or {}
+    intra_note = ""
+    if intra and not intra.get("_error"):
+        intra_note = (
+            f" | intraday (nepsealpha) {intra.get('cutoff_datetime_np','NA')}"
+            f"->{intra.get('latest_datetime_np','NA')} ("
+            f"{intra.get('minute_bar_count','?')} min bars, "
+            f"{intra.get('trading_days','?')} days; scraped "
+            f"{intra.get('scraped_at_np','?')})")
     note = (
         f"OHLCV {p[0]['date'] if p else 'NA'}->{p[-1]['date'] if p else 'NA'} "
         f"({len(p)} days, NOT corp-action adjusted) | "
         f"broker flow {cov.get('first_date','NA')}->{cov.get('last_date','NA')}"
         f" ({cov.get('files_with_rows','0')} days, "
         f"{cov.get('unique_brokers','0')} brokers) | "
-        f"events {len(e)} (announcements + timeline backfill, historical)")
-    return DossierData(symbol, p, b, e, note)
+        f"events {len(e)} (announcements + timeline backfill, historical)"
+        f"{intra_note}")
+    return DossierData(symbol, p, b, e, intra, note)
 
 
 if __name__ == "__main__":

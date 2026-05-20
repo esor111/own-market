@@ -116,6 +116,24 @@ Broker 88 sold persistently across **rising** prices (Mar 17 close 219 → Mar 1
 - The Mar 10 catalyst is **unknown**. A pattern with an unidentified driver should not be relied on.
 - Generalising broker 88's behaviour to other Nepali hydros from N=1 case is data-snooping.
 
+## Addendum (2026-05-20): intraday finding from nepsealpha minute data
+
+Source: `experiments/08-hydro-volume-tape-lab/raw/UPPER/upper_volume_last_month_full.json` (scraped 2026-04-27 via `refresh_upper_data.ps1` + `scripts/refresh_nepse_symbol.js`; CDP-attach to a real Chrome session, `fsk`-token sniff, iframe-context fetch — the *working* nepsealpha pipeline I previously declared impossible; see METHODOLOGY Rule 10).
+
+The minute-bar data adds a single decisive observation the EOD analysis could not see:
+
+| Date | Day volume | **Opening hour (11:00 NPT) volume** | **Opening hour share** |
+|---|---:|---:|---:|
+| 2026-03-10 (rally launch) | 2,114,315 | 1,147,960 | **54.3%** |
+| 2026-03-19 (battle/absorption day) | 2,548,271 | 1,305,441 | **51.2%** |
+| 2026-03-22 (peak) | 1,552,477 | 597,112 | 38.5% |
+
+**The March rally was an OPENING-HOUR phenomenon.** On the two biggest-volume rally days, **>50% of the entire day's volume traded in the first hour after the 11:00 NPT open.** That is the timing-fingerprint of an institutional or coordinated retail-app order flow opening the day with a positioning trade, not a diffuse intraday accumulation.
+
+Combined with §4's finding that broker 88 was a *persistent multi-week seller across* this same period, the intraday data sharpens the picture: the rally days were *opening-print absorption events* where buyers pushed price up in the first 60 minutes through the day's largest sell-leader (broker 88 / 35) supply. The peak day (Mar 22) shows opening-hour share dropping to 38.5% — by then the absorption was exhausted; selling spread across the session, not concentrated at the open.
+
+**Methodological add-on candidate (not yet promoted to METHODOLOGY.md):** for any heavy-volume rally day, check `(opening_hour_volume / day_volume)`. >50% concentration in the first hour = "opening-print event" (institutional / app-flow positioning); <30% = "intraday accumulation" (more diffuse, more retail-shaped). Worth observing on the next case before formalising as a rule.
+
 ## Sources & references
 
 - Local OHLCV: `sharesansar_datascrape/data/*.csv`.

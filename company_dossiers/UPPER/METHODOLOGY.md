@@ -181,6 +181,33 @@ before the data has spoken.
 **Anti-pattern this avoids.** Confirming the chart's first impression with
 the data, instead of letting the data correct the chart.
 
+## Rule 10 — Grep the codebase before declaring a probe impossible
+
+**The technique.** Before concluding "this can't be done" / "the site is gated"
+/ "no working approach exists," **search the existing codebase for any
+script that already does the thing.** A 30-second `Grep` against the repo
+beats hours of reinventing — and beats wrong conclusions that go into the
+record.
+
+**Concrete checklist before any "this is impossible" verdict:**
+- `Grep <site or feature name>` across the whole project tree.
+- Look for `.ps1`, `.sh`, `.js`, `.py` wrappers as well as docs / READMEs.
+- Read any `SOLUTION.md` / `KNOWN_GOTCHAS.md` / `RESOURCES.md` you find.
+- Check for `.playwright-mcp`, `.cdp`, `chrome-automation` or similar
+  artifacts indicating a working browser-automation flow.
+
+**Why it matters.** Reinventing is expensive; declaring something impossible
+when a working solution lives in the repo is *worse than expensive* — it
+puts a false fact into the dossier. This rule exists because exactly that
+happened on nepsealpha: I declared the site fully gated in three separate
+write-ups before someone pointed at `refresh_upper_data.ps1` + `scripts/
+refresh_nepse_symbol.js`, which had been quietly pulling 37,347 minute bars
+of UPPER intraday data for weeks. The mistake wasn't the failed probe; it
+was *not searching the codebase before writing up the conclusion*.
+
+**Anti-pattern this avoids.** Confident "impossible" conclusions written into
+the dossier when a working solution already exists nearby.
+
 ## Rule 9 — The absorption signature (added from Case #2, Mar 19 2026)
 
 **The technique.** On a heavy-volume day where (a) top-5 buy concentration and
@@ -244,3 +271,9 @@ the former gets *used*, and the inaccuracy compounds.
   March 2026 rally case (CASE_2026-03-10_rally.md, specifically the Mar 19
   +7.53% / 2.55M-vol battle day with balanced top-5 concentration). First
   example of the methodology growing from a real case, as designed.
+- 2026-05-20 — v0.2. Added Rule 10 ("grep before declaring impossible")
+  after I wrongly declared nepsealpha fully gated three times before
+  discovering `refresh_upper_data.ps1` + `scripts/refresh_nepse_symbol.js`
+  already in the repo, working perfectly via CDP-attach + fsk-token sniff +
+  iframe-context fetch. Meta-lesson: the canonical-source-first discipline
+  applies to the codebase itself, not just data.
