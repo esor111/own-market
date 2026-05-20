@@ -92,7 +92,7 @@ Computed across 343 days of UPPER broker history (2023-06 → 2026-05); broker n
 
 | # | Firm | Rule-11 signature | Use as descriptive context |
 |---|---|---|---|
-| **58** | **Naasa Securities Co. Ltd.** | **INFORMED +2.86% (n=21)** | Cleanest positive follow-through context on UPPER in this sample. One of NEPSE's largest brokers; wholesale-flow channel for institutional/HNW. *Context, not a "smart money is buying" signal — the data does not support that strength of claim.* |
+| **58** | **Naasa Securities Co. Ltd.** | **INFORMED +2.86% (n=21)** | Cleanest positive follow-through context on UPPER in this sample. One of NEPSE's largest brokers; wholesale-flow channel for institutional/HNW. **Reflexivity note (per self-validation 2026-05-21):** about half of the +2.86% accrues *same-day* (alongside their flow); about half over the following 5 days. The same-day component may be partly reflexive (their flow moving the market) rather than predictive. *Context, not a "smart money is buying" signal — the data does not support that strength of claim.* |
 | 49 | Online Securities Pvt. Ltd. | INFORMED +1.30% (n=16) | Mild positive follow-through context. |
 | 44 | **Dynamic Money Managers Securities** | **FORCED −6.02% (n=20)** | Took the **largest single position of any broker** on UPPER (−260k on Jul 18 '24). Sold the entire 2024 rally and missed the top. Pattern *consistent with* mechanical execution (portfolio/redemption/VWAP-target); the data does not prove that — it's a candidate interpretation. **NOT a fade signal** — descriptive only. |
 | 34 | (unresolved name) | FORCED (mild) −1.04% (n=15) | Marginal negative follow-through context. |

@@ -101,6 +101,18 @@ The September 27-28, 2024 landslide (88-day shutdown, 4 deaths, Rs 1.78b insuran
 - The Naasa-accumulating + Dynamic-Money-Managers-selling pattern of this case is **descriptive**; the next equivalent setup could look identical and resolve differently.
 - No buy/sell, no target, no stop emerges. Pattern memory only.
 
+## 9b. Sector-context addendum (2026-05-21, per Rule 13)
+
+Per `sector_correlation_test.py`: during the Jun 30 → Aug 27 2024 rally window, **UPPER was +54.2%, hydropower sub-index was +31.9%, correlation r=0.77, idiosyncratic spread +22.3%.**
+
+**Major reinterpretation:** the headline +87% UPPER move was *largely a hydropower-sector rally*. UPPER outperformed the sector by ~22%, but **the +54% move from June 30 → Aug 27 was mostly sector beta (~+32%) with a +22% UPPER-specific spread on top.** Even more striking: **for full-year 2024, the hydro sub-index was +41.4% while UPPER was −1.6% — UPPER underperformed the sector by ~43% over the full year**, recovering only some of that gap during the Jul-Aug rally.
+
+**Implication for the FY-result-rally narrative:** the +22% UPPER-specific outperformance is what the "fiscal-year-end → August result positioning" story explains — NOT the full +54% headline. Whatever drove the broader hydropower sector rally in Jul-Aug 2024 is *separate* from anything UPPER-specific. The narrative was UPPER explaining the spread, not driving the move.
+
+**Sept 2024 landslide context corrected:** I had said the disaster "hit a stock already unwinding the rally, not crashing into the disaster." More honest: during the Sep 27 → Dec 31 landslide window, **UPPER was −1.8% but the hydro sub-index was +11.4% — so UPPER underperformed the sector by ~13% during the disaster window.** The disaster had a real relative cost; the absolute "drift" framing was misleading.
+
+This case's weight should be lowered further than already noted in §10 below — only ~41% of the headline move was UPPER-specific.
+
 ## 10. ⚠️ Honest weight-vs-other-cases note (per Romeo review #4, 2026-05-20)
 
 **Of the three cases in this dossier, this one rests on the heaviest narrative load.** The "fiscal-year-end → August result positioning" interpretation is a *story* that fits the price/broker data on UPPER 2024, but it is also the kind of story that is easy to over-read into a pattern:

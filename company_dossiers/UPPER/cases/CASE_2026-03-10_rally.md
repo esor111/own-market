@@ -134,6 +134,14 @@ Combined with §4's finding that broker 88 was a *persistent multi-week seller a
 
 **Methodological add-on candidate (not yet promoted to METHODOLOGY.md):** for any heavy-volume rally day, check `(opening_hour_volume / day_volume)`. >50% concentration in the first hour = "opening-print event" (institutional / app-flow positioning); <30% = "intraday accumulation" (more diffuse, more retail-shaped). Worth observing on the next case before formalising as a rule.
 
+## Sector-context addendum (2026-05-21, per Rule 13)
+
+Per `sector_correlation_test.py`: during the Mar 1 → Mar 22 2026 rally window, **UPPER was +28.7%, hydropower sub-index was +12.4%, correlation r=0.80, idiosyncratic spread +16.3%.**
+
+**Implication:** the headline +29% UPPER move was *mostly hydro-sector flow* (~+12%) with **about +16% of UPPER-specific outperformance**. The broker fingerprint analysis above (Naasa accumulated, Dynamic Money Managers persistently sold) captures the *idiosyncratic spread*, NOT the whole rally. The launch on Mar 10 (broker 28 +119k) and the Mar 19 absorption battle were real UPPER-specific events but they happened *during* a sector-wide rally and amplified it; they did not by themselves drive it.
+
+Reader-weight: this case's evidence weight should be moderate, not high — about 57% of the headline move was sector beta. See SELF_VALIDATION_2026-05-21.md for context.
+
 ## Sources & references
 
 - Local OHLCV: `sharesansar_datascrape/data/*.csv`.

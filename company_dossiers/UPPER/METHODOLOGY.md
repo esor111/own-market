@@ -181,6 +181,40 @@ before the data has spoken.
 **Anti-pattern this avoids.** Confirming the chart's first impression with
 the data, instead of letting the data correct the chart.
 
+## Rule 13 — Sector-context check before claiming idiosyncrasy
+
+**The technique.** Before treating any stock-level move or pattern as
+*idiosyncratic to that stock*, compute its correlation with the relevant
+sector sub-index over the same window. If correlation is high (e.g. r > 0.6),
+a large share of the move was sector beta, not stock-specific.
+
+**Concrete on UPPER (computed 2026-05-21, `sector_correlation_test.py`):**
+- Full-window correlation UPPER daily ret vs hydropower sub-index: **r = 0.796 over 1,247 days.**
+- 2024 rally (Jun 30 → Aug 27): UPPER +54%, hydro sector +32% → idiosyncratic spread +22%.
+- Mar 2026 rally (Mar 1 → Mar 22): UPPER +29%, hydro sector +12% → idiosyncratic spread +16%.
+- Apr 22 2026 broker-100 window: UPPER −7%, hydro sector −2% → idiosyncratic spread −5% (Case #1 is the *most* stock-specific event in our case library).
+- Sep 2024 landslide window: UPPER −2%, hydro sector +11% → UPPER underperformed sector by ~13%.
+
+**Implication for stock-level analysis:** stock-level findings explain the
+idiosyncratic *spread*, not the headline move. Case-narrative weighting should
+account for this: Case #1 has the most weight (~71% of its move was
+idiosyncratic), Case #2 has less (~57%), Case #3 has even less (~41%).
+
+**Anti-pattern this avoids.** Attributing a sector-wide rally to a stock-
+specific catalyst. The 2024 UPPER rally narrative ("FY result positioning")
+explains only the +22% spread; the +32% headline portion was the whole
+hydropower sector.
+
+**Known methodological gap (flagged, not yet patched):** Rule 11 broker
+fingerprints currently compute follow-through against UPPER's *absolute*
+price moves — which are 80% correlated with the sector. The fingerprints
+therefore partially measure "broker was bullish during a sector rally" rather
+than "broker had stock-specific insight." A refined Rule 11 would compute
+follow-through against UPPER's *residual after sector-beta adjustment*. This
+is the single biggest methodology hole in the current dossier; it has not
+been tested, and its existence should temper confidence in all current
+broker fingerprints until tested.
+
 ## Rule 12 — Cross-source corp-action awareness
 
 **The technique.** Before cross-comparing price levels between two sources,
@@ -368,6 +402,24 @@ the former gets *used*, and the inaccuracy compounds.
   forced signatures on UPPER (broker 58 +3.58% INFORMED; broker 44 −7.05%
   FORCED). Rule 12 (cross-source corp-action awareness) earned its place
   from the local-vs-nepsealpha level divergence (Rs 766 unadj vs Rs 504 adj).
+- 2026-05-21 — v0.5 (self-validation pass; minimal patch after user caught
+  over-correction risk). Promoted Rule 13 (sector-context check) — earned
+  from the r=0.796 UPPER-vs-hydro-sub-index finding (`sector_correlation_test.py`).
+  Recorded two CANDIDATE rules NOT yet promoted (need Romeo Review #5):
+  Rule 14 candidate (stability requirement before promoting tags) — held
+  back because per-third n's in `stability_test.py` were too small (n=2-3
+  in some thirds) to draw confident verdicts from; Rule 15 candidate
+  (same-day vs following-days decomposition) — held back as a candidate
+  not yet earned. Naasa #58 received a reflexivity note in COMPANY_CONTEXT
+  (the ~50%-same-day finding is real and worth flagging). NO downgrades
+  applied to Online Securities #49 or Dynamic Money Managers #44, because
+  the per-third samples driving those verdicts were too thin (P3 n=2-3).
+  Major methodological gap flagged: Rule 11 broker fingerprints likely have
+  market-beta contamination (UPPER r=0.80 with hydro sector); proper test
+  requires sector-residual follow-through, not yet done. Two case files
+  (Cases #2 and #3) received brief sector-context addenda; Case #1 NOT
+  modified (the "Apr 7 sharp drop" wording cannot be checked without
+  intraday data which was not in this pass).
 - 2026-05-20 — v0.4 (Romeo review #4 patches). THREE corrections:
   (a) Rule 11 forward-window math fixed from "calendar +10 days, take last"
       to **exact +5 trading days** in the sorted trading-date list, matching
