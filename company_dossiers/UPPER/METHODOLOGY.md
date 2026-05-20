@@ -181,6 +181,66 @@ before the data has spoken.
 **Anti-pattern this avoids.** Confirming the chart's first impression with
 the data, instead of letting the data correct the chart.
 
+## Rule 12 — Cross-source corp-action awareness
+
+**The technique.** Before cross-comparing price levels between two sources,
+explicitly check whether each is corporate-action adjusted. Adjusted and
+unadjusted series diverge massively across major events (rights, bonus,
+splits) — sometimes by 50%+ for a single 1:1 right-share.
+
+**Concrete on UPPER:**
+- Local OHLCV (`sharesansar_datascrape/data/*.csv`): **NOT adjusted.** Shows pre-rights peak of Rs 766 (Feb 2022).
+- Nepsealpha daily endpoint: **adjusted.** Shows post-rights-equivalent peak of Rs 504 (Apr 2021).
+
+Both are correct in their own frame. They are NOT comparable on level. They
+ARE comparable on percentage moves (mostly).
+
+**Implication for dossier work:**
+- Quote levels with the source named ("Rs 504 (adjusted, nepsealpha)" vs "Rs 766 (unadjusted, local OHLCV)").
+- For multi-year structural analysis, prefer the adjusted source.
+- For recent (<6 months) day-to-day reading where no corp action falls in the
+  window, either source is fine.
+
+**Anti-pattern this avoids.** Quoting a price level without naming the source,
+then drawing structural conclusions about historic highs/lows that are
+artifacts of an adjustment difference.
+
+## Rule 11 — Broker fingerprinting via lead-day follow-through
+
+**The technique.** For any symbol with ≥1 year of broker fact-table data,
+compute per-broker:
+1. **Lead days (n):** how many times that broker was the day's largest
+   absolute net position.
+2. **Avg 5-day follow-through:** for each lead day, the forward 5-trading-day
+   price change *in that broker's net direction*. Sum / count = the broker's
+   signature value.
+
+| Signature value | Tag | Interpretation |
+|---|---|---|
+| > +1.0% | INFORMED | Price tends to follow when they take a big position |
+| < −1.0% | FORCED | Price tends to reverse against them |
+| ±1.0% | NOISE | No reliable follow-through |
+
+**Use:**
+- *Descriptive context only* in the daily read: "today's top buyer is broker 58, who has a historically-informed signature (+3.58% avg follow-through over 21 lead days)."
+- **Never as a signal to follow.** A historical fingerprint is a pattern in past data, not a prediction about the next event. Broker identities are anonymous numeric and may shift entity over time.
+
+**Concrete on UPPER (computed 2026-05-20, n=343 days):**
+- Broker 58: 21 lead days, **+3.58%** → INFORMED.
+- Broker 44: 20 lead days, **−7.05%**, max position 260k shares → FORCED.
+- Broker 49: 16 lead days, +1.92% → INFORMED.
+- Brokers with ≤10 lead days = sample too thin to classify with confidence.
+
+**Caveats:**
+- N is small (7-23 per broker). Confidence is moderate.
+- Anonymous broker IDs — not stable cross-source.
+- Path-dependence: one big day can dominate the average. Always check dispersion.
+- Survivorship: only brokers active in the broker-history window appear.
+
+**Anti-pattern this avoids.** Treating every appearance of a "big broker" as
+informed flow. Without the historical follow-through check, there is no
+basis to distinguish informed from forced from noise.
+
 ## Rule 10 — Grep the codebase before declaring a probe impossible
 
 **The technique.** Before concluding "this can't be done" / "the site is gated"
@@ -277,3 +337,9 @@ the former gets *used*, and the inaccuracy compounds.
   already in the repo, working perfectly via CDP-attach + fsk-token sniff +
   iframe-context fetch. Meta-lesson: the canonical-source-first discipline
   applies to the codebase itself, not just data.
+- 2026-05-20 — v0.3. Promoted Rules 11 and 12 from the deep 5-year analysis
+  (`DEEP_FINDINGS_2026-05-20.md`). Rule 11 (broker fingerprinting via
+  lead-day follow-through) earned its place by producing clean signal-vs-
+  forced signatures on UPPER (broker 58 +3.58% INFORMED; broker 44 −7.05%
+  FORCED). Rule 12 (cross-source corp-action awareness) earned its place
+  from the local-vs-nepsealpha level divergence (Rs 766 unadj vs Rs 504 adj).
