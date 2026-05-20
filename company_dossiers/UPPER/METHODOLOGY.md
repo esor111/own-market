@@ -181,6 +181,36 @@ before the data has spoken.
 **Anti-pattern this avoids.** Confirming the chart's first impression with
 the data, instead of letting the data correct the chart.
 
+## Rule 9 — The absorption signature (added from Case #2, Mar 19 2026)
+
+**The technique.** On a heavy-volume day where (a) top-5 buy concentration and
+top-5 sell concentration are **approximately equal** (e.g. both 22–26%, neither
+side singularly dominant) and (b) price moves **sharply in one direction**,
+the side moving the price is *actively absorbing* the other side's flow.
+
+- **Heavy vol + balanced concentration + sharp UP move** = buyers absorbing
+  every share offered. Sellers are present and large, but the buyers are
+  *taking everything they put up*. Descriptive: "active buyer absorption."
+- **Heavy vol + balanced concentration + sharp DOWN move** = sellers absorbing
+  every bid. Buyers are present, just being overwhelmed.
+
+**Why it matters.** Without this lens, "balanced concentration" looks like
+"nothing interesting — no side dominates." But when paired with a large
+directional move, balanced concentration is the *most* informative footprint:
+both sides showed up in size, and one side decisively won.
+
+**Concrete on UPPER Mar 19 2026:** top-5 buy 22.7%, top-5 sell 24.6% — looks
+balanced — but price closed +7.53% on the day's largest volume of the rally
+(2.55M). Two large net sellers (broker 35 −95k, broker 88 −81k) AND two large
+net buyers (broker 66 +66k, broker 49 +66k) collided. The buyers won.
+
+**When NOT to apply.** On low-volume days, "balanced + small move" is just
+noise. The signature requires *heavy volume + sharp move* together. Don't
+read it into a quiet tape.
+
+**Anti-pattern this avoids.** Calling a heavy-volume up-day "consolidation" or
+"no clear winner" when in fact one side was demonstrably absorbing the other.
+
 ## Rule 8 — Mark [unverified] explicitly; never guess
 
 **The rule.** When a fact is not located in a verifiable open source, mark it
@@ -210,3 +240,7 @@ the former gets *used*, and the inaccuracy compounds.
 - 2026-05-20 — v0. Rules 1-8 distilled from the Apr 22 2026 UPPER event case
   (CASE_2026-04-22_volume_anomaly.md), the broader UPPER §2 sourcing pass,
   and the nepsealpha probe. Eight rules; future cases will extend.
+- 2026-05-20 — v0.1. Added Rule 9 ("absorption signature") derived from the
+  March 2026 rally case (CASE_2026-03-10_rally.md, specifically the Mar 19
+  +7.53% / 2.55M-vol battle day with balanced top-5 concentration). First
+  example of the methodology growing from a real case, as designed.
