@@ -101,6 +101,21 @@ The September 27-28, 2024 landslide (88-day shutdown, 4 deaths, Rs 1.78b insuran
 - The Naasa-accumulating + Dynamic-Money-Managers-selling pattern of this case is **descriptive**; the next equivalent setup could look identical and resolve differently.
 - No buy/sell, no target, no stop emerges. Pattern memory only.
 
+## 10. ⚠️ Honest weight-vs-other-cases note (per Romeo review #4, 2026-05-20)
+
+**Of the three cases in this dossier, this one rests on the heaviest narrative load.** The "fiscal-year-end → August result positioning" interpretation is a *story* that fits the price/broker data on UPPER 2024, but it is also the kind of story that is easy to over-read into a pattern:
+
+- The source's §9.1 win-rate is across many BFI sectors and many years, NOT a tested UPPER-specific pattern.
+- Our **own calendar lab** explicitly proved that this seasonal pattern is *suggestive but unconfirmable* at retail data N (≤6 same-sign years cannot clear the pre-committed α=0.01 bar).
+- We have N=1 (this 2024 instance) of the FY-result-rally pattern on UPPER. One case does not make a rule.
+
+**Compare to:**
+- **Case #1 (Apr 22 anomaly)** — strongest evidence: price-shape + broker round-trip price-check + persistent layer + intraday closing-hour concentration all independently point to "forced flow." Four lines of evidence converge.
+- **Case #2 (Mar 2026 rally)** — middle evidence: clean broker fingerprint contrast, but the launch catalyst still unknown.
+- **Case #3 (this one)** — weakest evidence: catalyst is *named* (FY result print) but the *interpretation* of why the market rallied INTO a Rs 2.68b loss is necessarily a narrative. The narrative is plausible; it is not proven.
+
+**How to read this case in the daily-read flow:** treat it as **context for August result periods** and **a clear empirical instance of the §9.1 pattern on UPPER** — useful for forming a thesis you can write into the journal. Do NOT treat it as a "next August will rally" template, and weight your conviction in any next-August discretionary decision accordingly lower than you would weight a Case-#1-style multi-evidence convergence.
+
 ## Sources
 
 - `dossier_data.corporate_actions("UPPER")` events list (the 2024-08-13 entry).

@@ -88,17 +88,20 @@ located in a verifiable open source as of 2026-05-20.
 
 Computed across 343 days of UPPER broker history (2023-06 → 2026-05); broker numbers resolved via [merolagani BrokerList](https://www.merolagani.com/BrokerList.aspx) and confirmed by ShareSansar weekly summaries:
 
+**Numbers recomputed 2026-05-20 with exact-5-trading-day forward math** (the prior version used a calendar-day approximation; per Romeo review the methodology now uses an exact-trading-day index). Tag scheme adds SPARSE_POSITIVE / SPARSE_NEGATIVE for cases where n ≤ 10.
+
 | # | Firm | Rule-11 signature | Use as descriptive context |
 |---|---|---|---|
-| **58** | **Naasa Securities Co. Ltd.** | **INFORMED +3.58% over 5d (n=21)** | When Naasa is leading or persistently active on a side, that's the most informed-fingerprint signal we have on UPPER. Likely wholesale flow for institutions/HNW. |
-| 49 | Online Securities Pvt. Ltd. | INFORMED +1.92% (n=16) | Retail-app broker; mild informed signature. |
-| 38 | Dipshikha Dhitopatra Karobar Pvt. Ltd. | INFORMED +2.13% (n=9) | Top-buyer on multiple Aug 2024 rally days. |
-| **44** | **Dynamic Money Managers Securities** | **FORCED −7.05% (n=20)** | Took the **largest single position** (−260k on Jul 18 '24). Sold the entire 2024 rally and missed the top. Pattern is consistent with portfolio/redemption-driven mechanical execution. NOT a fade signal — descriptive only. |
-| 42 | Sani Securities Co. Ltd. | mildly forced −1.14% (n=23) | Most-frequent day-leader; high turnover. |
-| 48 | (resolve later) | mildly forced −1.31% (n=11) | |
-| 26 | Asian Securities Pvt. Limited | mildly forced −1.10% (n=7) | Currently on a 7-day net-buy streak. |
-| 88 | Blue Chip Securities Ltd | noise +0.46% (n=8) | Episodic; the Mar 19 '26 rally distributor. |
-| 28 | Shree Krishna Securities Limited | sparse (3 leads) | The Mar 10 '26 rally-launch buyer (+119k). |
+| **58** | **Naasa Securities Co. Ltd.** | **INFORMED +2.86% (n=21)** | Cleanest positive follow-through context on UPPER in this sample. One of NEPSE's largest brokers; wholesale-flow channel for institutional/HNW. *Context, not a "smart money is buying" signal — the data does not support that strength of claim.* |
+| 49 | Online Securities Pvt. Ltd. | INFORMED +1.30% (n=16) | Mild positive follow-through context. |
+| 44 | **Dynamic Money Managers Securities** | **FORCED −6.02% (n=20)** | Took the **largest single position of any broker** on UPPER (−260k on Jul 18 '24). Sold the entire 2024 rally and missed the top. Pattern *consistent with* mechanical execution (portfolio/redemption/VWAP-target); the data does not prove that — it's a candidate interpretation. **NOT a fade signal** — descriptive only. |
+| 34 | (unresolved name) | FORCED (mild) −1.04% (n=15) | Marginal negative follow-through context. |
+| 48 | (unresolved name) | FORCED (mild) −1.05% (n=11) | Marginal negative follow-through context. |
+| 38 | Dipshikha Dhitopatra Karobar Pvt. Ltd. | **SPARSE_POSITIVE** +2.79% (n=9) | Directionally positive but sample below the n=11 threshold — *not* confidently classified. Top-buyer on multiple Aug 2024 rally days. |
+| 88 | Blue Chip Securities Ltd | SPARSE_POSITIVE +1.61% (n=8) | n thin; the Mar 19 '26 rally distributor (sold 81k); episodic. |
+| 26 | Asian Securities Pvt. Limited | SPARSE_NEGATIVE −1.17% (n=7) | Directionally negative but n=7 thin. Currently on a 7-day net-buy streak. |
+| 42 | Sani Securities Co. Ltd. | NOISE −0.19% (n=22) | Most-frequent leader; high turnover; no reliable follow-through context. |
+| 28 | Shree Krishna Securities Limited | too sparse (3 leads) | The Mar 10 '26 rally-launch buyer (+119k). |
 
 **Discipline (binding):** these are *named context* for the daily read, NOT signals to follow. Per DOSSIER_CONTRACT §7 and METHODOLOGY Rule 11: a historical fingerprint is a pattern in past data, never a prediction about the next event. Broker identities are not stable cross-symbol.
 

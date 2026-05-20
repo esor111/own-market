@@ -211,35 +211,60 @@ artifacts of an adjustment difference.
 compute per-broker:
 1. **Lead days (n):** how many times that broker was the day's largest
    absolute net position.
-2. **Avg 5-day follow-through:** for each lead day, the forward 5-trading-day
-   price change *in that broker's net direction*. Sum / count = the broker's
-   signature value.
+2. **Avg exact-5-trading-day follow-through:** for each lead day, the price
+   change exactly **5 trading days forward** (not calendar days) *in that
+   broker's net direction*. Sum / count = the broker's signature value.
 
-| Signature value | Tag | Interpretation |
-|---|---|---|
-| > +1.0% | INFORMED | Price tends to follow when they take a big position |
-| < −1.0% | FORCED | Price tends to reverse against them |
-| ±1.0% | NOISE | No reliable follow-through |
+**Classification (revised 2026-05-20 post Romeo-review for sample-size honesty):**
 
-**Use:**
-- *Descriptive context only* in the daily read: "today's top buyer is broker 58, who has a historically-informed signature (+3.58% avg follow-through over 21 lead days)."
-- **Never as a signal to follow.** A historical fingerprint is a pattern in past data, not a prediction about the next event. Broker identities are anonymous numeric and may shift entity over time.
+| Signature value | Lead-day count n | Tag | Interpretation |
+|---|---|---|---|
+| > +1.0% | n ≥ 11 | INFORMED | Historically positive follow-through context in this sample |
+| < −1.0% | n ≥ 11 | FORCED | Historically negative follow-through context in this sample |
+| > +1.0% | n ≤ 10 | SPARSE_POSITIVE | Directionally positive but sample too thin to classify confidently |
+| < −1.0% | n ≤ 10 | SPARSE_NEGATIVE | Directionally negative but sample too thin to classify confidently |
+| ±1.0% | any | NOISE | No reliable follow-through in this sample |
 
-**Concrete on UPPER (computed 2026-05-20, n=343 days):**
-- Broker 58: 21 lead days, **+3.58%** → INFORMED.
-- Broker 44: 20 lead days, **−7.05%**, max position 260k shares → FORCED.
-- Broker 49: 16 lead days, +1.92% → INFORMED.
-- Brokers with ≤10 lead days = sample too thin to classify with confidence.
+**Use — strictly descriptive context:**
+- In the daily read: "today's top buyer is Naasa Securities, which has
+  historically positive follow-through context on UPPER in this sample
+  (+2.86% avg over 21 lead days)."
+- **Never as a signal to follow.** A historical fingerprint is a pattern in
+  past data, not a prediction about the next event. Use of words like
+  "reliable" or "smart money" or "follow them" is forbidden — the data does
+  not support that strength of claim.
+- Broker identities are stable on NEPSE in the medium term but corporate
+  ownership/management of brokerages can change; not safe cross-symbol or
+  cross-era.
 
-**Caveats:**
-- N is small (7-23 per broker). Confidence is moderate.
-- Anonymous broker IDs — not stable cross-source.
-- Path-dependence: one big day can dominate the average. Always check dispersion.
+**Concrete on UPPER (recomputed 2026-05-20 with exact-trading-day math; supersedes prior):**
+
+| # | n | Avg | Tag |
+|---|---:|---:|---|
+| 58 (Naasa Securities) | 21 | +2.86% | INFORMED |
+| 44 (Dynamic Money Managers) | 20 | −6.02% | FORCED |
+| 49 (Online Securities) | 16 | +1.30% | INFORMED |
+| 34 | 15 | −1.04% | FORCED (mild) |
+| 48 | 11 | −1.05% | FORCED (mild) |
+| 38 (Dipshikha Dhitopatra) | 9 | +2.79% | SPARSE_POSITIVE |
+| 81 | 9 | +1.05% | SPARSE_POSITIVE |
+| 88 (Blue Chip) | 8 | +1.61% | SPARSE_POSITIVE |
+| 22 | 7 | +1.01% | SPARSE_POSITIVE |
+| 26 (Asian Securities) | 7 | −1.17% | SPARSE_NEGATIVE |
+| 42, 56, 45, 17, 35 | ≥7 | ±1.0% | NOISE |
+
+**Caveats (binding):**
+- N is small. Even at n=21, the signature is "context for this sample,"
+  not a confirmed property of the broker.
+- Path-dependence: one big day can dominate the average. The script does
+  not yet check dispersion — that's a known gap.
 - Survivorship: only brokers active in the broker-history window appear.
+- Anonymous broker IDs may not be stable cross-symbol.
 
 **Anti-pattern this avoids.** Treating every appearance of a "big broker" as
 informed flow. Without the historical follow-through check, there is no
-basis to distinguish informed from forced from noise.
+basis to distinguish informed from forced from noise. Equally avoided:
+treating the historical signature as if it predicts the next event.
 
 ## Rule 10 — Grep the codebase before declaring a probe impossible
 
@@ -343,3 +368,18 @@ the former gets *used*, and the inaccuracy compounds.
   forced signatures on UPPER (broker 58 +3.58% INFORMED; broker 44 −7.05%
   FORCED). Rule 12 (cross-source corp-action awareness) earned its place
   from the local-vs-nepsealpha level divergence (Rs 766 unadj vs Rs 504 adj).
+- 2026-05-20 — v0.4 (Romeo review #4 patches). THREE corrections:
+  (a) Rule 11 forward-window math fixed from "calendar +10 days, take last"
+      to **exact +5 trading days** in the sorted trading-date list, matching
+      the prose claim. Recomputed all fingerprints; magnitudes shifted
+      modestly downward (broker 58 +3.58% → +2.86%; broker 44 −7.05% → −6.02%);
+      rank-order of top signatures unchanged. Several prior "mildly forced"
+      tags reclassified to NOISE post-fix.
+  (b) Added SPARSE_POSITIVE / SPARSE_NEGATIVE tags for n ≤ 10 — fixes the
+      inconsistency where broker 38 was tagged INFORMED at n=9 despite the
+      methodology stating n ≤ 10 is too thin to classify confidently.
+  (c) Softened the prose throughout: "reliable informed-side actor" →
+      "historically positive follow-through context in this sample"; "signal"
+      → "context"; "validated cleanly" → "supported descriptively in this
+      single case." The tags themselves are kept; the surrounding language
+      no longer drifts toward trading-signal territory.

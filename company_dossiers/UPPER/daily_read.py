@@ -24,17 +24,21 @@ OUT_DIR = os.path.join(HERE, "daily_reads")
 
 # Broker number -> firm name + Rule-11 fingerprint tag, for the daily read.
 # Sources: merolagani.com/BrokerList.aspx + ShareSansar weekly broker summaries.
-# Fingerprints from deep_analysis.py over 343 days of UPPER broker history.
+# Fingerprints from deep_analysis.py over 343 days of UPPER broker history,
+# recomputed 2026-05-20 with exact-5-trading-day forward math + SPARSE tag
+# for n<=10 (per Romeo review). Numbers are DESCRIPTIVE CONTEXT only — not
+# signals to follow. See METHODOLOGY.md Rule 11.
 BROKER_INFO = {
-    "26": ("Asian Securities", "mildly forced (−1.10%, n=7)"),
+    "26": ("Asian Securities", "sparse-neg (−1.17%, n=7)"),
     "28": ("Shree Krishna Securities", "sparse (3 leads)"),
-    "38": ("Dipshikha Dhitopatra", "INFORMED (+2.13%, n=9)"),
-    "42": ("Sani Securities", "mildly forced (−1.14%, n=23)"),
-    "44": ("Dynamic Money Managers", "FORCED (−7.05%, n=20)"),
-    "48": ("(unresolved)", "mildly forced (−1.31%, n=11)"),
-    "49": ("Online Securities", "INFORMED (+1.92%, n=16)"),
-    "58": ("Naasa Securities", "INFORMED (+3.58%, n=21)"),
-    "88": ("Blue Chip Securities", "noise (+0.46%, n=8)"),
+    "34": ("(unresolved)", "forced-mild (−1.04%, n=15)"),
+    "38": ("Dipshikha Dhitopatra", "sparse-pos (+2.79%, n=9)"),
+    "42": ("Sani Securities", "noise (−0.19%, n=22)"),
+    "44": ("Dynamic Money Managers", "forced (−6.02%, n=20)"),
+    "48": ("(unresolved)", "forced-mild (−1.05%, n=11)"),
+    "49": ("Online Securities", "informed (+1.30%, n=16)"),
+    "58": ("Naasa Securities", "informed (+2.86%, n=21)"),
+    "88": ("Blue Chip Securities", "sparse-pos (+1.61%, n=8)"),
 }
 
 

@@ -82,28 +82,59 @@ Catalyst remains `[unverified]`. Sector-wide flow into hydro post-monsoon-antici
 
 Computed across the full 343-day broker fact table: for each broker, every time they were the *day's net leader* (largest |net_qty|), the average forward-5-day price move *in their direction* (positive = price followed them; negative = price went against them).
 
-### Top "INFORMED" brokers (price tends to follow when they lead)
+**Methodology fix (per Romeo review 2026-05-20):** initial computation used a
+calendar-day window approximating ~5 trading days. Replaced with **exact +5
+index in the sorted trading-date list**, matching METHODOLOGY Rule 11 wording.
+Numbers below are post-fix; they shifted modestly downward in magnitude but
+the rank-order of the top signatures is unchanged.
 
-| Broker | Lead days (n) | Avg follow-through 5d | Max single net position |
+### Brokers with positive follow-through context (n ≥ 11)
+
+| Broker | Lead days (n) | Avg exact-5td | Max single net position |
 |---|---:|---:|---:|
-| **58** | **21** | **+3.58%** | 164,236 |
-| 49 | 16 | +1.92% | 66,243 |
-| 38 | 9 | +2.13% | 64,648 |
+| **58 (Naasa Securities)** | **21** | **+2.86%** | 164,236 |
+| 49 (Online Securities) | 16 | +1.30% | 66,243 |
 
-### Top "FORCED?" brokers (price tends to reverse against them)
+### Brokers with negative follow-through context (n ≥ 11)
 
-| Broker | Lead days (n) | Avg follow-through 5d | Max single net position |
+| Broker | Lead days (n) | Avg exact-5td | Max single net position |
 |---|---:|---:|---:|
-| **44** | **20** | **−7.05%** | 260,306 |
-| 48 | 11 | −1.31% | 76,653 |
-| 42 | 23 | −1.14% | 75,536 |
-| 45 | 12 | −1.12% | 48,953 |
-| 26 | 7 | −1.10% | 42,030 |
+| **44 (Dynamic Money Managers)** | **20** | **−6.02%** | 260,306 |
+| 34 | 15 | −1.04% | 47,048 |
+| 48 | 11 | −1.05% | 76,653 |
 
-### Strongest single fingerprints (by signal-to-noise)
+### SPARSE (directional but n ≤ 10 — too thin to classify confidently)
 
-- **Broker 58** is the standout informed signature. 21 lead days with avg follow-through of +3.58%. When they take the day's biggest net position, price moves an average of 3.58% in their direction over the next 5 days. Largest single position was 164k shares — significant institutional size.
-- **Broker 44** is the standout forced/wrong-side. 20 lead days, max position **260k shares (the largest of any broker)**, but price moves an average of **−7.05% against** them over the next 5 days. Big positions, bad timing. Strong "forced flow" candidate.
+| Broker | n | Avg | Direction |
+|---|---:|---:|---|
+| 38 (Dipshikha Dhitopatra) | 9 | +2.79% | SPARSE_POSITIVE |
+| 88 (Blue Chip Securities) | 8 | +1.61% | SPARSE_POSITIVE |
+| 81 | 9 | +1.05% | SPARSE_POSITIVE |
+| 22 | 7 | +1.01% | SPARSE_POSITIVE |
+| 26 (Asian Securities) | 7 | −1.17% | SPARSE_NEGATIVE |
+
+### Strongest single signatures (descriptive, not signal)
+
+- **Broker 58 (Naasa Securities)** has the cleanest positive follow-through
+  context: 21 lead days with avg +2.86% in their direction over the next 5
+  trading days. Largest single position 164k shares. This is *historical
+  context that has tended to land positively in this sample*, NOT a "reliable
+  informed-side actor" — the data does not support that strength of language.
+- **Broker 44 (Dynamic Money Managers)** has the cleanest negative follow-
+  through context: 20 lead days, max position **260k shares (the largest of
+  any broker)**, avg follow-through **−6.02%**. Their big positions have
+  historically been followed by price moving against them. Pattern is
+  consistent with mechanical execution (portfolio / redemption / VWAP-target)
+  but the data does not prove that — it's a candidate interpretation.
+
+### Critical caveats (per METHODOLOGY Rule 11)
+- N is small (7–23 lead days per broker). Even at n=21, the signature is
+  "context for this sample," not a confirmed property of the broker.
+- Anonymous broker IDs — not stable cross-symbol.
+- Path-dependence: one big day can dominate the average. **Dispersion is
+  not yet computed; the average could be masking variability.**
+- Survivorship: this analysis only sees brokers who appeared in our
+  fact-table window (2023-06 onwards).
 
 ### Critical caveats
 - **N is small.** 7-23 lead days per broker. Confidence is moderate, not high.
@@ -186,18 +217,18 @@ Used ShareSansar's weekly top-broker summaries + merolagani's official broker li
 
 | # | Firm name | Our Rule-11 fingerprint | Notes |
 |---|---|---|---|
-| **26** | Asian Securities Pvt. Limited | mildly forced (−1.10%, n=7) | Currently on a 7-day net-buy streak on UPPER |
-| **28** | Shree Krishna Securities Limited | too sparse (3 leads) | The Mar 10 2026 rally-launch buyer (+119k) |
-| **38** | Dipshikha Dhitopatra Karobar Co. Pvt. Ltd. | **INFORMED (+2.13%, n=9)** | Top-buyer on multiple Aug 2024 rally days |
-| **42** | Sani Securities Co. Ltd. | mildly forced (−1.14%, n=23) | The most-frequent leader; high turnover |
-| **44** | **Dynamic Money Managers Securities Pvt. Ltd.** | **FORCED (−7.05%, n=20)** | **Took largest single position of any broker (−260k on Jul 18 '24); sold the entire 2024 rally and missed the top by ~30 NPR. Name 'Money Managers' suggests portfolio/redemption-driven mechanical execution.** |
-| **49** | Online Securities Pvt. Ltd. | **INFORMED (+1.92%, n=16)** | Retail-app broker; informed signature plausibly via aggregated app flow timing |
-| **58** | **Naasa Securities Co. Ltd.** | **INFORMED (+3.58%, n=21)** | **One of NEPSE's largest brokers, repeatedly cited as 'top buyer / top seller broker' in ShareSansar weekly summaries. Likely wholesale-flow channel for institutional / high-net-worth clients. Their lead positions are followed by avg +3.58% over 5 days. Currently on a 4-day net-buy streak on UPPER.** |
-| **88** | Blue Chip Securities Ltd | noise (+0.46%, n=8) | The Mar 19 2026 rally distributor (sold 81k); appears episodically |
+| **26** | Asian Securities Pvt. Limited | SPARSE_NEGATIVE (−1.17%, n=7) | Directionally negative but n=7 too thin to classify confidently. Currently on a 7-day net-buy streak on UPPER. |
+| **28** | Shree Krishna Securities Limited | too sparse (3 leads) | The Mar 10 2026 rally-launch buyer (+119k). |
+| **38** | Dipshikha Dhitopatra Karobar Co. Pvt. Ltd. | SPARSE_POSITIVE (+2.79%, **n=9**) | Directionally positive but n=9 ≤ 10 threshold. Was top-buyer on multiple Aug 2024 rally days. |
+| **42** | Sani Securities Co. Ltd. | NOISE (−0.19%, n=22) | Most-frequent leader; high turnover; no reliable follow-through context. |
+| **44** | **Dynamic Money Managers Securities Pvt. Ltd.** | **FORCED (−6.02%, n=20)** | Largest single position of any broker (−260k on Jul 18 '24). Sold the entire 2024 rally and missed the top by ~30 NPR. Pattern is *consistent with* mechanical execution (portfolio / redemption / VWAP-target); the data does not prove that — it's a candidate interpretation. NOT a "fade them" signal — descriptive only. |
+| **49** | Online Securities Pvt. Ltd. | INFORMED (+1.30%, n=16) | Mild positive follow-through context. |
+| **58** | **Naasa Securities Co. Ltd.** | **INFORMED (+2.86%, n=21)** | One of NEPSE's largest brokers, repeatedly cited as 'top buyer/seller broker' in ShareSansar weekly summaries; likely a wholesale-flow channel for institutional / high-net-worth clients. Has the cleanest positive follow-through context in this UPPER sample. **NOT** to be treated as a "reliable smart-money" actor — that overstates what the data supports. Context only. Currently on a 4-day net-buy streak on UPPER. |
+| **88** | Blue Chip Securities Ltd | SPARSE_POSITIVE (+1.61%, n=8) | n=8 thin; the Mar 19 2026 rally distributor (sold 81k); appears episodically. |
 
 ### What this means concretely for the dossier
 
-1. **Naming changes the read.** Saying "broker 58 is on a 4-day buy streak" is descriptive. Saying "**Naasa Securities, NEPSE's most prolific wholesale-flow broker, is on a 4-day buy streak with a historically-informed signature**" is *meaningfully more useful* discretionary context — without crossing into "therefore buy."
+1. **Naming changes the read carefully.** Saying "broker 58 is on a 4-day buy streak" is descriptive. Saying "Naasa Securities, one of NEPSE's wholesale-flow brokers, is on a 4-day buy streak with **historically positive follow-through context in this UPPER sample (n=21)**" is *meaningfully more useful* discretionary context — without crossing into "smart money is buying" or "therefore buy." The data supports the first framing, not the second.
 2. **The 2024 rally now has both a documented catalyst (FY annual result anticipation) AND named protagonists** (Naasa accumulated; Dynamic Money Managers sold all the way up). Future August result periods on UPPER carry this expectation as descriptive context.
 3. **Dynamic Money Managers (broker 44) is now a clear FORCED-side watch-broker.** When they take a big position, the historical pattern is a 7% move *against* them over 5 days. Descriptive only — not a "fade them" signal, because (a) the average can be dominated by 2-3 outsized losses, (b) broker identities aren't stable cross-symbol, (c) past 20-event behaviour does not predict the next event.
 4. **All this should be reflected in the daily-read template.** When today's leaders / persistent brokers are identifiable, they should be named, not just numbered.

@@ -94,7 +94,10 @@ def main():
     close_by_date = {r["date_np"]: r["close"] for r in rows}
 
     # For each broker: appearances, days as net leader (|net_qty| was max that day),
-    # mean 5-day forward price move following their LEAD day in their net direction
+    # mean **exact 5-trading-day** forward price move following their LEAD day in their
+    # net direction. (Fix per Romeo review 2026-05-20: prior code used calendar-day
+    # window which approximated 5 trading days; now uses exact +5 index in the sorted
+    # trading-date list. Matches METHODOLOGY Rule 11 wording exactly.)
     broker_stats = defaultdict(lambda: {
         "appearances": 0,
         "lead_days": 0,
@@ -104,6 +107,11 @@ def main():
         "max_abs_net": 0.0,
         "total_buy": 0.0, "total_sell": 0.0,
     })
+
+    # Build a strict trading-day index from the close map
+    sorted_trading_dates = sorted(close_by_date)
+    trading_day_index = {d: i for i, d in enumerate(sorted_trading_dates)}
+
     for d, recs in by_date.items():
         # who was the day's net leader?
         leader = max(recs, key=lambda r: abs(r["net_qty"]))
@@ -118,20 +126,20 @@ def main():
         s = broker_stats[leader["broker"]]
         s["lead_days"] += 1
         s["lead_dates"].append(d)
-        # forward 5d price change in their direction
-        if d in close_by_date:
-            d_dt = dt.date.fromisoformat(d)
-            d5 = (d_dt + dt.timedelta(days=10)).isoformat()  # ~5 trading days
-            forward = None
-            for dd_ in sorted(close_by_date):
-                if dd_ > d and dd_ <= d5:
-                    forward = close_by_date[dd_]
-            if forward and close_by_date[d]:
-                move = (forward - close_by_date[d]) / close_by_date[d] * 100
-                side = 1 if leader["net_qty"] > 0 else -1 if leader["net_qty"] < 0 else 0
-                if side != 0:
-                    s["lead_direction_sum_5d"] += side * move
-                    s["lead_dir_count"] += 1
+        # forward EXACTLY 5 trading days price change in their direction
+        if d in trading_day_index:
+            i = trading_day_index[d]
+            if i + 5 < len(sorted_trading_dates):
+                d_fwd = sorted_trading_dates[i + 5]
+                p_now = close_by_date[d]
+                p_fwd = close_by_date[d_fwd]
+                if p_now and p_fwd:
+                    move = (p_fwd - p_now) / p_now * 100
+                    side = (1 if leader["net_qty"] > 0
+                            else -1 if leader["net_qty"] < 0 else 0)
+                    if side != 0:
+                        s["lead_direction_sum_5d"] += side * move
+                        s["lead_dir_count"] += 1
 
     # Print brokers ranked by lead_days, with informed-vs-forced classification
     leaders = sorted(broker_stats.items(),
@@ -142,13 +150,19 @@ def main():
     for br, s in leaders[:15]:
         avg = (s["lead_direction_sum_5d"] / s["lead_dir_count"]
                if s["lead_dir_count"] else None)
-        # classification: +avg = informed (price followed them), -avg = forced
+        n = s["lead_dir_count"]
+        # Per METHODOLOGY Rule 11 (post Romeo-review 2026-05-20): n<=10 is too
+        # thin to classify with confidence -> SPARSE_POSITIVE / SPARSE_NEGATIVE
         if avg is None:
             kind = "—"
+        elif avg > 1.0 and n >= 11:
+            kind = "INFORMED  (positive follow-through context, avg +%g%%, n=%d)" % (round(avg, 2), n)
+        elif avg < -1.0 and n >= 11:
+            kind = "FORCED?   (negative follow-through context, avg %g%%, n=%d)" % (round(avg, 2), n)
         elif avg > 1.0:
-            kind = "INFORMED  (price followed by avg +%g%% over 5d)" % round(avg, 2)
+            kind = "SPARSE_POSITIVE (avg +%g%% but n=%d ≤ 10; underclassified)" % (round(avg, 2), n)
         elif avg < -1.0:
-            kind = "FORCED?   (price went avg %g%% AGAINST them)" % round(avg, 2)
+            kind = "SPARSE_NEGATIVE (avg %g%% but n=%d ≤ 10; underclassified)" % (round(avg, 2), n)
         else:
             kind = "NOISE     (~flat follow-through)"
         print(f"  {br:>6}  {s['lead_days']:>5}  {s['appearances']:>6}  "
